@@ -1,0 +1,73 @@
+<div class="container config" [style]="{width: '450px'}">
+    <div class="d-flex flex-row justify-content-between">
+        <div class="big-title">
+            Configuration
+        </div>
+    </div>
+    <div class="row p-2 crd-cnt">
+        <div class="col-sm-6 " style="height: 100%;">
+            <div class="card border-primary mb-3 backend categorie" style="height:100%;">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="backend-technology">Back End</label>
+                        <p-inputSwitch class="p-field-checkbox" [(ngModel)]="userConfig.wantBackend"></p-inputSwitch>
+                    </div>
+                    <div class="form-group">
+                        <label for="backend-technology">Technology</label>
+                        <div class="input-config ">
+                            <p-dropdown [options]="backendTechnologies" [(ngModel)]="backendSelectedTechnology"
+                                        optionLabel="name"
+                                        [ngModelOptions]="{standalone: true}"
+                                        (onChange)="changeSelectedBackendTechnology()"
+                                        [showClear]="true" styleClass="technology">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row  ">
+                        <label for="backend-template">Template</label>
+                        <div class="input-config ">
+                            <p-dropdown [options]="backendSelectedTechnology.templates" [(ngModel)]="userConfig.backend"
+                                        optionLabel="name"
+                                        [ngModelOptions]="{standalone: true}" [showClear]="true"
+                                        styleClass="technology">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="frontend-technology">Front End</label>
+                        <p-inputSwitch class="p-field-checkbox" [(ngModel)]="userConfig.wantFrontend"></p-inputSwitch>
+                    </div>
+                    <div class="form-group">
+                        <label for="frontend-technology">Technology</label>
+                        <div class="input-config ">
+                            <p-dropdown [options]="frontendTechnologies" [(ngModel)]="frontendSelectedTechnology"
+                                        optionLabel="name"
+                                        [ngModelOptions]="{standalone: true}"
+                                        (onChange)="changeSelectedFrontendTechnology()"
+                                        [showClear]="true" styleClass="technology">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row  ">
+                        <label for="frontend-template">Template</label>
+                        <div class="input-config ">
+                            <p-dropdown [options]="frontendSelectedTechnology.templates"
+                                        [(ngModel)]="userConfig.frontend"
+                                        optionLabel="name"
+                                        [ngModelOptions]="{standalone: true}" [showClear]="true"
+                                        styleClass="technology">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="row p-2 crd-cnt">
+        <input type="text" class="p-button-info p-blockui" pButton (click)="generateProject()" value="Generate">
+<!--        <input type="text" class="p-button-danger" pButton (click)="download()" value="Download">-->
+    </div>
+</div>

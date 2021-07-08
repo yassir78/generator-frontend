@@ -1,0 +1,28 @@
+<p-dialog [(visible)]="editDialog" [style]="{width: '450px'}" header="Commande Edit" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label for="ref">Ref</label>
+            <input type="text" pInputText id="ref" [(ngModel)]="selected.reference" required autofocus />
+            <small class="p-invalid" *ngIf="submitted && !selected.reference">ref is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="total">Total</label>
+            <input type="text" pInputText id="total" [(ngModel)]="selected.total" required autofocus />
+            <small class="p-invalid" *ngIf="submitted && !selected.total">total is required.</small>
+        </div>
+
+
+
+        <div class="p-formgrid p-grid">
+            <div class="p-field p-col">
+                <label for="totalPaye">Total Paye</label>
+                <p-inputNumber id="totalPaye" [(ngModel)]="selected.totalPaye"></p-inputNumber>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideEditDialog()"></button>
+        <button pButton pRipple label="Edit" icon="pi pi-check" class="p-button-text" (click)="edit()"></button>
+    </ng-template>
+</p-dialog>

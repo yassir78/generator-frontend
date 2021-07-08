@@ -1,0 +1,13 @@
+<h2 class="">Insert Entites Yaml in the Code Editor Below</h2>
+
+<div class="card p-fluid p-formgrid p-grid">
+    <div class="p-field p-col">
+        <!--   <textarea pInputTextarea [(ngModel)]="requestVo.yamlText" rows="20" placeholder="Enter Yaml Content"></textarea> -->
+        <ngs-code-editor [theme]="theme" [codeModel]="codeModel" [options]="options"
+            (valueChanged)="onCodeChanged($event)" style="height: 50vh; width: ;">
+        </ngs-code-editor>
+    </div>
+    <div class="dad">
+        <p-button class="cen" label="Send " icon="pi pi-check" iconPos="left" (click)="importYaml()"></p-button>
+    </div>
+</div>
