@@ -125,7 +125,7 @@ import { CommandesComponent } from "./view/admin/commandes/commandes.component";
 import { CommandeListComponent } from "./view/admin/commandes/commande-list/commande-list.component";
 import { CommandeEditComponent } from "./view/admin/commandes/commande-edit/commande-edit.component";
 import { CommandeViewComponent } from "./view/admin/commandes/commande-view/commande-view.component";
-import { ConfirmationService, MessageService } from "primeng/api";
+import { ConfirmationService, MessageService, SharedModule } from "primeng/api";
 import { PojoListComponent } from "./view/admin/pojos/pojo-list/pojo-list.component";
 import { PojoImportComponent } from "./view/admin/pojos/pojo-import/pojo-import.component";
 import { PojoGenerateComponent } from "./view/admin/pojos/pojo-generate/pojo-generate.component";
@@ -140,6 +140,7 @@ import { FileLoadComponent } from './view/admin/pojos/pojo-import/file-load/file
     BrowserModule,
     FormsModule,
     AppRoutingModule,
+    SharedModule,
     AppCodeModule,
     HttpClientModule,
     BrowserAnimationsModule,
