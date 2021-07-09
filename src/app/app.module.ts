@@ -1,3 +1,4 @@
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
@@ -132,6 +133,7 @@ import { CodeEditorModule } from "@ngstack/code-editor";
 import { PaiementListComponent } from "./view/paiements/paiement-list/paiement-list.component";
 import { PaiementViewComponent } from "./view/paiements/paiement-view/paiement-view.component";
 import { PaiementEditComponent } from "./view/paiements/paiement-edit/paiement-edit.component";
+import { FileLoadComponent } from './view/admin/pojos/pojo-import/file-load/file-load.component';
 
 @NgModule({
   imports: [
@@ -221,6 +223,7 @@ import { PaiementEditComponent } from "./view/paiements/paiement-edit/paiement-e
     TreeModule,
     TreeTableModule,
     VirtualScrollerModule,
+    DynamicDialogModule,
   ],
   declarations: [
     AppComponent,
@@ -257,6 +260,10 @@ import { PaiementEditComponent } from "./view/paiements/paiement-edit/paiement-e
     PaiementListComponent,
     PaiementViewComponent,
     PaiementEditComponent,
+    FileLoadComponent,
+  ],
+  entryComponents:[
+    FileLoadComponent,
   ],
   providers: [
     /*    { provide: LocationStrategy, useClass: HashLocationStrategy }, */
