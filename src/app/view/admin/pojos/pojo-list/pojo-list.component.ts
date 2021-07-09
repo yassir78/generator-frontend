@@ -173,7 +173,10 @@ export class PojoListComponent implements OnInit {
     var myFile = new File([ymlText], "demo.yaml", {type: "text/yaml;charset=utf-8"});
     saveAs(myFile);
   }
-
+  public details(selected:Pojo){
+    this.appear = true;
+    this.selected = selected;
+  }
   public openCreate() {
     this.selected = new Pojo();
     this.submitted = false;
