@@ -1,77 +1,144 @@
-import { Component, OnInit } from '@angular/core';
-import {ConfirmationService, MessageService} from 'primeng/api';
-import {PojoService} from '../../../../controller/service/pojo.service';
-import {Pojo} from '../../../../controller/model/pojo';
-import {UserConfig} from "../../../../controller/model/userConfig";
-import {Router} from "@angular/router";
-
-
+import { Component, OnInit } from "@angular/core";
+import {
+  ConfirmationService,
+  MessageService,
+  SelectItem,
+  TreeNode,
+} from "primeng/api";
+import { PojoService } from "../../../../controller/service/pojo.service";
+import { Pojo } from "../../../../controller/model/pojo";
+import { Router } from "@angular/router";
+var YAML = require("json2yaml");
 @Component({
-  selector: 'app-pojo-list',
-  templateUrl: './pojo-list.component.html',
-  styleUrls: ['./pojo-list.component.scss'],
-  providers: [MessageService, ConfirmationService]
+  selector: "app-pojo-list",
+  templateUrl: "./pojo-list.component.html",
+  styleUrls: ["./pojo-list.component.scss"],
+  providers: [MessageService, ConfirmationService],
 })
 export class PojoListComponent implements OnInit {
-  appear:boolean=false;
+  appear: boolean = false;
   cols: any[];
-  colAttributs:any[];
-  constructor(private messageService: MessageService, private confirmationService: ConfirmationService,
-              private service: PojoService, private router: Router) {
+  selectedType: any;
+  colAttributs: any[];
+  statuses: SelectItem[];
+  constructor(
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private service: PojoService,
+    private router: Router
+  ) {}
+  updateField(event, field) {
+    console.log("*********************************************");
+    const index = this.findFieldByName(field);
+    console.log(index);
+    const selectedField = this.selected.fields[index];
+    console.log(event.value);
+    if (event.value == "REF") {
+      console.log("********************************");
+      selectedField.id = false;
+      selectedField.reference = true;
+      console.log(this.selected.fields[index]);
+    } else if (event.value == "ID") {
+      console.log("//////////////////////////////////");
+      selectedField.reference = false;
+      this.changeIdOfOtherItems(selectedField);
+      selectedField.id = true;
+      console.log(this.selected.fields[index]);
+    }
   }
-
+  changeIdOfOtherItems(fieldToExclude) {
+    let array = this.selected.fields.filter(
+      (field) => field.name != fieldToExclude.name
+    );
+    array.forEach((element) => {
+      element.id = false;
+    });
+  }
+  deleteFromFieldsArray(field) {
+    this.selected.fields.splice(field, 1);
+  }
+  findFieldByName(fieldLookingFor) {
+    const indexOfUpdated = this.selected.fields.findIndex(
+      (field) => field.name === fieldLookingFor.name
+    );
+    return indexOfUpdated;
+  }
   ngOnInit(): void {
-    this.initCol();
+    console.log(this.pojo);
+    this.statuses = [
+      { label: "Choississez un type", value: "" },
+      { label: "ID", value: "ID" },
+      { label: "REF", value: "REF" },
+    ];
+    // this.initCol();
   }
-
-  public showAttributes(){
-
+  changeType(field: any) {
+    field.id = false;
+    /*     if (this.selectedType == "REF") {
+      console.log("********************************");
+      field.reference == true;
+      field.id == false;
+      console.log(field);
+    } else {
+      console.log("//////////////////////////////////");
+      field.reference == false;
+      field.id == true;
+      console.log(field);
+    } */
+    /*     value == "REF"
+      ? field.reference == true && field.id == false
+      : field.reference == false && field.id == true; */
   }
+  export() {
+    console.log("hhh");
+    const ymlText = YAML.stringify(this.items);
+    console.log(ymlText);
+  }
+  public showAttributes() {}
   public navigate() {
-    this.router.navigateByUrl('view/pojo/generate');
+    this.router.navigateByUrl("view/pojo/generate");
   }
 
   public delete(selected: Pojo) {
     this.selected = selected;
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + selected.id + '?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
+      message: "Are you sure you want to delete " + selected.id + "?",
+      header: "Confirm",
+      icon: "pi pi-exclamation-triangle",
       accept: () => {
-          this.items = this.items.filter(val => val.id !== this.selected.id);
-          this.selected = new Pojo();
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Pojo Deleted',
-            life: 3000
-          });
-      }
+        this.items = this.items.filter((val) => val.id !== this.selected.id);
+        this.selected = new Pojo();
+        this.messageService.add({
+          severity: "success",
+          summary: "Successful",
+          detail: "Pojo Deleted",
+          life: 3000,
+        });
+      },
     });
   }
   public deleteMultiple() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected Pojos?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
+      message: "Are you sure you want to delete the selected Pojos?",
+      header: "Confirm",
+      icon: "pi pi-exclamation-triangle",
       accept: () => {
-          this.service.deleteMultipleIndexById();
-          this.selectes = null;
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Commandes Deleted',
-            life: 3000
-          });
-      }
+        this.service.deleteMultipleIndexById();
+        this.selectes = null;
+        this.messageService.add({
+          severity: "success",
+          summary: "Successful",
+          detail: "Commandes Deleted",
+          life: 3000,
+        });
+      },
     });
   }
 
-  public details(selected: Pojo){
-    this.appear=true;
+  public details(selected: Pojo) {
+    this.appear = true;
     this.selected = selected;
   }
-
 
   public openCreate() {
     this.selected = new Pojo();
@@ -80,30 +147,25 @@ export class PojoListComponent implements OnInit {
   }
 
   public edit(pojo: Pojo) {
-    this.selected = {...pojo};
+    this.selected = { ...pojo };
     this.editDialog = true;
   }
   public view(pojo: Pojo) {
-    this.selected = {...pojo};
+    this.selected = { ...pojo };
     this.viewDialog = true;
   }
 
   private initCol() {
-    this.cols = [
-      {field: 'name', header: 'name'},
-
-    ];
-    this.colAttributs = [
-      {field: 'name', header: 'Attributs'},
-
-    ];
+    this.cols = [{ field: "name", header: "name" }];
+    this.colAttributs = [{ field: "name", header: "Attributs" }];
   }
-
 
   get pojo(): Pojo {
     return this.service.pojo;
   }
-
+  get pojos(): Pojo[] {
+    return this.service.items;
+  }
   get selected(): Pojo {
     return this.service.selected;
   }
@@ -159,6 +221,4 @@ export class PojoListComponent implements OnInit {
   set selectes(value: Array<Pojo>) {
     this.service.selectes = value;
   }
-
-
 }

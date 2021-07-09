@@ -1,10 +1,10 @@
 <h2 class="">Insert Entites Yaml in the Code Editor Below</h2>
-<p-splitButton label="Import" icon="pi pi-plus" (onClick)="save('success')" [model]="items" styleClass="p-button-success p-mb-2"></p-splitButton>
+<p-splitButton label="Import" icon="pi pi-plus" [model]="items" styleClass="p-button-success p-mb-2"></p-splitButton>
 <div class="card p-fluid p-formgrid p-grid">
     <div class="p-field p-col">
         <!--   <textarea pInputTextarea [(ngModel)]="requestVo.yamlText" rows="20" placeholder="Enter Yaml Content"></textarea> -->
         <ngs-code-editor [theme]="theme" [codeModel]="codeModel" [options]="options"
-            (valueChanged)="onCodeChanged($event)" style="height: 50vh; width: ;">
+            (valueChanged)="onCodeChanged($event)" style="height: 50vh; width: 100%;">
         </ngs-code-editor>
     </div>
     <div class="dad">
