@@ -1,3 +1,6 @@
+
+
+
 import { Component, OnInit } from "@angular/core";
 import {
   ConfirmationService,
@@ -8,6 +11,8 @@ import {
 import { PojoService } from "../../../../controller/service/pojo.service";
 import { Pojo } from "../../../../controller/model/pojo";
 import { Router } from "@angular/router";
+import {Field} from "../../../../controller/model/field";
+import { saveAs } from 'file-saver';
 var YAML = require("json2yaml");
 @Component({
   selector: "app-pojo-list",
@@ -16,6 +21,7 @@ var YAML = require("json2yaml");
   providers: [MessageService, ConfirmationService],
 })
 export class PojoListComponent implements OnInit {
+
   appear: boolean = false;
   cols: any[];
   selectedType: any;
@@ -135,11 +141,42 @@ export class PojoListComponent implements OnInit {
     });
   }
 
-  public details(selected: Pojo) {
+ public prepareItems(items: Pojo[]){
+    const results: {} = {};
+    items.forEach(item =>{
+      const fields = {};
+      item.fields.forEach(field => {
+        fields[`${field.name}`] = `${field.type.simpleName}`;
+        //fields.push(this.prepareField(field));
+      })
+      results[`${item.name}`] = fields;
+    })
+
+   return results;
+
+ }
+
+ public prepareField(field: Field){
+    let result: {} = {};
+    result[`${field.name}`] = field.type.simpleName;
+    return result;
+ }
+  public onExport(){
+    const items = this.prepareItems(this.items)
+    //console.log(items);
+    const ymlText = YAML.stringify(items);
+     console.log(ymlText);
+     const string : String = new String(ymlText)
+    ymlText.replace("/-/g","")
+    console.log("ymlText");
+    console.log(string);
+    var myFile = new File([ymlText], "demo.yaml", {type: "text/yaml;charset=utf-8"});
+    saveAs(myFile);
+  }
+  public details(selected:Pojo){
     this.appear = true;
     this.selected = selected;
   }
-
   public openCreate() {
     this.selected = new Pojo();
     this.submitted = false;
@@ -222,3 +259,5 @@ export class PojoListComponent implements OnInit {
     this.service.selectes = value;
   }
 }
+
+
