@@ -13,7 +13,7 @@ import { Pojo } from "../../../../controller/model/pojo";
 import { Router } from "@angular/router";
 import {Field} from "../../../../controller/model/field";
 import { saveAs } from 'file-saver';
-var YAML = require("json2yaml");
+import * as YAML from "json2yaml"
 @Component({
   selector: "app-pojo-list",
   templateUrl: "./pojo-list.component.html",
@@ -61,7 +61,8 @@ export class PojoListComponent implements OnInit {
     });
   }
   deleteFromFieldsArray(field) {
-    this.selected.fields.splice(field, 1);
+    const index = this.selected.fields.indexOf(field);
+    this.selected.fields.splice(index, 1);
   }
   findFieldByName(fieldLookingFor) {
     const indexOfUpdated = this.selected.fields.findIndex(
