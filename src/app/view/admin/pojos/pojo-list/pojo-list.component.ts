@@ -179,9 +179,10 @@ export class PojoListComponent implements OnInit {
     this.selected = selected;
   }
   public openCreate() {
+    console.log("hello world")
     this.selected = new Pojo();
     this.submitted = false;
-    this.createDialog = true;
+    this.addDialog = true;
   }
 
   public edit(pojo: Pojo) {
@@ -219,6 +220,14 @@ export class PojoListComponent implements OnInit {
   set items(value: Array<Pojo>) {
     this.service.items = value;
   }
+    get addDialog(): boolean {
+    return this.service.addDialog;
+  }
+
+  set addDialog(value: boolean) {
+    this.service.addDialog = value;
+  }
+
 
   get submitted(): boolean {
     return this.service.submitted;

@@ -16,6 +16,7 @@ export class PojoService {
   private _selected: Pojo;
   private _selectes: Array<Pojo>;
   private _pojo: Pojo;
+  private _addDialog;
   private _createDialog: boolean;
   private _editDialog: boolean;
   private _viewDialog: boolean;
@@ -75,7 +76,6 @@ export class PojoService {
       this.deleteIndexById(item.id);
     }
   }
-
   get pojo(): Pojo {
     if (this._pojo == null) {
       this._pojo = new Pojo();
@@ -156,4 +156,12 @@ export class PojoService {
   set viewDialog(value: boolean) {
     this._viewDialog = value;
   }
+    get addDialog(): boolean {
+    return this._addDialog;
+  }
+
+  set addDialog(value: boolean) {
+    this._addDialog = value;
+  }
+
 }
