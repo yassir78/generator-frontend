@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { PojoService } from 'src/app/controller/service/pojo.service';
-import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';  
-import { Pojo } from 'src/app/controller/model/pojo';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Field } from 'src/app/controller/model/field';
+import { Pojo } from 'src/app/controller/model/pojo';
 import { Type } from 'src/app/controller/model/type';
+import { PojoService } from 'src/app/controller/service/pojo.service';
+
 @Component({
-  selector: 'pojo-add',
-  templateUrl: './pojo-add.component.html',
-  styleUrls: ['./pojo-add.component.scss']
+  selector: 'pojo-add-field',
+  templateUrl: './pojo-add-field.component.html',
+  styleUrls: ['./pojo-add-field.component.scss']
 })
-export class PojoAddComponent implements OnInit {
-  display: boolean = false;
-  title = 'formarray';  
+export class PojoAddFieldComponent implements OnInit {
+
+  constructor(private service:PojoService,private formBuilder: FormBuilder) { }
+  private pojoToBeEdited:Pojo;
+  form!: FormGroup;  
+  fields!: FormArray;  
   pojosNames;
   typesSimple = [{type:"String"},{type:"BigDecimal"},{type:"Double"}]
   categories = [{name:"Simple"},{name:"Complexe"}]
   idOrReferenceValue = [{name:'id'},{name:'ref'}]
-  form!: FormGroup;  
-  fields!: FormArray;  
-  constructor(private service:PojoService,private formBuilder: FormBuilder) { }
-
-  ngOnInit(): void {
+ngOnInit(): void {
     this.pojosNames = this.service.items.map(pojo=>{
       return { name: pojo.name } });
       console.log(this.pojosNames)
@@ -62,28 +62,19 @@ export class PojoAddComponent implements OnInit {
     }
     submit(){
       const result = this.form.value;
-       let pojo = new Pojo();
-      pojo.name = result.name;
-      //console.log(result.fields)
-      const fields = this.processFields(result.fields);
-      this.processPojo(pojo,fields);
-      console.log(pojo)
-      this.service.items.push(pojo);
-      this.service.addDialog = false;
+      this.pojoToBeEdited= this.service.selectedPojoToBeEdited;
+       const fields = this.processFields(result.fields);
+      if ( fields instanceof Array )
+      this.pojoToBeEdited.fields = this.pojoToBeEdited.fields.concat( fields );
+      else
+       this.pojoToBeEdited.fields.push( fields );
+      
+     this.service.addFieldToExistingPojoDialog = false;
       this.form.reset();
-    }
-    processPojo(pojo:Pojo,fields:Field[]){
-      pojo.fields = fields;
-       fields.forEach(field=>{
-         field.id ?  pojo.id = field : false;
-         field.reference ? pojo.reference = field : false;
-         field.list ?  pojo.hasList = true:false
-       })
     }
     processFields(formFields):Field[]{
         let fields = new Array<Field>();
         formFields.forEach(formField => {
-          console.log(formField)
           let field = new Field();
           field.name = formField.name;
           if(formField.idOrReference.name === 'id'){
@@ -120,4 +111,27 @@ export class PojoAddComponent implements OnInit {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+get addFieldToExistingPojoDialog(): boolean {
+    return this.service.addFieldToExistingPojoDialog;
+    }
+set addFieldToExistingPojoDialog(value: boolean) {
+    this.service.addFieldToExistingPojoDialog = value;
+    } 
+get selectedPojoToBeEdited(): Pojo {
+    return this.service.selectedPojoToBeEdited;
+    }
+set selectedPojoToBeEdited(value: Pojo) {
+    this.service.selectedPojoToBeEdited = value;
+    }
 }

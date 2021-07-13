@@ -71,7 +71,10 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Type</th>
-                                <th>Typezz</th>
+                                <th style="display: flex;align-items: baseline;justify-content: space-between;">Action
+                                    <button pButton pRipple label="Add Filed" class="p-button-success p-mr-2 p-mb-2"
+                                        (click)="openAddFieldsToPojoDialog()"></button>
+                                </th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-field let-editing="editing" let-ri="rowIndex">
@@ -174,3 +177,4 @@
         </div>
     </div>
     <pojo-add></pojo-add>
+    <pojo-add-field></pojo-add-field>

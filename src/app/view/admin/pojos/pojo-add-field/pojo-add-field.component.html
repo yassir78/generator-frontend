@@ -1,12 +1,5 @@
-<p-dialog header="Title" [(visible)]="addDialog" [formGroup]="form" [style]="{width: '80vw',height:'auto'}"
-    [contentStyle]="{minHeight:'10vh'}" [baseZIndex]="10000">
-    <div class="p-field p-grid">
-        <label for="firstname3" class="p-col-fixed" style="width:100px">Pojo Name</label>
-        <div class="p-col">
-            <input id="firstname3" type="text" pInputText formControlName="name">
-        </div>
-
-    </div>
+<p-dialog header="Title" [(visible)]="addFieldToExistingPojoDialog" [formGroup]="form"
+    [style]="{width: '80vw',height:'auto'}" [contentStyle]="{minHeight:'10vh'}" [baseZIndex]="10000">
     <div class="" formArrayName="fields" *ngFor="let item of form.get('fields').controls; let i = index;">
         <div class="p-fluid p-grid" [formGroupName]="i"
             style="border: 5px outset rgba(10, 100, 78, 0.521); padding: 20px; margin: 10px;">
@@ -60,18 +53,16 @@
     <button pButton type="button" label="ADD FIELD" (click)="addField()"></button>
     <button pButton type="submit" label="Save" (click)="submit()"></button>
     <!--     <div class="p-field p-grid">
-        <div>
-            <div formArrayName="items" *ngFor="let item of form.get('fields').controls; let i = index;">
-                <div [formGroupName]="i">
-                    <input formControlName="fieldName" placeholder="Item name">
-                    <input formControlName="categorie" placeholder="Item description">
-                    <input formControlName="type" placeholder="Item price">
-                    <input formControlName="isList" placeholder="Item price">
+            <div>
+                <div formArrayName="items" *ngFor="let item of form.get('fields').controls; let i = index;">
+                    <div [formGroupName]="i">
+                        <input formControlName="fieldName" placeholder="Item name">
+                        <input formControlName="categorie" placeholder="Item description">
+                        <input formControlName="type" placeholder="Item price">
+                        <input formControlName="isList" placeholder="Item price">
+                    </div>
                 </div>
             </div>
-        </div>
-       
-    </div> -->
+           
+        </div> -->
 </p-dialog>
-
-<!-- <button type="button" (click)="hideCreateDialog()" icon="pi pi-info-circle" label="Show"></button> -->

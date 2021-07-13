@@ -136,6 +136,7 @@ import { PaiementEditComponent } from "./view/paiements/paiement-edit/paiement-e
 import { FileLoadComponent } from './view/admin/pojos/pojo-import/file-load/file-load.component';
 import { PojoAddComponent } from './view/admin/pojos/pojo-add/pojo-add.component';
 import { PojoEditComponent } from './view/admin/pojos/pojo-edit/pojo-edit.component';
+import { PojoAddFieldComponent } from './view/admin/pojos/pojo-add-field/pojo-add-field.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -268,6 +269,7 @@ import { PojoEditComponent } from './view/admin/pojos/pojo-edit/pojo-edit.compon
     FileLoadComponent,
     PojoAddComponent,
     PojoEditComponent,
+    PojoAddFieldComponent,
   ],
   entryComponents:[
     FileLoadComponent,

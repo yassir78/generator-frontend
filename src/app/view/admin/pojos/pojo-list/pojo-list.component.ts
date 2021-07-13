@@ -175,6 +175,8 @@ export class PojoListComponent implements OnInit {
     saveAs(myFile);
   }
   public details(selected:Pojo){
+    this.service.selectedPojoToBeEdited = selected;
+    console.log(this.service.selectedPojoToBeEdited)
     this.appear = true;
     this.selected = selected;
   }
@@ -198,7 +200,10 @@ export class PojoListComponent implements OnInit {
     this.cols = [{ field: "name", header: "name" }];
     this.colAttributs = [{ field: "name", header: "Attributs" }];
   }
-
+  openAddFieldsToPojoDialog(){
+    console.log("hello world")
+    this.addFieldToExistingPojoDialog = true;
+  }
   get pojo(): Pojo {
     return this.service.pojo;
   }
@@ -268,6 +273,18 @@ export class PojoListComponent implements OnInit {
   set selectes(value: Array<Pojo>) {
     this.service.selectes = value;
   }
+  get addFieldToExistingPojo(): boolean {
+    return this.service.addDialog;
+    }
+set addFieldToExistingPojoDialog(value: boolean) {
+    this.service.addFieldToExistingPojoDialog = value;
+    }
+get selectedPojoToBeEdited(): Pojo {
+    return this.service.selectedPojoToBeEdited;
+    }
+set selectedPojoToBeEdited(value: Pojo) {
+    this.service.selectedPojoToBeEdited = value;
+    }
 }
 
 

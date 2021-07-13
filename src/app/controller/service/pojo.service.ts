@@ -21,6 +21,8 @@ export class PojoService {
   private _editDialog: boolean;
   private _viewDialog: boolean;
   private _submitted: boolean;
+  private _addFieldToExistingPojoDialog:boolean;
+  private _selectedPojoToBeEdited:Pojo;
   private _requestVo: RequestVo;
 
   // constructor(private messageService: MessageService,
@@ -135,6 +137,22 @@ export class PojoService {
 
   get editDialog(): boolean {
     return this._editDialog;
+  }
+
+  set addFieldToExistingPojoDialog(value: boolean) {
+    this._addFieldToExistingPojoDialog = value;
+  }
+
+  get addFieldToExistingPojoDialog(): boolean {
+    return this._addFieldToExistingPojoDialog;
+  }
+
+  set selectedPojoToBeEdited(value: Pojo) {
+    this._selectedPojoToBeEdited = value;
+  }
+
+  get selectedPojoToBeEdited(): Pojo {
+    return this._selectedPojoToBeEdited;
   }
 
   set editDialog(value: boolean) {
