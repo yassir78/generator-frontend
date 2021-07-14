@@ -137,6 +137,7 @@ import { FileLoadComponent } from './view/admin/pojos/pojo-import/file-load/file
 import { PojoAddComponent } from './view/admin/pojos/pojo-add/pojo-add.component';
 import { PojoEditComponent } from './view/admin/pojos/pojo-edit/pojo-edit.component';
 import { PojoAddFieldComponent } from './view/admin/pojos/pojo-add-field/pojo-add-field.component';
+import { FieldEditComponent } from './view/admin/pojos/field-edit/field-edit.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -270,6 +271,7 @@ import { PojoAddFieldComponent } from './view/admin/pojos/pojo-add-field/pojo-ad
     PojoAddComponent,
     PojoEditComponent,
     PojoAddFieldComponent,
+    FieldEditComponent,
   ],
   entryComponents:[
     FileLoadComponent,

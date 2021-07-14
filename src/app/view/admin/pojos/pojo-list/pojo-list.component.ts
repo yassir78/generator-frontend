@@ -33,7 +33,7 @@ export class PojoListComponent implements OnInit {
     private service: PojoService,
     private router: Router
   ) {}
-  updateField(event, field) {
+/*   updateField(event, field) {
     console.log("*********************************************");
     const index = this.findFieldByName(field);
     console.log(index);
@@ -51,6 +51,14 @@ export class PojoListComponent implements OnInit {
       selectedField.id = true;
       console.log(this.selected.fields[index]);
     }
+  } */
+  editFieldDialog(field:Field){
+    this.service.editFieldDialog = true;
+    this.service.fieldToBeEdited = field;
+    this.service.editField$.next(true);
+  }
+  deleteField(field){
+
   }
   changeIdOfOtherItems(fieldToExclude) {
     let array = this.selected.fields.filter(

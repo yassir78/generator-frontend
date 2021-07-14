@@ -28,7 +28,7 @@ ngOnInit(): void {
        name:new FormControl([]),
       fields: new FormArray([])  
     });  
-    this.addField
+    this.addField();
   }
    createItem(): FormGroup {  
     return this.formBuilder.group({  
