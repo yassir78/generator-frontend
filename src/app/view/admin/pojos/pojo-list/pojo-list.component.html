@@ -103,7 +103,12 @@
                             <th pSortableColumn="type.simpleName">Type
                                 <p-sortIcon field="type.simpleName"></p-sortIcon>
                             </th>
-                            <th>Action
+                            <th style="display: flex;justify-content: space-between;align-items: center;">Action
+
+                                <button pButton pRipple label="ADD" [disabled]="!selectedPojoToBeEdited" icon="pi "
+                                    class="p-button-success p-mr-2 p-mb-2"
+                                    (click)="openAddFieldsToPojoDialog()"></button>
+
                             </th>
                             <!--<th></th>-->
                         </tr>

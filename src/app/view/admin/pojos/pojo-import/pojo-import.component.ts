@@ -47,6 +47,9 @@ export class PojoImportComponent implements OnInit {
   public importYaml() {
     this.pojoSerice.importYaml().subscribe(
       (data) => {
+        console.log("%c this is the data coming from the server","background-color:red,color:white");
+        console.log(data)
+         console.log("%c //////////////////////////////////////","background-color:red,color:white");
         this.pojoSerice.items = data;
         console.log(data);
         this.router.navigateByUrl("view/pojo/show");

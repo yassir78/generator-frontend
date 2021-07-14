@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { Field } from 'src/app/controller/model/field';
 import { PojoService } from 'src/app/controller/service/pojo.service';
 
@@ -33,7 +33,7 @@ export class FieldEditComponent implements OnInit {
       if(value){
         console.log("i'm in")
         this.addField();
-         
+        console.log(this.fieldToBeEdited)
       }
     })
    
@@ -41,14 +41,48 @@ export class FieldEditComponent implements OnInit {
     createItem(): FormGroup {  
       console.log('this is the create item function')
       this.form.get('fields').valueChanges.subscribe(value=>{
-        console.log(value)
-        // check the emitted value and change the values in the fieldObject
-        const simpleOrComplexe = value[0].category.name;
-           if(simpleOrComplexe=="Simple"){
-          this.fieldToBeEdited.simple = true
-        }else{
-              this.fieldToBeEdited.simple = false
+        const simpleOrComplexe = value[0].category == null ? null : value[0].category.name;
+        const genericName = value[0].generic == null ?null:value[0].generic.name;
+        const simpleName =value[0].simple == null ? null :value[0].simple.type;
+        const idOrRef  = value[0].idOrReference == null ? null : value[0].idOrReference.name;
+        const isList = value[0].isList;
+        if(idOrRef){
+          if(idOrRef == 'ref'){
+            this.fieldToBeEdited.id = false;
+            this.fieldToBeEdited.reference = true;
+            this.fieldToBeEdited.type.simpleName += " REF";
+          }else{
+            this.fieldToBeEdited.id = true;
+            this.fieldToBeEdited.reference = false;
+              this.fieldToBeEdited.type.simpleName += " ID";
+          }
         }
+        if(simpleOrComplexe == 'Simple'){
+           this.fieldToBeEdited.simple =  true;
+           this.fieldToBeEdited.generic = false;
+           this.fieldToBeEdited.list = false;
+           this.fieldToBeEdited.type.simpleName = 'Simple'
+               this.fieldToBeEdited.type.name = 'Simple'
+           if(simpleName){
+             this.fieldToBeEdited.type.simpleName = simpleName;
+              this.fieldToBeEdited.type.name = simpleName;
+           }
+        }else if(simpleOrComplexe == 'Complexe'){
+          console.log("i'm in")
+            this.fieldToBeEdited.simple =  false;
+            this.fieldToBeEdited.generic = true;
+            this.fieldToBeEdited.type.simpleName = 'Complexe'
+             this.fieldToBeEdited.type.name = 'Complexe'
+           if(genericName){
+             this.fieldToBeEdited.type.simpleName=genericName; 
+              this.fieldToBeEdited.type.name = genericName;
+           }
+           if(isList){
+             this.fieldToBeEdited.list = true;
+             this.fieldToBeEdited.simple = false;
+           }
+        }
+        console.log(this.fieldToBeEdited)
      
       })
      return this.formBuilder.group({  
@@ -75,10 +109,18 @@ export class FieldEditComponent implements OnInit {
         return value == null ? false : arrayControl.at(index).get('category').value.name;
 
     }
+    hide(){
+      var arrayControl = this.form.get('fields') as FormArray;
+   arrayControl.clear();
+    }
   submit(){
    // TODO 
    // reset the form 
+   var arrayControl = this.form.get('fields') as FormArray;
+   arrayControl.clear();
    // close the dialog
+   this.editFieldDialog = false; 
+   this.service.editField$.next(false);
   }
      get fieldToBeEdited(): Field {
     return this.service.fieldToBeEdited;

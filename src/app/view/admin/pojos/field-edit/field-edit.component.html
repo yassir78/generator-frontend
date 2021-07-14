@@ -1,4 +1,4 @@
-<p-dialog header="Title" [(visible)]="editFieldDialog" [formGroup]="form" [style]="{width: '80vw',height:'auto'}"
+<p-dialog header="Title" [(visible)]="editFieldDialog" (onHide)="hide()" [formGroup]="form" [style]="{width: '80vw',height:'auto'}"
     [contentStyle]="{minHeight:'10vh'}" [baseZIndex]="10000">
     <div class="" formArrayName="fields" *ngFor="let item of form.get('fields').controls; let i = index;">
         <div class="p-fluid p-grid" [formGroupName]="i"
@@ -19,14 +19,14 @@
                 </span>
             </div>
 
-            <div class="p-field p-col-12 p-md-4" *ngIf="fieldToBeEdited.simple">
+            <div class="p-field p-col-12 p-md-4" *ngIf="fieldToBeEdited.generic">
                 <span class="p-float-label">
                     <p-dropdown inputId="generic" [autoDisplayFirst]="false" [options]="pojosNames"
                         formControlName="generic" optionLabel="name"></p-dropdown>
                     <label for="generic">{{fieldToBeEdited.type.name}} </label>
                 </span>
             </div>
-            <div class="p-field p-col-4 p-md-4" *ngIf="fieldToBeEdited.simple">
+            <div class="p-field p-col-4 p-md-4" *ngIf="!fieldToBeEdited.simple">
                 <span class="p-float-label">
                     <h6>Is List</h6>
                     <p-inputSwitch formControlName="isList"></p-inputSwitch>
@@ -36,7 +36,7 @@
                 <span class="p-float-label">
                     <p-dropdown inputId="simple" [autoDisplayFirst]="false" [options]="typesSimple"
                         formControlName="simple" optionLabel="type"></p-dropdown>
-                    <label for="simple">{{fieldToBeEdited.type.name}}</label>
+                    <label for="simple">{{fieldToBeEdited.type.simpleName}}</label>
                 </span>
             </div>
             <div class="p-field p-col-12 p-md-4">
@@ -50,18 +50,4 @@
         </div>
     </div>
     <button pButton type="submit" label="Edit" (click)="submit()" [disabled]="form.invalid"></button>
-    <!--  <button pButton class="p-mr-4" type="button" label="ADD FIELD" (click)="addField()"></button> -->
-    <!--     <div class="p-field p-grid">
-            <div>
-                <div formArrayName="items" *ngFor="let item of form.get('fields').controls; let i = index;">
-                    <div [formGroupName]="i">
-                        <input formControlName="fieldName" placeholder="Item name">
-                        <input formControlName="categorie" placeholder="Item description">
-                        <input formControlName="type" placeholder="Item price">
-                        <input formControlName="isList" placeholder="Item price">
-                    </div>
-                </div>
-            </div>
-           
-        </div> -->
 </p-dialog>

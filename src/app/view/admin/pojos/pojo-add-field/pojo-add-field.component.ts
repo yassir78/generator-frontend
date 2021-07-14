@@ -90,7 +90,7 @@ ngOnInit(): void {
           if(formField.category.name === 'Simple'){
             field.generic = false;
             field.list = false;
-            field.simple = true;
+            field.comboBox = true;
             let type = new Type();
             type.name = formField.simple.type;
             field.id == true? type.simpleName = type.name +' ID' :true;

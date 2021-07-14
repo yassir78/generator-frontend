@@ -11,5 +11,5 @@ export class Field {
   public reference: boolean;
   //public pojo: Pojo;
   public mappedBy: string;
-  private comboBox: boolean;
+  public comboBox: boolean;
 }
