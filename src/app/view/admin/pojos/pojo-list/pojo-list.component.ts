@@ -13,7 +13,11 @@ import { Pojo } from "../../../../controller/model/pojo";
 import { Router } from "@angular/router";
 import {Field} from "../../../../controller/model/field";
 import { saveAs } from 'file-saver';
+<<<<<<< HEAD
 import * as YAML from "json2yaml";
+=======
+import * as YAML from "json2yaml"
+>>>>>>> 4ecccfd2b4f15cfd9af9a656cd9fb0b6731b837c
 @Component({
   selector: "app-pojo-list",
   templateUrl: "./pojo-list.component.html",
@@ -33,7 +37,7 @@ export class PojoListComponent implements OnInit {
     private service: PojoService,
     private router: Router
   ) {}
-  updateField(event, field) {
+/*   updateField(event, field) {
     console.log("*********************************************");
     const index = this.findFieldByName(field);
     console.log(index);
@@ -51,6 +55,14 @@ export class PojoListComponent implements OnInit {
       selectedField.id = true;
       console.log(this.selected.fields[index]);
     }
+  } */
+  editFieldDialog(field:Field){
+    this.service.editFieldDialog = true;
+    this.service.fieldToBeEdited = field;
+    this.service.editField$.next(true);
+  }
+  deleteField(field){
+
   }
   changeIdOfOtherItems(fieldToExclude) {
     let array = this.selected.fields.filter(
@@ -61,7 +73,8 @@ export class PojoListComponent implements OnInit {
     });
   }
   deleteFromFieldsArray(field) {
-    this.selected.fields.splice(field, 1);
+    const index = this.selected.fields.indexOf(field);
+    this.selected.fields.splice(index, 1);
   }
   findFieldByName(fieldLookingFor) {
     const indexOfUpdated = this.selected.fields.findIndex(
@@ -174,13 +187,16 @@ export class PojoListComponent implements OnInit {
     saveAs(myFile);
   }
   public details(selected:Pojo){
+    this.service.selectedPojoToBeEdited = selected;
+    console.log(this.service.selectedPojoToBeEdited)
     this.appear = true;
     this.selected = selected;
   }
   public openCreate() {
+    console.log("hello world")
     this.selected = new Pojo();
     this.submitted = false;
-    this.createDialog = true;
+    this.addDialog = true;
   }
 
   public edit(pojo: Pojo) {
@@ -196,7 +212,10 @@ export class PojoListComponent implements OnInit {
     this.cols = [{ field: "name", header: "name" }];
     this.colAttributs = [{ field: "name", header: "Attributs" }];
   }
-
+  openAddFieldsToPojoDialog(){
+    console.log("hello world")
+    this.addFieldToExistingPojoDialog = true;
+  }
   get pojo(): Pojo {
     return this.service.pojo;
   }
@@ -218,6 +237,14 @@ export class PojoListComponent implements OnInit {
   set items(value: Array<Pojo>) {
     this.service.items = value;
   }
+    get addDialog(): boolean {
+    return this.service.addDialog;
+  }
+
+  set addDialog(value: boolean) {
+    this.service.addDialog = value;
+  }
+
 
   get submitted(): boolean {
     return this.service.submitted;
@@ -258,6 +285,18 @@ export class PojoListComponent implements OnInit {
   set selectes(value: Array<Pojo>) {
     this.service.selectes = value;
   }
+  get addFieldToExistingPojo(): boolean {
+    return this.service.addDialog;
+    }
+set addFieldToExistingPojoDialog(value: boolean) {
+    this.service.addFieldToExistingPojoDialog = value;
+    }
+get selectedPojoToBeEdited(): Pojo {
+    return this.service.selectedPojoToBeEdited;
+    }
+set selectedPojoToBeEdited(value: Pojo) {
+    this.service.selectedPojoToBeEdited = value;
+    }
 }
 
 

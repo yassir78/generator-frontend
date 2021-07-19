@@ -1,6 +1,6 @@
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -134,10 +134,14 @@ import { PaiementListComponent } from "./view/paiements/paiement-list/paiement-l
 import { PaiementViewComponent } from "./view/paiements/paiement-view/paiement-view.component";
 import { PaiementEditComponent } from "./view/paiements/paiement-edit/paiement-edit.component";
 import { FileLoadComponent } from './view/admin/pojos/pojo-import/file-load/file-load.component';
-
+import { PojoAddComponent } from './view/admin/pojos/pojo-add/pojo-add.component';
+import { PojoEditComponent } from './view/admin/pojos/pojo-edit/pojo-edit.component';
+import { PojoAddFieldComponent } from './view/admin/pojos/pojo-add-field/pojo-add-field.component';
+import { FieldEditComponent } from './view/admin/pojos/field-edit/field-edit.component';
 @NgModule({
   imports: [
     BrowserModule,
+    InputSwitchModule,
     FormsModule,
     AppRoutingModule,
     SharedModule,
@@ -193,11 +197,13 @@ import { FileLoadComponent } from './view/admin/pojos/pojo-import/file-load/file
     OverlayPanelModule,
     PaginatorModule,
     PanelModule,
+    BrowserAnimationsModule,
     PanelMenuModule,
     PasswordModule,
     PickListModule,
     ProgressBarModule,
     RadioButtonModule,
+    ReactiveFormsModule,
     RatingModule,
     RippleModule,
     ScrollPanelModule,
@@ -262,6 +268,10 @@ import { FileLoadComponent } from './view/admin/pojos/pojo-import/file-load/file
     PaiementViewComponent,
     PaiementEditComponent,
     FileLoadComponent,
+    PojoAddComponent,
+    PojoEditComponent,
+    PojoAddFieldComponent,
+    FieldEditComponent,
   ],
   entryComponents:[
     FileLoadComponent,

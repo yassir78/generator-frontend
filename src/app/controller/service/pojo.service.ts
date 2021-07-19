@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Pojo } from "../model/pojo";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { Field } from "../model/field";
 import { RequestVo } from "../model/request-vo.model";
 
@@ -16,10 +16,16 @@ export class PojoService {
   private _selected: Pojo;
   private _selectes: Array<Pojo>;
   private _pojo: Pojo;
+  private _addDialog;
+  editField$:Subject<boolean> = new Subject<boolean>();
   private _createDialog: boolean;
   private _editDialog: boolean;
   private _viewDialog: boolean;
   private _submitted: boolean;
+  private _addFieldToExistingPojoDialog:boolean;
+  private _selectedPojoToBeEdited:Pojo;
+  private _editFieldDialog:boolean;
+  private _fieldToBeEdited:Field;
   private _requestVo: RequestVo;
 
   // constructor(private messageService: MessageService,
@@ -75,7 +81,6 @@ export class PojoService {
       this.deleteIndexById(item.id);
     }
   }
-
   get pojo(): Pojo {
     if (this._pojo == null) {
       this._pojo = new Pojo();
@@ -137,6 +142,22 @@ export class PojoService {
     return this._editDialog;
   }
 
+  set addFieldToExistingPojoDialog(value: boolean) {
+    this._addFieldToExistingPojoDialog = value;
+  }
+
+  get addFieldToExistingPojoDialog(): boolean {
+    return this._addFieldToExistingPojoDialog;
+  }
+
+  set selectedPojoToBeEdited(value: Pojo) {
+    this._selectedPojoToBeEdited = value;
+  }
+
+  get selectedPojoToBeEdited(): Pojo {
+    return this._selectedPojoToBeEdited;
+  }
+
   set editDialog(value: boolean) {
     this._editDialog = value;
   }
@@ -155,5 +176,26 @@ export class PojoService {
 
   set viewDialog(value: boolean) {
     this._viewDialog = value;
+  }
+    get addDialog(): boolean {
+    return this._addDialog;
+  }
+
+  set addDialog(value: boolean) {
+    this._addDialog = value;
+  }
+    get editFieldDialog(): boolean {
+    return this._editFieldDialog;
+  }
+
+  set editFieldDialog(value: boolean) {
+    this._editFieldDialog = value;
+  }
+ get fieldToBeEdited(): Field {
+    return this._fieldToBeEdited;
+  }
+
+  set fieldToBeEdited(value: Field) {
+    this._fieldToBeEdited = value;
   }
 }
