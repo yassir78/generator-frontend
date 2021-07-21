@@ -1,4 +1,3 @@
-import { Type } from './../../../../controller/model/type';
 import { Component, OnInit } from '@angular/core';
 import { PojoService } from 'src/app/controller/service/pojo.service';
 import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';  
