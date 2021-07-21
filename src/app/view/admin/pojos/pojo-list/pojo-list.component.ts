@@ -57,9 +57,12 @@ export class PojoListComponent implements OnInit {
     this.service.fieldToBeEdited = field;
     this.service.editField$.next(true);
   }
+  
   deleteField(field){
-
+    const index = this.selected.fields.indexOf(field);
+    this.selected.fields.splice(index, 1);
   }
+
   changeIdOfOtherItems(fieldToExclude) {
     let array = this.selected.fields.filter(
       (field) => field.name != fieldToExclude.name

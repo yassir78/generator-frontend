@@ -111,7 +111,7 @@ export class FieldEditComponent implements OnInit {
     }
     hide(){
       var arrayControl = this.form.get('fields') as FormArray;
-   arrayControl.clear();
+      arrayControl.clear();
     }
   submit(){
    // TODO 
