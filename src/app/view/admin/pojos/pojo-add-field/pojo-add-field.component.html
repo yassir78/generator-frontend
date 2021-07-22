@@ -1,8 +1,8 @@
-<p-dialog header="Title" [(visible)]="addFieldToExistingPojoDialog" [formGroup]="form"
-    [style]="{width: '80vw',height:'auto'}" [contentStyle]="{minHeight:'10vh'}" [baseZIndex]="10000">
-    <div class="" formArrayName="fields" *ngFor="let item of form.get('fields').controls; let i = index;">
-        <div class="p-fluid p-grid" [formGroupName]="i"
-            style="border: 5px outset rgba(10, 100, 78, 0.521); padding: 20px; margin: 10px;">
+<p-dialog header="Ajouter un champ" [(visible)]="addFieldToExistingPojoDialog" [formGroup]="form"
+    [style]="{width: '65vw',height:'auto'}" (onHide)="hide()" [contentStyle]="{minHeight:'10vh'}" [baseZIndex]="10000">
+    <div class="" >
+        <div class="p-fluid p-grid" 
+            style="border: 2px outset rgba(56, 59, 59, 0.521); padding: 10px; margin: 5px;">
 
             <div class="p-field p-col-12 p-md-4">
                 <span class="p-float-label">
@@ -19,20 +19,20 @@
                 </span>
             </div>
 
-            <div class="p-field p-col-12 p-md-4" *ngIf="fieldValueByIndex(i)=='Complexe'">
+            <div class="p-field p-col-12 p-md-4" *ngIf="fieldValueByIndex()=='Complexe'">
                 <span class="p-float-label">
                     <p-dropdown inputId="generic" [autoDisplayFirst]="false" [options]="pojosNames"
                         formControlName="generic" optionLabel="name"></p-dropdown>
                     <label for="generic">type Complexe </label>
                 </span>
             </div>
-            <div class="p-field p-col-4 p-md-4" *ngIf="fieldValueByIndex(i)=='Complexe'">
+            <div class="p-field p-col-4 p-md-4" *ngIf="fieldValueByIndex()=='Complexe'">
                 <span class="p-float-label">
                     <h6>Is List</h6>
                     <p-inputSwitch formControlName="isList"></p-inputSwitch>
                 </span>
             </div>
-            <div class="p-field p-col-12 p-md-4" *ngIf="fieldValueByIndex(i)=='Simple'">
+            <div class="p-field p-col-12 p-md-4" *ngIf="fieldValueByIndex()=='Simple'">
                 <span class="p-float-label">
                     <p-dropdown inputId="simple" [autoDisplayFirst]="false" [options]="typesSimple"
                         formControlName="simple" optionLabel="type"></p-dropdown>
@@ -49,20 +49,6 @@
             </div>
         </div>
     </div>
-
-    <button pButton class="p-mr-4" type="button" label="ADD FIELD" (click)="addField()"></button>
-    <button pButton type="submit" label="Save" (click)="submit()"></button>
-    <!--     <div class="p-field p-grid">
-            <div>
-                <div formArrayName="items" *ngFor="let item of form.get('fields').controls; let i = index;">
-                    <div [formGroupName]="i">
-                        <input formControlName="fieldName" placeholder="Item name">
-                        <input formControlName="categorie" placeholder="Item description">
-                        <input formControlName="type" placeholder="Item price">
-                        <input formControlName="isList" placeholder="Item price">
-                    </div>
-                </div>
-            </div>
-           
-        </div> -->
+    <button pButton type="submit" label="Save" style="margin-top: 3vh;float: right;" (click)="submit()"></button>
+    <!-- <button pButton type="submit" [disabled] = "!form.value.name?.legth > 0 || !form.value.category?.length > 0" label="Save" (click)="submit()"></button> -->
 </p-dialog>

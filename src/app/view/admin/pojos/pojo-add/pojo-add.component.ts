@@ -15,12 +15,12 @@ export class PojoAddComponent implements OnInit {
   display: boolean = false;
   title = 'formarray';  
   pojosNames;
-  typesSimple = [{type:"String"},{type:"BigDecimal"},{type:"Double"}]
+  typesSimple = [{type:"Long"},{type:"String"},{type:"BigDecimal"},{type:"Double"}]
   categories = [{name:"Simple"},{name:"Complexe"}]
   idOrReferenceValue = [{name:'id'},{name:'ref'}]  
   constructor(private service:PojoService,private formBuilder: FormBuilder) { }
    form = new FormGroup({ 
-    name:new FormControl("",[Validators.required,Validators.minLength(3),Validators.pattern('/^[A-Z]')],),
+    name:new FormControl("",[Validators.required,Validators.minLength(3),Validators.pattern('/^[A-Z].*')],),
   });  
 
   formField = new FormGroup({ 
@@ -71,6 +71,7 @@ export class PojoAddComponent implements OnInit {
     this.form.reset();
     this.resetFieldForm(); 
     this.service.addDialog = false;
+    this.fieldsArray = [];
    }
 
   get addDialog(): boolean {
@@ -80,17 +81,15 @@ export class PojoAddComponent implements OnInit {
   set addDialog(value: boolean) {
         this.service.addDialog = value;
   }
-     fieldValueByIndex() {
-
+   fieldValueByIndex() {
       const value = this.formField.get('category').value;
-        return value == null ? false : value.name;
-
+      return value == null ? false : value.name;
     }
 
     submit(){
       const result = this.form.value;
        let pojo = new Pojo();
-      pojo.name = result.name;
+      pojo.name = result.name.substring(0,1).toUpperCase()+result.name.substring(1);
       this.processPojo(pojo,this.fieldsArray);
       this.service.items.push(pojo);
       this.form.reset();
@@ -138,9 +137,10 @@ export class PojoAddComponent implements OnInit {
                field.simple = false;
 
                let type = new Type();
-               type.name = formField.generic.name;
                type.simpleName = formField.generic.name;
-
+               field.id == true? type.name = type.simpleName +' ID' :true;
+               field.reference == true? type.name =type.simpleName + ' REF':true;
+               
                field.type = type;
                if(formField.isList){
                  field.list = true;

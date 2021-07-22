@@ -13,69 +13,69 @@ import { PojoService } from 'src/app/controller/service/pojo.service';
 export class PojoAddFieldComponent implements OnInit {
 
   constructor(private service:PojoService,private formBuilder: FormBuilder) { }
-  private pojoToBeEdited:Pojo;
-  form!: FormGroup;  
-  fields!: FormArray;  
+
+  private pojoToBeEdited:Pojo; 
   pojosNames;
-  typesSimple = [{type:"String"},{type:"BigDecimal"},{type:"Double"}]
-  categories = [{name:"Simple"},{name:"Complexe"}]
-  idOrReferenceValue = [{name:'id'},{name:'ref'}]
+  typesSimple = [{type:"Long"},{type:"String"},{type:"BigDecimal"},{type:"Double"}];
+  categories = [{name:"Simple"},{name:"Complexe"}];
+  idOrReferenceValue = [{name:'id'},{name:'ref'}];
+  form = new FormGroup({  
+    name:new FormControl("",[]),
+    category:new FormControl("",[]),
+    generic:new FormControl("",[]),
+    simple:new FormControl("",[]),
+    isList:new FormControl("",[]),
+    idOrReference:new FormControl("",[]),
+ });  
+ 
 ngOnInit(): void {
     this.pojosNames = this.service.items.map(pojo=>{
       return { name: pojo.name } });
-      console.log(this.pojosNames)
-     this.form = new FormGroup({  
-       name:new FormControl([]),
-      fields: new FormArray([])  
-    });  
-    this.addField();
   }
-   createItem(): FormGroup {  
-    return this.formBuilder.group({  
-      name: '',  
-      category: '',  
-      generic:'',
-      simple: '',
-      isList:'',
-      idOrReference:''
-    });  
-  }   
-   addField(): void {  
-    this.fields = this.form.get('fields') as FormArray;  
-    this.fields.push(this.createItem());  
-  }  
-  hideCreateDialog(){
-    this.addDialog = false;
-                     }
-  get addDialog(): boolean {
-        return this.service.addDialog;
-    }
+  //  createItem(): FormGroup {  
+  //   return this.formBuilder.group({  
+  //     name: '',  
+  //     category: '',  
+  //     generic:'',
+  //     simple: '',
+  //     isList:'',
+  //     idOrReference:''
+  //   });  
+  // }   
+  //  addField(): void {  
+  //   this.fields = this.form.get('fields') as FormArray;  
+  //   this.fields.push(this.createItem());  
+  // }  
+//   hideCreateDialog(){
+//     this.addDialog = false;
+//  }
+ hide(){
+  this.form.reset();
+  this.service.addFieldToExistingPojoDialog = false;
+ }
+  // get addDialog(): boolean {
+  //       return this.service.addDialog;
+  //   }
 
-    set addDialog(value: boolean) {
-        this.service.addDialog = value;
-    }
-     fieldValueByIndex(index) {
-      var arrayControl = this.form.get('fields') as FormArray;
-      const value = arrayControl.at(index).get('category').value;
-        return value == null ? false : arrayControl.at(index).get('category').value.name;
+  //   set addDialog(value: boolean) {
+  //       this.service.addDialog = value;
+  //   }
 
+    fieldValueByIndex() {
+      const value = this.form.get('category').value;
+      return value == null ? false : value.name;
     }
     submit(){
       const result = this.form.value;
       this.pojoToBeEdited= this.service.selectedPojoToBeEdited;
-       const fields = this.processFields(result.fields);
-      if ( fields instanceof Array )
-      this.pojoToBeEdited.fields = this.pojoToBeEdited.fields.concat( fields );
-      else
-       this.pojoToBeEdited.fields.push( fields );
+      const field = this.processFields(result);
+       this.pojoToBeEdited.fields.push( field );
       
-     this.service.addFieldToExistingPojoDialog = false;
+      this.service.addFieldToExistingPojoDialog = false;
       this.form.reset();
     }
-    processFields(formFields):Field[]{
-        let fields = new Array<Field>();
-        formFields.forEach(formField => {
-          let field = new Field();
+    processFields(formField):Field{
+         let field = new Field();
           field.name = formField.name;
           if(formField.idOrReference != null){
                if(formField.idOrReference.name === 'id'){
@@ -92,7 +92,6 @@ ngOnInit(): void {
           if(formField.category.name === 'Simple'){
             field.generic = false;
             field.list = false;
-            field.comboBox = true;
             let type = new Type();
             type.simpleName = formField.simple.type;
             field.id == true? type.name = type.simpleName +' ID' :true;
@@ -103,8 +102,9 @@ ngOnInit(): void {
                field.generic = true;
                field.simple = false;
                let type = new Type();
-               type.simpleName = formField.generic.name;
-               type.name = formField.generic.name;
+               type.simpleName = formField.generic.name; 
+               field.id == true? type.name = type.simpleName +' ID' :true;
+               field.reference == true? type.name =type.simpleName + ' REF':true;
                field.type = type;
 
                if(formField.isList){
@@ -113,21 +113,8 @@ ngOnInit(): void {
                   field.list = false;
                }
             }
-            fields.push(field);
-        });
-        return fields;
+        return field;
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 get addFieldToExistingPojoDialog(): boolean {

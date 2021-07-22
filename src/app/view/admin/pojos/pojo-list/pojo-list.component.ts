@@ -187,9 +187,9 @@ export class PojoListComponent implements OnInit {
   }
   public details(selected:Pojo){
     this.service.selectedPojoToBeEdited = selected;
-    console.log(this.service.selectedPojoToBeEdited)
     this.appear = true;
     this.selected = selected;
+    // console.log('pojo to be edited: ',this.service.selectedPojoToBeEdited)
   }
   public openCreate() {
     this.selected = new Pojo();
@@ -211,7 +211,6 @@ export class PojoListComponent implements OnInit {
     this.colAttributs = [{ field: "name", header: "Attributs" }];
   }
   openAddFieldsToPojoDialog(){
-    console.log("hello world")
     this.addFieldToExistingPojoDialog = true;
   }
   get pojo(): Pojo {
