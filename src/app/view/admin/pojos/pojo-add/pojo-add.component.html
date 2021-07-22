@@ -1,9 +1,9 @@
 <p-dialog header="Ajouter un pojo" [(visible)]="addDialog"  [style]="{width: '80vw',height:'auto'}"
     [contentStyle]="{minHeight:'25vh'}" [baseZIndex]="10000" (onHide)="hide()">
     <div class="p-field p-grid" [formGroup]="form">
-        <label for="firstname3" class="p-col-fixed" style="width:100px">Pojo Name</label>
+        <label for="pojoName" class="p-col-fixed" style="width:100px">Pojo Name</label>
         <div class="p-col">
-            <input id="firstname3" type="text" pInputText formControlName="name">
+            <input id="pojoName" type="text" pInputText formControlName="name">
         </div>
 
     </div>
@@ -116,6 +116,6 @@
     </p-splitter>
 
     <button pButton type="button" class="p-mr-4" style="margin-top: 3vh;" label="ADD FIELD" (click)="addField()"></button>
-    <button pButton type="submit" label="Save" style="margin-top: 3vh;" (click)="submit()"></button>
+    <button pButton type="submit" label="Save" [disabled] = "(this.form.value.name != null && !this.form.value.name.length > 0) || !this.fieldsArray.length > 0" style="margin-top: 3vh;" (click)="submit()"></button>
  
 </p-dialog>

@@ -192,7 +192,6 @@ export class PojoListComponent implements OnInit {
     this.selected = selected;
   }
   public openCreate() {
-    console.log("hello world")
     this.selected = new Pojo();
     this.submitted = false;
     this.addDialog = true;

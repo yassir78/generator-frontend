@@ -17,67 +17,60 @@ export class PojoAddComponent implements OnInit {
   pojosNames;
   typesSimple = [{type:"String"},{type:"BigDecimal"},{type:"Double"}]
   categories = [{name:"Simple"},{name:"Complexe"}]
-  idOrReferenceValue = [{name:'id'},{name:'ref'}]
-  form!: FormGroup;  
-  formField!: FormGroup;  
+  idOrReferenceValue = [{name:'id'},{name:'ref'}]  
   constructor(private service:PojoService,private formBuilder: FormBuilder) { }
+   form = new FormGroup({ 
+    name:new FormControl("",[Validators.required,Validators.minLength(3),Validators.pattern('/^[A-Z]')],),
+  });  
+
+  formField = new FormGroup({ 
+    name: new FormControl("",[Validators.required]),  
+    category:new FormControl("",[Validators.required]),  
+    generic:new FormControl("",[Validators.required]),
+    simple: new FormControl("",[Validators.required]),
+    isList: new FormControl("",[Validators.required]),
+    idOrReference:new FormControl("",[]),
+
+  }); 
 
   ngOnInit(): void {
     //la liste des pojos
     this.pojosNames = this.service.items.map(pojo=>{
       return { name: pojo.name } });
       //console.log(this.pojosNames)
-     this.form = new FormGroup({ 
-      name:new FormControl("",[Validators.required]),
-    });  
-
-     this.formField = new FormGroup({ 
-      name: new FormControl([]),  
-      category:new FormControl([]),  
-      generic:new FormControl([]),
-      simple: new FormControl([]),
-      isList: new FormControl([]),
-      idOrReference:new FormControl([""]),
-
-    });  
   }
 
    addField(): void {  
     const field = this.formField.value;
     const fieldProcessed = this.processFields(field);
-    console.log("added field: ",fieldProcessed);
+    // console.log("added field: ",fieldProcessed);
     this.fieldsArray.push(fieldProcessed);
-    this.formField.reset();
-    
-    this.formField = new FormGroup({ 
-      name: new FormControl([]),  
-      category:new FormControl([]),  
-      generic:new FormControl([]),
-      simple: new FormControl([]),
-      isList: new FormControl([]),
-      idOrReference:new FormControl([""]),
-
-    });  
+    this.resetFieldForm();
   } 
   
   deleteField(field){
     const index = this.fieldsArray.indexOf(field);
     this.fieldsArray.splice(index, 1);
   }
+
+  resetFieldForm(){
+    this.formField.reset();
+    
+  this.formField = new FormGroup({ 
+    name: new FormControl("",[Validators.required]),  
+    category:new FormControl("",[Validators.required]),  
+    generic:new FormControl("",[Validators.required]),
+    simple: new FormControl("",[Validators.required]),
+    isList: new FormControl("",[Validators.required]),
+    idOrReference:new FormControl("",[]),
+
+  }); 
+  }
   
   hide(){
-    this.service.addDialog = false;
     this.form.reset();
-    this.formField.reset();
-    this.formField = new FormGroup({ 
-      name: new FormControl([]),  
-      category:new FormControl([]),  
-      generic:new FormControl([]),
-      simple: new FormControl([]),
-      isList: new FormControl([]),
-      idOrReference:new FormControl([""]),
-
-    });  
+    this.resetFieldForm(); 
+    this.service.addDialog = false;
    }
 
   get addDialog(): boolean {
@@ -93,16 +86,17 @@ export class PojoAddComponent implements OnInit {
         return value == null ? false : value.name;
 
     }
+
     submit(){
       const result = this.form.value;
        let pojo = new Pojo();
       pojo.name = result.name;
       this.processPojo(pojo,this.fieldsArray);
       this.service.items.push(pojo);
-      this.service.addDialog = false;
       this.form.reset();
-      this.formField.reset();
+      this.resetFieldForm();
       this.fieldsArray = [];
+      this.service.addDialog = false;
     }
     processPojo(pojo:Pojo,fields:Field[]){
       pojo.fields = fields;
@@ -116,7 +110,7 @@ export class PojoAddComponent implements OnInit {
         let field = new Field;
           field.name = formField.name;
 
-          if(this.idOrReferenceValue != null){
+          if(formField.idOrReference.name != null){
             if(formField.idOrReference.name === 'id'){
             field.id = true;
             field.reference = false;
