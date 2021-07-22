@@ -77,7 +77,8 @@ ngOnInit(): void {
         formFields.forEach(formField => {
           let field = new Field();
           field.name = formField.name;
-          if(formField.idOrReference.name === 'id'){
+          if(formField.idOrReference != null){
+               if(formField.idOrReference.name === 'id'){
             field.id = true;
             field.reference = false;
           }else if(formField.idOrReference.name === 'ref'){
@@ -87,18 +88,25 @@ ngOnInit(): void {
             field.id = false;
             field.reference = false;
           }
+          }
           if(formField.category.name === 'Simple'){
             field.generic = false;
             field.list = false;
             field.comboBox = true;
             let type = new Type();
-            type.name = formField.simple.type;
-            field.id == true? type.simpleName = type.name +' ID' :true;
-            field.reference == true? type.simpleName =type.name + ' REF':true;
+            type.simpleName = formField.simple.type;
+            field.id == true? type.name = type.simpleName +' ID' :true;
+            field.reference == true? type.name =type.simpleName + ' REF':true;
             field.type = type;
           }
             if(formField.category.name == 'Complexe'){
                field.generic = true;
+               field.simple = false;
+               let type = new Type();
+               type.simpleName = formField.generic.name;
+               type.name = formField.generic.name;
+               field.type = type;
+
                if(formField.isList){
                  field.list = true;
                }else{
