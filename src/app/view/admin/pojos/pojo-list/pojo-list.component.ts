@@ -60,8 +60,22 @@ export class PojoListComponent implements OnInit {
   }
   
   deleteField(field){
-    const index = this.selected.fields.indexOf(field);
-    this.selected.fields.splice(index, 1);
+    this.confirmationService.confirm({
+      message: "Are you sure you want to delete Field " + field.name + "?",
+      header: "Confirm",
+      icon: "pi pi-exclamation-triangle",
+      accept: () => {
+        const index = this.selected.fields.indexOf(field);
+        this.selected.fields.splice(index, 1);
+        this.messageService.add({
+          severity: "success",
+          summary: "Successful",
+          detail: "Field "+field.name+" deleted successfully!",
+          life: 3000,
+        });
+      },
+    });
+    
   }
 
   changeIdOfOtherItems(fieldToExclude) {
@@ -121,7 +135,7 @@ export class PojoListComponent implements OnInit {
   public delete(selected: Pojo) {
     this.selected = selected;
     this.confirmationService.confirm({
-      message: "Are you sure you want to delete " + selected.id + "?",
+      message: "Are you sure you want to delete Pojo " + selected.name + "?",
       header: "Confirm",
       icon: "pi pi-exclamation-triangle",
       accept: () => {
@@ -130,7 +144,7 @@ export class PojoListComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Successful",
-          detail: "Pojo Deleted",
+          detail: "Pojo "+selected.name+" deleted successfully!",
           life: 3000,
         });
       },
