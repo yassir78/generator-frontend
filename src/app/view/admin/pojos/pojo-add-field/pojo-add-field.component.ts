@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Field } from 'src/app/controller/model/field';
 import { Pojo } from 'src/app/controller/model/pojo';
 import { Type } from 'src/app/controller/model/type';
@@ -16,12 +16,12 @@ export class PojoAddFieldComponent implements OnInit {
 
   private pojoToBeEdited:Pojo; 
   pojosNames;
-  typesSimple = [{type:"Long"},{type:"String"},{type:"BigDecimal"},{type:"Double"}];
+  typesSimple = [{type:"Long"},{type:"String"},{type:"Date"},{type:"BigDecimal"},{type:"Double"}];
   categories = [{name:"Simple"},{name:"Complexe"}];
   idOrReferenceValue = [{name:'id'},{name:'ref'}];
   form = new FormGroup({  
-    name:new FormControl("",[]),
-    category:new FormControl("",[]),
+    name:new FormControl("",[Validators.required]),
+    category:new FormControl("",[Validators.required]),
     generic:new FormControl("",[]),
     simple:new FormControl("",[]),
     isList:new FormControl("",[]),

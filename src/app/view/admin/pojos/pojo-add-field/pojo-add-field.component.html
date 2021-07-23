@@ -1,6 +1,6 @@
 <p-dialog header="Ajouter un champ" [(visible)]="addFieldToExistingPojoDialog" [formGroup]="form"
-    [style]="{width: '65vw',height:'auto'}" (onHide)="hide()" [contentStyle]="{minHeight:'10vh'}" [baseZIndex]="10000">
-    <div class="" >
+    [style]="{width: '58vw',height:'auto'}" (onHide)="hide()" [contentStyle]="{minHeight:'10vh'}" [baseZIndex]="10000">
+   
         <div class="p-fluid p-grid" 
             style="border: 2px outset rgba(56, 59, 59, 0.521); padding: 10px; margin: 5px;">
 
@@ -48,7 +48,6 @@
                 </span>
             </div>
         </div>
-    </div>
-    <button pButton type="submit" label="Save" style="margin-top: 3vh;float: right;" (click)="submit()"></button>
+    <button pButton type="submit" [disabled] = "!form.valid" label="Save" style="margin-top: 3vh;float: right;" (click)="submit()"></button>
     <!-- <button pButton type="submit" [disabled] = "!form.value.name?.legth > 0 || !form.value.category?.length > 0" label="Save" (click)="submit()"></button> -->
 </p-dialog>

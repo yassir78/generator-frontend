@@ -15,7 +15,7 @@ export class PojoAddComponent implements OnInit {
   display: boolean = false;
   title = 'formarray';  
   pojosNames;
-  typesSimple = [{type:"Long"},{type:"String"},{type:"BigDecimal"},{type:"Double"}]
+  typesSimple = [{type:"Long"},{type:"String"},{type:"Date"},{type:"BigDecimal"},{type:"Double"}]
   categories = [{name:"Simple"},{name:"Complexe"}]
   idOrReferenceValue = [{name:'id'},{name:'ref'}]  
   constructor(private service:PojoService,private formBuilder: FormBuilder) { }

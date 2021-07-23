@@ -1,1 +1,121 @@
-<p>pojo-edit works!</p>
+<p-dialog header="Editer un pojo" [(visible)]="editDialog"  [style]="{width: '80vw',height:'auto'}"
+    [contentStyle]="{minHeight:'25vh'}" [baseZIndex]="10000" (onHide)="hide()">
+    <div class="p-field p-grid" [formGroup]="form">
+        <label for="pojoName" class="p-col-fixed" style="width:100px">Pojo Name</label>
+        <div class="p-col">
+            <input id="pojoName" type="text" pInputText formControlName="name">
+        </div>
+
+    </div>
+
+    <p-splitter [panelSizes]="[25,65]">
+        <ng-template pTemplate class="p-col-12">
+            <div class="p-fluid" [formGroup]="formField" style="padding: 20px; margin: 10px;">
+                <div class="p-fluid" style="margin-bottom: 6vh;">
+                    <div class="p-field">
+                        <span class="p-float-label">
+                            <input type="text" id="inputtext" pInputText formControlName="name">
+                            <label for="inputtext">Field name</label>
+                        </span>
+                    </div>
+                </div>
+        
+                <div class="p-fluid" style="margin-bottom: 6vh;">
+                    <div class="p-field">
+                        <span class="p-float-label">
+                            <p-dropdown inputId="category" [autoDisplayFirst]="false" [options]="categories"
+                                formControlName="category" optionLabel="name"></p-dropdown>
+                            <label for="category">category</label>
+                        </span>
+                    </div>
+                </div>
+        
+                <div class="p-fluid" style="margin-bottom: 6vh;">
+                    <div class="p-field" *ngIf="fieldValueByIndex()=='Complexe'">
+                        <span class="p-float-label">
+                            <p-dropdown inputId="generic" [autoDisplayFirst]="false" [options]="pojosNames"
+                                formControlName="generic" optionLabel="name"></p-dropdown>
+                            <label for="generic">type Complexe </label>
+                        </span>
+                    </div>
+                </div>
+        
+                <div class="p-fluid" style="margin-bottom: 6vh;">
+                    <div class="p-field" *ngIf="fieldValueByIndex()=='Complexe'">
+                        <span class="p-float-label">
+                            <h6>Is List</h6>
+                            <p-inputSwitch formControlName="isList"></p-inputSwitch>
+                        </span>
+                    </div>
+                </div>
+        
+                <div class="p-fluid" style="margin-bottom: 6vh;">
+                    <div class="p-field" *ngIf="fieldValueByIndex()=='Simple'">
+                        <span class="p-float-label">
+                            <p-dropdown inputId="simple" [autoDisplayFirst]="false" [options]="typesSimple"
+                                formControlName="simple" optionLabel="type"></p-dropdown>
+                            <label for="simple">type Simple</label>
+                        </span>
+                    </div>
+                </div>
+        
+                <div class="p-fluid" style="margin-bottom: 2vh;">
+                    <div class="p-field ">
+                        <span class="p-float-label">
+                            <p-dropdown inputId="idOrReference" [autoDisplayFirst]="false" [options]="idOrReferenceValue"
+                                formControlName="idOrReference" optionLabel="name"></p-dropdown>
+                            <label for="idOrReference">Id Or Ref</label>
+        
+                        </span>
+                    </div>
+                </div>
+        
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate>
+            <p-table #dt [rows]="4" [paginator]="true" [globalFilterFields]="['name']" [value]="fieldsArray"
+            [rowHover]="true" dataKey="name" styleClass="p-datatable-customers"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true" class="p-col">
+          
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="name">Name
+                        <p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="type.simpleName">Type
+                        <p-sortIcon field="type.simpleName"></p-sortIcon>
+                    </th>
+                    <th style="display: flex;justify-content: space-between;align-items: center;padding-left: 6%;">Action
+        
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-field>
+                <tr>
+                    <td>{{field.name}}</td>
+                    <td>
+                        {{field.type.simpleName}}
+                        <span *ngIf="field.id" [class]="'enhanced-badge status-info'">[ID]</span>
+                        <span *ngIf="field.reference" [class]="'enhanced-badge status-warn'">[REF]</span>
+                    </td>
+    
+                    <td>
+                        <button pButton pRipple icon="pi pi-pencil"
+                            class="p-button-rounded p-button-success p-mr-2"
+                            (click)="editFieldDialog(field)"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                            (click)="deleteField(field)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        
+            </p-table>
+        </ng-template>
+    </p-splitter>
+
+    <button pButton type="button" class="p-mr-4" style="margin-top: 3vh;" label="Edit FIELD" (click)="editField()"></button>
+    <button pButton type="submit" label="Save" [disabled] = "(this.form.value.name != null && !this.form.value.name.length > 0) || !this.fieldsArray.length > 0" style="margin-top: 3vh;float: right;" (click)="submit()"></button>
+ 
+</p-dialog>

@@ -55,6 +55,7 @@ export class PojoListComponent implements OnInit {
   editFieldDialog(field:Field){
     this.service.editFieldDialog = true;
     this.service.fieldToBeEdited = field;
+    console.log(this.service.fieldToBeEdited);
     this.service.editField$.next(true);
   }
   

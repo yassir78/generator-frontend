@@ -25,7 +25,7 @@ export class PojoService {
   private _addFieldToExistingPojoDialog:boolean;
   private _selectedPojoToBeEdited:Pojo;
   private _editFieldDialog:boolean;
-  private _fieldToBeEdited:Field;
+  private _fieldToBeEdited:Field = new Field();
   private _requestVo: RequestVo;
 
   // constructor(private messageService: MessageService,

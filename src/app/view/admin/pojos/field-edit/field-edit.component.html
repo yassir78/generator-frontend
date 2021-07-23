@@ -1,8 +1,8 @@
-<p-dialog header="Title" [(visible)]="editFieldDialog" (onHide)="hide()" [formGroup]="form" [style]="{width: '80vw',height:'auto'}"
+<p-dialog header="Modifier le champ" [(visible)]="editFieldDialog" (onHide)="hide()" [formGroup]="form" [style]="{width: '60vw',height:'auto'}"
     [contentStyle]="{minHeight:'10vh'}" [baseZIndex]="10000">
-    <div class="" formArrayName="fields" *ngFor="let item of form.get('fields').controls; let i = index;">
-        <div class="p-fluid p-grid" [formGroupName]="i"
-            style="border: 5px outset rgba(10, 100, 78, 0.521); padding: 20px; margin: 10px;">
+  
+        <div class="p-fluid p-grid"
+            style="border: 2px outset rgba(56, 59, 59, 0.521); padding: 10px; margin: 5px;">
 
             <div class="p-field p-col-12 p-md-4">
                 <span class="p-float-label">
@@ -23,7 +23,7 @@
                 <span class="p-float-label">
                     <p-dropdown inputId="generic" [autoDisplayFirst]="false" [options]="pojosNames"
                         formControlName="generic" optionLabel="name"></p-dropdown>
-                    <label for="generic">{{fieldToBeEdited.type.name}} </label>
+                    <label for="generic">{{fieldToBeEdited.type.simpleName}} </label>
                 </span>
             </div>
             <div class="p-field p-col-4 p-md-4" *ngIf="!fieldToBeEdited.simple">
@@ -48,6 +48,5 @@
                 </span>
             </div>
         </div>
-    </div>
-    <button pButton type="submit" label="Edit" (click)="submit()" [disabled]="form.invalid"></button>
+    <button pButton type="submit" style="margin-top: 3vh;float: right;" label="Edit" (click)="submit()" [disabled]="form.invalid"></button>
 </p-dialog>
