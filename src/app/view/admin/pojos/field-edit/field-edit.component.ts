@@ -100,6 +100,8 @@ export class FieldEditComponent implements OnInit {
            this.fieldToBeEdited.list = false;
            if(simpleName){
             this.fieldToBeEdited.type.simpleName = simpleName;
+            if(!this.fieldToBeEdited.id && !this.fieldToBeEdited.reference)
+            this.fieldToBeEdited.type.name = simpleName;
             this.fieldToBeEdited.id?this.fieldToBeEdited.type.name = simpleName+' ID ':
             this.fieldToBeEdited.reference?this.fieldToBeEdited.type.name = simpleName+' REF ':false;
            }
@@ -109,6 +111,8 @@ export class FieldEditComponent implements OnInit {
             this.fieldToBeEdited.generic = true;
            if(genericName){
             this.fieldToBeEdited.type.simpleName=genericName; 
+            if(!this.fieldToBeEdited.id && !this.fieldToBeEdited.reference)
+           this.fieldToBeEdited.type.name = genericName;
             this.fieldToBeEdited.id?this.fieldToBeEdited.type.name = simpleName+' ID ':
             this.fieldToBeEdited.reference?this.fieldToBeEdited.type.name = simpleName+' REF ':false;
            }
