@@ -10,7 +10,7 @@ import { PojoService } from 'src/app/controller/service/pojo.service';
   styleUrls: ['./field-edit.component.scss']
 })
 export class FieldEditComponent implements OnInit {
- 
+  field: Field = new Field();
   pojosNames;
   typesSimple = [{type:"Long"},{type:"String"},{type:"Date"},{type:"BigDecimal"},{type:"Double"}]
   categories = [{name:"Simple"},{name:"Complexe"}]
@@ -35,6 +35,7 @@ export class FieldEditComponent implements OnInit {
     this.editField$.subscribe(value=>{
       if(value){
         if(this.fieldToBeEdited){
+          this.field = JSON.parse(JSON.stringify(this.fieldToBeEdited));
           this.form.setValue({
             name: this.fieldToBeEdited.name,
             category: this.fieldToBeEdited.simple?'Simple':'Complexe',
@@ -45,6 +46,7 @@ export class FieldEditComponent implements OnInit {
           })
           this.valuesChanged();
         }
+        
       }
     })
     
@@ -76,11 +78,15 @@ export class FieldEditComponent implements OnInit {
         if(simpleName){
           console.log('testing type changed')
           this.fieldToBeEdited.type.simpleName = simpleName;
+          if(!this.fieldToBeEdited.id && !this.fieldToBeEdited.reference)
+          this.fieldToBeEdited.type.name = simpleName;
            this.fieldToBeEdited.id?this.fieldToBeEdited.type.name = simpleName+' ID ':
            this.fieldToBeEdited.reference?this.fieldToBeEdited.type.name = simpleName+' REF ':false;
         }
         if(genericName){
           this.fieldToBeEdited.type.simpleName=genericName; 
+          if(!this.fieldToBeEdited.id && !this.fieldToBeEdited.reference)
+          this.fieldToBeEdited.type.name = genericName;
           this.fieldToBeEdited.id?this.fieldToBeEdited.type.name = simpleName+' ID ':
           this.fieldToBeEdited.reference?this.fieldToBeEdited.type.name = simpleName+' REF ':false;
         }

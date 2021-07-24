@@ -161,7 +161,7 @@ export class PojoListComponent implements OnInit {
         this.messageService.add({
           severity: "success",
           summary: "Successful",
-          detail: "Commandes Deleted",
+          detail: "Selected Pojos deleted successfully!",
           life: 3000,
         });
       },
