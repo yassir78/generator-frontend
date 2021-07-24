@@ -26,6 +26,7 @@ export class PojoService {
   private _selectedPojoToBeEdited:Pojo;
   private _editFieldDialog:boolean;
   private _fieldToBeEdited:Field = new Field();
+  private _fieldToBeEditedIndex: number = 0;
   private _requestVo: RequestVo;
 
   // constructor(private messageService: MessageService,
@@ -197,5 +198,12 @@ export class PojoService {
 
   set fieldToBeEdited(value: Field) {
     this._fieldToBeEdited = value;
+  }
+ get fieldToBeEditedIndex(): number {
+    return this._fieldToBeEditedIndex;
+  }
+
+  set fieldToBeEditedIndex(value: number) {
+    this._fieldToBeEditedIndex = value;
   }
 }

@@ -35,14 +35,14 @@ export class FieldEditComponent implements OnInit {
     this.editField$.subscribe(value=>{
       if(value){
         if(this.fieldToBeEdited){
-          this.field = JSON.parse(JSON.stringify(this.fieldToBeEdited));
+          this.field = {...this.fieldToBeEdited, type:{...this.fieldToBeEdited.type}};
           this.form.setValue({
-            name: this.fieldToBeEdited.name,
-            category: this.fieldToBeEdited.simple?'Simple':'Complexe',
-            isList: this.fieldToBeEdited.list,
-            simple:this.fieldToBeEdited.type.simpleName,
-            generic:this.fieldToBeEdited.type.simpleName,
-            idOrReference:this.fieldToBeEdited.id?'id':this.fieldToBeEdited.reference?'ref':'idOrRef',
+            name: this.field.name,
+            category: this.field.simple?'Simple':'Complexe',
+            isList: this.field.list,
+            simple:this.field.type.simpleName,
+            generic:this.field.type.simpleName,
+            idOrReference:this.field.id?'id':this.field.reference?'ref':'idOrRef',
           })
           this.valuesChanged();
         }
@@ -62,74 +62,72 @@ export class FieldEditComponent implements OnInit {
         const idOrRef  = value.idOrReference == null ? null : value.idOrReference.name;
         const isList = value.isList;
         
-        name?this.fieldToBeEdited.name = name:false;
+        name?this.field.name = name:false;
 
         if(idOrRef){
           if(idOrRef == 'ref'){
-            this.fieldToBeEdited.id = false;
-            this.fieldToBeEdited.reference = true;
-            this.fieldToBeEdited.type.name = this.fieldToBeEdited.type.simpleName+ " REF";
+            this.field.id = false;
+            this.field.reference = true;
+            this.field.type.name = this.field.type.simpleName+ " REF";
           }else{
-            this.fieldToBeEdited.id = true;
-            this.fieldToBeEdited.reference = false;
-            this.fieldToBeEdited.type.name = this.fieldToBeEdited.type.simpleName+ " ID";
+            this.field.id = true;
+            this.field.reference = false;
+            this.field.type.name = this.field.type.simpleName+ " ID";
           }
         }
         if(simpleName){
           console.log('testing type changed')
-          this.fieldToBeEdited.type.simpleName = simpleName;
-          if(!this.fieldToBeEdited.id && !this.fieldToBeEdited.reference)
-          this.fieldToBeEdited.type.name = simpleName;
-           this.fieldToBeEdited.id?this.fieldToBeEdited.type.name = simpleName+' ID ':
-           this.fieldToBeEdited.reference?this.fieldToBeEdited.type.name = simpleName+' REF ':false;
+          this.field.type.simpleName = simpleName;
+          if(!this.field.id && !this.field.reference)
+          this.field.type.name = simpleName;
+           this.field.id?this.field.type.name = simpleName+' ID ':
+           this.field.reference?this.field.type.name = simpleName+' REF ':false;
         }
         if(genericName){
-          this.fieldToBeEdited.type.simpleName=genericName; 
-          if(!this.fieldToBeEdited.id && !this.fieldToBeEdited.reference)
-          this.fieldToBeEdited.type.name = genericName;
-          this.fieldToBeEdited.id?this.fieldToBeEdited.type.name = simpleName+' ID ':
-          this.fieldToBeEdited.reference?this.fieldToBeEdited.type.name = simpleName+' REF ':false;
+          this.field.type.simpleName=genericName; 
+          if(!this.field.id && !this.field.reference)
+          this.field.type.name = genericName;
+          this.field.id?this.field.type.name = simpleName+' ID ':
+          this.field.reference?this.field.type.name = simpleName+' REF ':false;
         }
         if(isList){
-          this.fieldToBeEdited.list = true;
-          this.fieldToBeEdited.simple = false;
+          this.field.list = true;
+          this.field.simple = false;
         }
         if(simpleOrComplexe == 'Simple'){
-           this.fieldToBeEdited.simple =  true;
-           this.fieldToBeEdited.generic = false;
-           this.fieldToBeEdited.list = false;
+           this.field.simple =  true;
+           this.field.generic = false;
+           this.field.list = false;
            if(simpleName){
-            this.fieldToBeEdited.type.simpleName = simpleName;
-            if(!this.fieldToBeEdited.id && !this.fieldToBeEdited.reference)
-            this.fieldToBeEdited.type.name = simpleName;
-            this.fieldToBeEdited.id?this.fieldToBeEdited.type.name = simpleName+' ID ':
-            this.fieldToBeEdited.reference?this.fieldToBeEdited.type.name = simpleName+' REF ':false;
+            this.field.type.simpleName = simpleName;
+            if(!this.field.id && !this.field.reference)
+            this.field.type.name = simpleName;
+            this.field.id?this.field.type.name = simpleName+' ID ':
+            this.field.reference?this.field.type.name = simpleName+' REF ':false;
            }
         }else if(simpleOrComplexe == 'Complexe'){
           console.log("i'm in")
-            this.fieldToBeEdited.simple =  false;
-            this.fieldToBeEdited.generic = true;
+            this.field.simple =  false;
+            this.field.generic = true;
            if(genericName){
-            this.fieldToBeEdited.type.simpleName=genericName; 
-            if(!this.fieldToBeEdited.id && !this.fieldToBeEdited.reference)
-           this.fieldToBeEdited.type.name = genericName;
-            this.fieldToBeEdited.id?this.fieldToBeEdited.type.name = simpleName+' ID ':
-            this.fieldToBeEdited.reference?this.fieldToBeEdited.type.name = simpleName+' REF ':false;
+            this.field.type.simpleName=genericName; 
+            if(!this.field.id && !this.field.reference)
+           this.field.type.name = genericName;
+            this.field.id?this.field.type.name = simpleName+' ID ':
+            this.field.reference?this.field.type.name = simpleName+' REF ':false;
            }
            if(isList){
-             this.fieldToBeEdited.list = true;
-             this.fieldToBeEdited.simple = false;
+             this.field.list = true;
+             this.field.simple = false;
            }
         }
-        console.log(this.fieldToBeEdited)
-     
       })
      return this.formBuilder.group({  
-      name: [this.fieldToBeEdited.name,Validators.required],  
+      name: [this.field.name,Validators.required],  
       category: [''],  
       generic:[''],
       simple: [''],
-      isList:this.fieldToBeEdited.list,
+      isList:this.field.list,
       idOrReference:[''],
     });    
     
@@ -148,19 +146,24 @@ export class FieldEditComponent implements OnInit {
       this.form.reset();
       this.editFieldDialog = false; 
     }
-  submit(){
-   this.form.reset();
-   this.editFieldDialog = false; 
-   this.service.editField$.next(false);
-  }
-     get fieldToBeEdited(): Field {
+
+    submit(){
+    console.log(this.fieldToBeEdited);
+    this.fieldToBeEdited = {...this.field};
+    console.log(this.fieldToBeEdited);
+    this.form.reset();
+    this.editFieldDialog = false; 
+    this.service.editField$.next(false);
+    }
+
+    get fieldToBeEdited(): Field {
     return this.service.fieldToBeEdited;
-  }
+    }
 
   set fieldToBeEdited(value: Field) {
     this.service.fieldToBeEdited = value;
   }
-      get editFieldDialog(): boolean {
+   get editFieldDialog(): boolean {
     return this.service.editFieldDialog;
   }
 

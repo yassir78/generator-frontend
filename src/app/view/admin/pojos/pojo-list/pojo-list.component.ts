@@ -54,9 +54,13 @@ export class PojoListComponent implements OnInit {
   } */
   editFieldDialog(field:Field){
     this.service.editFieldDialog = true;
-    this.service.fieldToBeEdited = field;
-    console.log(this.service.fieldToBeEdited);
+    this.service.fieldToBeEdited = {...field, type:{...field.type}};
+    this.service.fieldToBeEditedIndex = this.selectedPojoToBeEdited.fields.findIndex(f=>f.name==field.name)
     this.service.editField$.next(true);
+    this.service.editField$.subscribe(value=>{
+      if(!value) this.selectedPojoToBeEdited.fields[this.service.fieldToBeEditedIndex] = this.service.fieldToBeEdited;
+      
+    });
   }
   
   deleteField(field){
