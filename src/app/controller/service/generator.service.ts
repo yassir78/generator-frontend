@@ -21,11 +21,10 @@ export class GeneratorService{
     public generateProject(){
         this.userConfigService.setTechnologiestoGenerate();
         this.userConfigService.userConfig.pojos = this.pojoSerive.pojos;
-        console.log(this.userConfigService.userConfig);
+        // console.log(this.userConfigService.userConfig);
      
       this.http.post<GeneratedProject>(this.url, this.userConfigService.userConfig).subscribe(response => {
         if(response==null || response.zip==null)
-           console.log("errora");
         else{
           this.project = response;
           this.showProjectStructure = true;
@@ -48,7 +47,7 @@ export class GeneratorService{
     }
     generateFiles() {
       this.fileConfigService.fileConfig.pojos = this.pojoSerive.pojos;
-      console.log(this.fileConfigService.fileConfig);
+      // console.log(this.fileConfigService.fileConfig);
        this.http.post<GeneratedProject>(this.url+"/files", this.fileConfigService.fileConfig).subscribe(response => {
         if(response==null || response.zip==null)
            console.log("errora");

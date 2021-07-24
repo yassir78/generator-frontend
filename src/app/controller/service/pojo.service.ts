@@ -38,7 +38,6 @@ export class PojoService {
     return this.http.post<any>(this.urlGenerator, this.requestVo.userConfig);
   }
   public importYaml(): Observable<Array<Pojo>> {
-    console.log(this.requestVo);
     return this.http.post<any>(this.url + "/convert/", this.requestVo);
   } 
 

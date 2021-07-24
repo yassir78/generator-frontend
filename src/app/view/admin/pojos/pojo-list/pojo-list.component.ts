@@ -33,25 +33,7 @@ export class PojoListComponent implements OnInit {
     private service: PojoService,
     private router: Router
   ) {}
-/*   updateField(event, field) {
-    console.log("*********************************************");
-    const index = this.findFieldByName(field);
-    console.log(index);
-    const selectedField = this.selected.fields[index];
-    console.log(event.value);
-    if (event.value == "REF") {
-      console.log("********************************");
-      selectedField.id = false;
-      selectedField.reference = true;
-      console.log(this.selected.fields[index]);
-    } else if (event.value == "ID") {
-      console.log("//////////////////////////////////");
-      selectedField.reference = false;
-      this.changeIdOfOtherItems(selectedField);
-      selectedField.id = true;
-      console.log(this.selected.fields[index]);
-    }
-  } */
+
   editFieldDialog(field:Field){
     this.service.editFieldDialog = true;
     this.service.fieldToBeEdited = {...field, type:{...field.type}};
@@ -59,7 +41,7 @@ export class PojoListComponent implements OnInit {
     this.service.editField$.next(true);
     this.service.editField$.subscribe(value=>{
       if(!value) this.selectedPojoToBeEdited.fields[this.service.fieldToBeEditedIndex] = this.service.fieldToBeEdited;
-      
+
     });
   }
   
@@ -101,7 +83,6 @@ export class PojoListComponent implements OnInit {
     return indexOfUpdated;
   }
   ngOnInit(): void {
-    console.log(this.pojo);
     this.statuses = [
       { label: "Choississez un type", value: "" },
       { label: "ID", value: "ID" },
@@ -111,25 +92,10 @@ export class PojoListComponent implements OnInit {
   }
   changeType(field: any) {
     field.id = false;
-    /*     if (this.selectedType == "REF") {
-      console.log("********************************");
-      field.reference == true;
-      field.id == false;
-      console.log(field);
-    } else {
-      console.log("//////////////////////////////////");
-      field.reference == false;
-      field.id == true;
-      console.log(field);
-    } */
-    /*     value == "REF"
-      ? field.reference == true && field.id == false
-      : field.reference == false && field.id == true; */
   }
+
   export() {
-    console.log("hhh");
     const ymlText = YAML.stringify(this.items);
-    console.log(ymlText);
   }
   public showAttributes() {}
   public navigate() {
@@ -194,13 +160,9 @@ export class PojoListComponent implements OnInit {
  }
   public onExport(){
     const items = this.prepareItems(this.items)
-    //console.log(items);
     const ymlText = YAML.stringify(items);
-     console.log(ymlText);
      const string : String = new String(ymlText)
     ymlText.replace("/-/g","")
-    console.log("ymlText");
-    console.log(string);
     var myFile = new File([ymlText], "demo.yaml", {type: "text/yaml;charset=utf-8"});
     saveAs(myFile);
   }
@@ -218,7 +180,6 @@ export class PojoListComponent implements OnInit {
 
   public edit(pojo: Pojo) {
     this.selected = { ...pojo };
-    this.editDialog = true;
   }
   public view(pojo: Pojo) {
     this.selected = { ...pojo };

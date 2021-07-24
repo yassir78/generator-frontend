@@ -33,7 +33,7 @@ export class PojoGenerateComponent implements OnInit {
     public generateProject(){
         this.userConfigService.setTechnologiestoGenerate();
         this.userConfigService.userConfig.pojos = this.pojoSerive.items;
-        console.log(this.userConfigService.userConfig);
+        // console.log(this.userConfigService.userConfig);
         this.http.post<GeneratedProject>(this.url, this.userConfigService.userConfig).subscribe(response => {
             if(response==null || response.zip==null)
                 console.log('erreur lors du generation du projet');

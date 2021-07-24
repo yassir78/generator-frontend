@@ -52,9 +52,7 @@ export class FieldEditComponent implements OnInit {
     
   }
     valuesChanged(): FormGroup { 
-      console.log('this is the create item function')
       this.form.valueChanges.subscribe(value=>{
-        console.log(value);
         const name = value.name == null? null:value.name;
         const simpleOrComplexe = value.category == null ? null : value.category.name;
         const genericName = value.generic == null ?null:value.generic.name;
@@ -76,7 +74,6 @@ export class FieldEditComponent implements OnInit {
           }
         }
         if(simpleName){
-          console.log('testing type changed')
           this.field.type.simpleName = simpleName;
           if(!this.field.id && !this.field.reference)
           this.field.type.name = simpleName;
@@ -106,7 +103,6 @@ export class FieldEditComponent implements OnInit {
             this.field.reference?this.field.type.name = simpleName+' REF ':false;
            }
         }else if(simpleOrComplexe == 'Complexe'){
-          console.log("i'm in")
             this.field.simple =  false;
             this.field.generic = true;
            if(genericName){
@@ -148,9 +144,7 @@ export class FieldEditComponent implements OnInit {
     }
 
     submit(){
-    console.log(this.fieldToBeEdited);
     this.fieldToBeEdited = {...this.field};
-    console.log(this.fieldToBeEdited);
     this.form.reset();
     this.editFieldDialog = false; 
     this.service.editField$.next(false);
