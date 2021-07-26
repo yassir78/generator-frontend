@@ -11,12 +11,18 @@ import {PojoService} from "./pojo.service";
 export class RoleService {
     private baseUrl = "http://localhost:8036/";
     private _pojos:Array<Pojo>;
-    private roles:Array<RoleConfig>;
-
+    private _roles:Array<RoleConfig> = new Array<RoleConfig>();
+    private _role: RoleConfig = new RoleConfig();
     constructor(private http: HttpClient,pojoService:PojoService) { }
 
 
+     get role(): RoleConfig{
+        return this._role;
+    }
 
+    set role(value: RoleConfig) {
+        this._role = value;
+    }
     get pojos(): Array<Pojo> {
         return this.pojos;
     }
@@ -25,8 +31,10 @@ export class RoleService {
         this.pojos = value;
     }
 
-    getRoles() :RoleConfig[]{
-        return null;
-
+    get roles() :RoleConfig[]{
+        return this._roles;
+    }
+    set roles(value: Array<RoleConfig>) {
+        this._roles = value;
     }
 }
