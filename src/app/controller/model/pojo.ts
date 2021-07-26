@@ -1,12 +1,13 @@
 import {Field} from "./field";
-import {Role} from "./role";
+import {RoleConfig} from "./roleConfig";
 import {Type} from "./type";
+import {Permission} from "./permission";
 
 export class Pojo {
     public id:Field;
     public name:string;
     public reference:Field;
-    public role:Role;
+    public role:RoleConfig;
     public fields:Array<Field>;
     public types:Array<Type>;
     public fieldsGeneric: Array<Field>;
@@ -19,6 +20,7 @@ export class Pojo {
     public idString: boolean;
     public hasDate: boolean;
     public compactView: boolean;
+    public permissions?:Array<Permission>
 
 
 }

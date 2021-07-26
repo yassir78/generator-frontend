@@ -1,7 +1,7 @@
 
 
 
-import { Component, OnInit } from "@angular/core";
+import {Component, EventEmitter, OnInit, Output} from "@angular/core";
 import {
   ConfirmationService,
   MessageService,
@@ -13,11 +13,9 @@ import { Pojo } from "../../../../controller/model/pojo";
 import { Router } from "@angular/router";
 import {Field} from "../../../../controller/model/field";
 import { saveAs } from 'file-saver';
-<<<<<<< HEAD
-import * as YAML from "json2yaml";
-=======
+
 import * as YAML from "json2yaml"
->>>>>>> 4ecccfd2b4f15cfd9af9a656cd9fb0b6731b837c
+import {RoleService} from "../../../../controller/service/role.service";
 @Component({
   selector: "app-pojo-list",
   templateUrl: "./pojo-list.component.html",
@@ -31,6 +29,7 @@ export class PojoListComponent implements OnInit {
   selectedType: any;
   colAttributs: any[];
   statuses: SelectItem[];
+  roloService:RoleService;
   constructor(
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
@@ -115,8 +114,14 @@ export class PojoListComponent implements OnInit {
   }
   public showAttributes() {}
   public navigate() {
-    this.router.navigateByUrl("view/pojo/generate");
+      this.service.fillojoPermitions();
+
+    //  this.router.navigateByUrl('view/pojo/generate');
+
+      console.log(this.service.items);
+    this.router.navigateByUrl("view/role/show");
   }
+
 
   public delete(selected: Pojo) {
     this.selected = selected;

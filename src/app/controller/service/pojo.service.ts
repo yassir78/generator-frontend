@@ -4,6 +4,7 @@ import { Pojo } from "../model/pojo";
 import { Observable, Subject } from "rxjs";
 import { Field } from "../model/field";
 import { RequestVo } from "../model/request-vo.model";
+import {Permission} from "../model/permission";
 
 @Injectable({
   providedIn: "root",
@@ -74,6 +75,21 @@ export class PojoService {
 
   public deleteIndexById(id: Field) {
     this.items.splice(this.findIndexById(id), 1);
+  }
+  public fillojoPermitions() {
+
+    this.items.forEach(pojo =>{
+      pojo.permissions =  pojo.permissions || [];
+
+      pojo.permissions.push({name : pojo.name+".edit"});
+      pojo.permissions.push({name : pojo.name+".list"});
+      pojo.permissions.push({name : pojo.name+".view"});
+      pojo.permissions.push({name : pojo.name+".add"});
+      pojo.permissions.push({name : pojo.name+".delete"});
+
+    });
+
+
   }
 
   public deleteMultipleIndexById() {
