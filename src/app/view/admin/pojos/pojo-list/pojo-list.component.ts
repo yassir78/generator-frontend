@@ -106,7 +106,6 @@ export class PojoListComponent implements OnInit {
 
     //  this.router.navigateByUrl('view/pojo/generate');
 
-      console.log(this.service.items);
     this.router.navigateByUrl("view/role/show");
   }
 

@@ -80,18 +80,17 @@ export class RoleListComponent implements OnInit {
   }
 
   deleteSelectedRole() {
-    this.router.navigateByUrl('view/pojo/generate');
 
-    // this.confirmationService.confirm({
-    //   message: 'Are you sure you want to delete the selected products?',
-    //   header: 'Confirm',
-    //   icon: 'pi pi-exclamation-triangle',
-    //   accept: () => {
-    //     this.roles = this.roles.filter(val => !this.selectedRoles.includes(val));
-    //     this.selectedRoles = null;
-    //     this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
-    //   }
-    // });
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete the selected products?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.roles = this.roles.filter(val => !this.selectedRoles.includes(val));
+        this.selectedRoles = null;
+        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
+      }
+    });
   }
 
   editRole(product: RoleConfig) {
