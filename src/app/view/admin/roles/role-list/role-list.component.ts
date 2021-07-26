@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ConfirmationService, MessageService} from "primeng/api";
+import {ConfirmationService, MegaMenuItem, MessageService} from "primeng/api";
 import {RoleConfig} from "../../../../controller/model/roleConfig";
 import {RoleService} from "../../../../controller/service/role.service";
 import {Pojo} from "../../../../controller/model/pojo";
@@ -37,18 +37,14 @@ import {Router} from "@angular/router";
 export class RoleListComponent implements OnInit {
 
   roleDialog: boolean;
-
-  roles: RoleConfig[];
-
-  role: RoleConfig;
-
+  roleEditing:boolean=false;
+  indexOfEditedRole:number;
+  items: MegaMenuItem[];
   selectedRoles: RoleConfig[];
 
   submitted: boolean;
 
   cols: any[];
-
-  pojos:Array<Pojo>;
 
   files3: TreeNode[];
   selectedFiles2;
@@ -59,12 +55,11 @@ export class RoleListComponent implements OnInit {
               private confirmationService: ConfirmationService,private pojoService:PojoService,private router: Router) {}
 
   ngOnInit() {
-    this.roles=this.roleService.getRoles();
-    this.pojos=this.pojoService.items;
-  this.files3=this.pojoToTreeNode();
+    
+    this.files3=this.pojoToTreeNode();
     this.cols = [
       {field: 'name', header: 'Name'}
-    ];
+     ];
   }
 
   pojoToTreeNode(){
@@ -80,6 +75,7 @@ export class RoleListComponent implements OnInit {
   }
 
   deleteSelectedRole() {
+<<<<<<< HEAD
 
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete the selected products?',
@@ -91,10 +87,27 @@ export class RoleListComponent implements OnInit {
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
       }
     });
+=======
+    this.router.navigateByUrl('view/pojo/generate');
+    
+    // this.confirmationService.confirm({
+    //   message: 'Are you sure you want to delete the selected products?',
+    //   header: 'Confirm',
+    //   icon: 'pi pi-exclamation-triangle',
+    //   accept: () => {
+    //     this.roles = this.roles.filter(val => !this.selectedRoles.includes(val));
+    //     this.selectedRoles = null;
+    //     this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
+    //   }
+    // });
+>>>>>>> d39a4a8180bba8372be381ec321657d52db3b021
   }
 
-  editRole(product: RoleConfig) {
-    this.role = {...product};
+  editRole(role: RoleConfig) {
+    this.roleEditing = true;
+    this.role = {...role,permissions:{...role.permissions}};
+    this.indexOfEditedRole = this.roles.findIndex(r=>r.name === role.name)
+    console.log(this.indexOfEditedRole)
     this.roleDialog = true;
   }
   deleteRole(role: RoleConfig) {
@@ -104,7 +117,6 @@ export class RoleListComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.roles = this.roles.filter(val => val.name !== role.name);
-        //this.role = {};
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
       }
     });
@@ -113,63 +125,58 @@ export class RoleListComponent implements OnInit {
   hideDialog() {
     this.roleDialog = false;
     this.submitted = false;
+    this.roleEditing = true;
   }
   nodeSelect(event) {
-    this.messageService.add({severity: 'info', summary: 'Node Selected', detail: event.node.label});
-   // this.selectedFiles2.push(event.node.label);
-
+    const pojoName:string = event.node.label;
+    const pojo:Pojo = this.findPojoByName(pojoName);
+    let permissions:Permission[] = [];
+    const children = event.node.children;
+    children.forEach(child => {
+      permissions.push({name:child.label,pojo:pojo})
+    });
+   this.role.permissions = Object.values(this.role.permissions);
+   this.role.permissions.push(...permissions)
+  }
+  findPojoByName(name:string):Pojo{
+    return this.pojos.find(pojo=>pojo.name == name);
   }
   nodeUnselect(event) {
-    this.messageService.add({severity: 'info', summary: 'Node Unselected', detail: event.node.label});
+   const children = event.node.children.map(child=>child.label);
+   this.role.permissions = Object.values(this.role.permissions);
+   this.role.permissions = this.role.permissions.filter(permission=> !children.includes(permission.name))
+  }
+  editSavedRole(){
+    this.roles[this.indexOfEditedRole] = this.role;
+    this.roleEditing = true;
+    this.roleDialog = false;
   }
   saveRole() {
-    this.submitted = true;
-
-    if (true) {
-      // if (this.role.id) {
-      //   this.role[this.fin(this.product.id)] = this.product;
-      //   this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
-      // } else {
-      this.role.id = this.createId();
-      this.role.permissions =  this.role.permissions || [];
-      this.selectedFiles2.forEach(permission=>{
-        if( permission.children ){console.log("parent")}
-        else { this.role.permissions.push({name:permission.label})}
-      });
-
-      this.roles =  this.roles || [];
-
-         this.roles.push(this.role);
-         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Role Created', life: 3000});
-      //
-      //
-      this.roles = [...this.roles];
-      this.roleDialog = false;
-      this.role = new RoleConfig();
-    }
-  }
-  //
-  // findIndexById(id: string): number {
-  //   let index = -1;
-  //   for (let i = 0; i < this.products.length; i++) {
-  //     if (this.products[i].id === id) {
-  //       index = i;
-  //       break;
-  //     }
-  //   }
-  //
-  //   return index;
-  // }
-  //
-  createId(): number {
-    let id = '';
-    const chars = '0123456789';
-    for (let i = 0; i < 5; i++) {
-      id += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return +id;
+    this.roles.push(this.role);
+    this.role = new RoleConfig();
+    this.roleDialog = false;
   }
 
+  get roles() :RoleConfig[]{
+    return this.roleService.roles;
+  }
+  set roles(value:RoleConfig[]){
+    this.roleService.roles = value;
+  }
+    get pojos() :Pojo[]{
+    return this.pojoService.items;
+  }
+  set pojos(value:Pojo[]){
+    this.pojoService.items = value;
+  }
+  
+     get role(): RoleConfig{
+        return this.roleService.role;
+    }
+
+    set role(value: RoleConfig) {
+        this.roleService.role = value;
+    }
 
 
 }
