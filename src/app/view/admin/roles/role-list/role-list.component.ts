@@ -55,13 +55,35 @@ export class RoleListComponent implements OnInit {
               private confirmationService: ConfirmationService,private pojoService:PojoService,private router: Router) {}
 
   ngOnInit() {
-    
+    this.items = [
+            {
+                label: 'Videos', icon: 'pi pi-fw pi-video',
+                items: [
+                    [
+                        {
+                            label: 'Video 1',
+                        },
+                        {
+                            label: 'Video 2',
+                        }
+                    ],
+           
+                ]
+            }]
     this.files3=this.pojoToTreeNode();
     this.cols = [
       {field: 'name', header: 'Name'}
      ];
   }
-
+  roleToTreeNode(role:RoleConfig){
+     const pojos = [...new Set(role.permissions.map(permission=>permission.pojo.name))];
+     const permissions = role.permissions.map(permission=>permission.name)
+     let object = pojos.map(pojo=>{
+       return {"children":permissions.filter(permission=>permission.split(".")[0] == pojo).map(elem=>{return {"label":elem}}),"label":pojo,"parent":undefined,"partialSelected":false}
+     })
+     permissions.forEach(permission=>object.push({"label":permission,"partialSelected":false}))
+     return object;
+  }
   pojoToTreeNode(){
     return this.pojos.map(pojo=>{
       return { "label": pojo.name ,"children":pojo.permissions.map(prem=>{return {"label":prem.name}})} });
@@ -93,8 +115,10 @@ export class RoleListComponent implements OnInit {
     this.roleEditing = true;
     this.role = {...role,permissions:{...role.permissions}};
     this.indexOfEditedRole = this.roles.findIndex(r=>r.name === role.name)
-    console.log(this.indexOfEditedRole)
+    this.selectedFiles2 = this.roleToTreeNode(role);
+    console.log(this.selectedFiles2);
     this.roleDialog = true;
+
   }
   deleteRole(role: RoleConfig) {
     this.confirmationService.confirm({
@@ -116,13 +140,13 @@ export class RoleListComponent implements OnInit {
   nodeSelect(event) {
     const pojoName:string = event.node.label;
     const pojo:Pojo = this.findPojoByName(pojoName);
-    let permissions:Permission[] = [];
+     let permissions:Permission[] = [];
     const children = event.node.children;
     children.forEach(child => {
       permissions.push({name:child.label,pojo:pojo})
     });
    this.role.permissions = Object.values(this.role.permissions);
-   this.role.permissions.push(...permissions)
+   this.role.permissions.push(...permissions) 
   }
   findPojoByName(name:string):Pojo{
     return this.pojos.find(pojo=>pojo.name == name);
@@ -137,10 +161,17 @@ export class RoleListComponent implements OnInit {
     this.roleEditing = true;
     this.roleDialog = false;
   }
+  getSelectedFile(){
+
+  }
   saveRole() {
     this.roles.push(this.role);
     this.role = new RoleConfig();
     this.roleDialog = false;
+    this.roleEditing = false;
+    console.log(this.selectedFiles2)
+    this.selectedFiles2 = [];
+     //this.selectedFiles2= [];
   }
 
   get roles() :RoleConfig[]{
