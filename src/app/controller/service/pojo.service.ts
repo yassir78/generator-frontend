@@ -26,7 +26,8 @@ export class PojoService {
   private _addFieldToExistingPojoDialog:boolean;
   private _selectedPojoToBeEdited:Pojo;
   private _editFieldDialog:boolean;
-  private _fieldToBeEdited:Field;
+  private _fieldToBeEdited:Field = new Field();
+  private _fieldToBeEditedIndex: number = 0;
   private _requestVo: RequestVo;
 
   // constructor(private messageService: MessageService,
@@ -38,7 +39,6 @@ export class PojoService {
     return this.http.post<any>(this.urlGenerator, this.requestVo.userConfig);
   }
   public importYaml(): Observable<Array<Pojo>> {
-    console.log(this.requestVo);
     return this.http.post<any>(this.url + "/convert/", this.requestVo);
   } 
 
@@ -213,5 +213,12 @@ export class PojoService {
 
   set fieldToBeEdited(value: Field) {
     this._fieldToBeEdited = value;
+  }
+ get fieldToBeEditedIndex(): number {
+    return this._fieldToBeEditedIndex;
+  }
+
+  set fieldToBeEditedIndex(value: number) {
+    this._fieldToBeEditedIndex = value;
   }
 }

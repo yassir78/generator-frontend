@@ -1,13 +1,13 @@
-<p-dialog header="Title" [(visible)]="editFieldDialog" (onHide)="hide()" [formGroup]="form" [style]="{width: '80vw',height:'auto'}"
+<p-dialog header="Modifier le champ" [(visible)]="editFieldDialog" (onHide)="hide()" [formGroup]="form" [style]="{width: '60vw',height:'auto'}"
     [contentStyle]="{minHeight:'10vh'}" [baseZIndex]="10000">
-    <div class="" formArrayName="fields" *ngFor="let item of form.get('fields').controls; let i = index;">
-        <div class="p-fluid p-grid" [formGroupName]="i"
-            style="border: 5px outset rgba(10, 100, 78, 0.521); padding: 20px; margin: 10px;">
+  
+        <div class="p-fluid p-grid"
+            style="border: 2px outset rgba(56, 59, 59, 0.521); padding: 10px; margin: 5px;">
 
             <div class="p-field p-col-12 p-md-4">
                 <span class="p-float-label">
                     <input type="text" id="inputtext" pInputText formControlName="name">
-                    <label for="inputtext">Field name</label>
+                    <label for="inputtext">{{field.name}}</label>
                 </span>
             </div>
 
@@ -15,39 +15,38 @@
                 <span class="p-float-label">
                     <p-dropdown inputId="category" [autoDisplayFirst]="false" [options]="categories"
                         formControlName="category" optionLabel="name"></p-dropdown>
-                    <label for="category">{{fieldToBeEdited.simple?'Simple':'Complexe'}}</label>
+                    <label for="category">{{field.simple?'Simple':'Complexe'}}</label>
                 </span>
             </div>
 
-            <div class="p-field p-col-12 p-md-4" *ngIf="fieldToBeEdited.generic">
+            <div class="p-field p-col-12 p-md-4" *ngIf="field.generic">
                 <span class="p-float-label">
                     <p-dropdown inputId="generic" [autoDisplayFirst]="false" [options]="pojosNames"
                         formControlName="generic" optionLabel="name"></p-dropdown>
-                    <label for="generic">{{fieldToBeEdited.type.name}} </label>
+                    <label for="generic">{{field.type.simpleName}} </label>
                 </span>
             </div>
-            <div class="p-field p-col-4 p-md-4" *ngIf="!fieldToBeEdited.simple">
+            <div class="p-field p-col-4 p-md-4" *ngIf="!field.simple">
                 <span class="p-float-label">
                     <h6>Is List</h6>
                     <p-inputSwitch formControlName="isList"></p-inputSwitch>
                 </span>
             </div>
-            <div class="p-field p-col-12 p-md-4" *ngIf="(fieldToBeEdited.simple?'Simple':'Complexe')=='Simple'">
+            <div class="p-field p-col-12 p-md-4" *ngIf="(field.simple?'Simple':'Complexe')=='Simple'">
                 <span class="p-float-label">
                     <p-dropdown inputId="simple" [autoDisplayFirst]="false" [options]="typesSimple"
                         formControlName="simple" optionLabel="type"></p-dropdown>
-                    <label for="simple">{{fieldToBeEdited.type.simpleName}}</label>
+                    <label for="simple">{{field.type.simpleName}}</label>
                 </span>
             </div>
             <div class="p-field p-col-12 p-md-4">
                 <span class="p-float-label">
                     <p-dropdown inputId="idOrReference" [autoDisplayFirst]="false" [options]="idOrReferenceValue"
                         formControlName="idOrReference" optionLabel="name"></p-dropdown>
-                    <label for="idOrReference">{{fieldToBeEdited.id?'id':fieldToBeEdited.reference?'ref':'Id
+                    <label for="idOrReference">{{field.id?'id':field.reference?'ref':'Id
                         OrRef'}}</label>
                 </span>
             </div>
         </div>
-    </div>
-    <button pButton type="submit" label="Edit" (click)="submit()" [disabled]="form.invalid"></button>
+    <button pButton type="submit" style="margin-top: 3vh;float: right;" label="Edit" (click)="submit()" [disabled]="form.invalid"></button>
 </p-dialog>
