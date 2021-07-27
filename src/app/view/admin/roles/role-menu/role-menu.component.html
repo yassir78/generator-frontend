@@ -1,0 +1,20 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <p-toast></p-toast>
+                <div class="card">
+                    <p-toolbar styleClass="p-mb-4">
+                        <ng-template pTemplate="left">
+                            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2"
+                                (click)="openNew()"></button>
+                            <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger p-mb-2"
+                                (click)="deleteSelectedRole()" [disabled]="!selectedRoles || !selectedRoles.length"></button>
+                        </ng-template>
+                
+                        <ng-template pTemplate="right">
+                            <button pButton pRipple label="Next" icon="pi pi-arrow-right" class="p-button-info p-mb-2"
+                                (click)="navigateMenu()"></button>
+                        </ng-template>
+                    </p-toolbar>
+
+    </div>
+</div>
