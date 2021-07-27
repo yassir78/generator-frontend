@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import {ConfirmationService, MegaMenuItem, MessageService} from "primeng/api";
 import {RoleConfig} from "../../../../controller/model/roleConfig";
@@ -78,9 +79,9 @@ export class RoleListComponent implements OnInit {
   roleToTreeNode(role:RoleConfig){
      const pojos = [...new Set(role.permissions.map(permission=>permission.pojo.name))];
      const permissions = role.permissions.map(permission=>permission.name)
-     let object = pojos.map(pojo=>{
-       return {"children":permissions.filter(permission=>permission.split(".")[0] == pojo).map(elem=>{return {"label":elem}}),"label":pojo,"parent":undefined,"partialSelected":false}
-     })
+     let object:any = pojos.map(pojo=>{
+       return {"label":pojo,"children":permissions.filter(permission=>permission.split(".")[0] == pojo).map(elem=>{return {"label":elem,"partialSelected":false}}),"parent":undefined,"partialSelected":false
+      }})
      permissions.forEach(permission=>object.push({"label":permission,"partialSelected":false}))
      return object;
   }
@@ -127,7 +128,7 @@ export class RoleListComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.roles = this.roles.filter(val => val.name !== role.name);
-        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
+        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Role '+role.name+' deleted successfully!', life: 3000});
       }
     });
   }
@@ -135,7 +136,11 @@ export class RoleListComponent implements OnInit {
   hideDialog() {
     this.roleDialog = false;
     this.submitted = false;
-    this.roleEditing = true;
+    if(this.roleEditing) this.roleEditing = false;
+    if(!this.roleEditing){
+      this.selectedFiles2 = [];
+      this.role = new RoleConfig();
+    }
   }
   nodeSelect(event) {
     const pojoName:string = event.node.label;
