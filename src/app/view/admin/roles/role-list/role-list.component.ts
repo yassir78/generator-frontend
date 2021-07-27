@@ -75,7 +75,6 @@ export class RoleListComponent implements OnInit {
   }
 
   deleteSelectedRole() {
-<<<<<<< HEAD
 
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete the selected products?',
@@ -87,7 +86,6 @@ export class RoleListComponent implements OnInit {
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
       }
     });
-=======
     this.router.navigateByUrl('view/pojo/generate');
     
     // this.confirmationService.confirm({
@@ -100,7 +98,6 @@ export class RoleListComponent implements OnInit {
     //     this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
     //   }
     // });
->>>>>>> d39a4a8180bba8372be381ec321657d52db3b021
   }
 
   editRole(role: RoleConfig) {
