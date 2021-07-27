@@ -14,11 +14,17 @@ export class MenuService {
   private _menu: Menu = new Menu();
   private _selectes: Array<Menu>;
   private _addMenuDailog:boolean=false;
-
+  private _editMenuDialog:boolean=false;
 
   constructor(private http: HttpClient,pojoService:PojoService) { }
 
+  get editMenuDialog(): boolean {
+    return this._editMenuDialog;
+  }
 
+  set editMenuDialog(value: boolean) {
+    this._editMenuDialog = value;
+  }
   get selectes(): Array<Menu> {
     return this._selectes;
   }
