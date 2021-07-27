@@ -76,7 +76,7 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="roleDialog" [style]="{width: '450px'}" header="Product Details" [modal]="true"
+        <p-dialog [(visible)]="roleDialog" (onHide)="hideDialog()" [style]="{width: '450px'}" header="Product Details" [modal]="true"
             styleClass="p-fluid">
             <ng-template pTemplate="content">
                 <div class="p-field">
@@ -96,7 +96,7 @@
             <ng-template pTemplate="footer">
                 <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
                     (click)="hideDialog()"></button>
-                <button pButton pRipple label="Save" *ngIf="!roleEditing" icon="pi pi-check" class="p-button-text"
+                <button pButton pRipple label="Save" [disabled]="(!role.name != null && !role.permissions.length > 0)" *ngIf="!roleEditing" icon="pi pi-check" class="p-button-text"
                     (click)="saveRole()"></button>
                 <button pButton pRipple label="Edit" *ngIf="roleEditing" icon="pi pi-check" class="p-button-text"
                     (click)="editSavedRole()"></button>

@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import {ConfirmationService, MegaMenuItem, MessageService} from "primeng/api";
 import {RoleConfig} from "../../../../controller/model/roleConfig";
@@ -41,15 +42,13 @@ export class RoleListComponent implements OnInit {
   indexOfEditedRole:number;
   items: MegaMenuItem[];
   selectedRoles: RoleConfig[];
-
+  indexOfEdited:number = 0;
   submitted: boolean;
-
   cols: any[];
-
   files3: TreeNode[];
   selectedFiles2;
-
-
+  selectedFilesHistory = new Map();
+  selectedFilesHistoryIndex = 0;
 
   constructor(private roleService: RoleService, private messageService: MessageService,
               private confirmationService: ConfirmationService,private pojoService:PojoService,private router: Router) {}
@@ -81,7 +80,7 @@ export class RoleListComponent implements OnInit {
      let object : any = pojos.map(pojo=>{
        return {"children":permissions.filter(permission=>permission.split(".")[0] == pojo).map(elem=>{return {"label":elem}}),"label":pojo,"parent":undefined,"partialSelected":false}
      })
-     permissions.forEach(permission=>object.push({"label":permission,"partialSelected":false}))
+     permissions.forEach(permission=>object.push({"label":permission,"parent":{"label":role.permissions.find(per=>per.name ==permission).pojo.name,expanded: false,parent: undefined,partialSelected: false} ,"partialSelected":false}))
      return object;
   }
   pojoToTreeNode(){
@@ -111,12 +110,14 @@ export class RoleListComponent implements OnInit {
     // });
   }
 
-  editRole(role: RoleConfig) {
+  editRole(role: RoleConfig,index:number) {
+    this.indexOfEdited = index;
     this.roleEditing = true;
     this.role = {...role,permissions:{...role.permissions}};
+    console.log(this.role);
     this.indexOfEditedRole = this.roles.findIndex(r=>r.name === role.name)
-    this.selectedFiles2 = this.roleToTreeNode(role);
-    console.log(this.selectedFiles2);
+    //this.selectedFiles2 = this.roleToTreeNode(role);
+    this.selectedFiles2=this.selectedFilesHistory.get(this.indexOfEdited);
     this.roleDialog = true;
 
   }
@@ -127,7 +128,7 @@ export class RoleListComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.roles = this.roles.filter(val => val.name !== role.name);
-        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
+        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Role '+role.name+' deleted successfully!', life: 3000});
       }
     });
   }
@@ -135,31 +136,58 @@ export class RoleListComponent implements OnInit {
   hideDialog() {
     this.roleDialog = false;
     this.submitted = false;
-    this.roleEditing = true;
+    if(this.roleEditing) this.roleEditing = false;
+    if(!this.roleEditing){
+      this.selectedFiles2 = [];
+      this.role = new RoleConfig();
+    }
   }
   nodeSelect(event) {
-    const pojoName:string = event.node.label;
-    const pojo:Pojo = this.findPojoByName(pojoName);
-     let permissions:Permission[] = [];
-    const children = event.node.children;
-    children.forEach(child => {
-      permissions.push({name:child.label,pojo:pojo})
-    });
+   console.log(event)
+   const label:string = event.node.label;
+   let pojoName:string;
+   let pojo:Pojo
    this.role.permissions = Object.values(this.role.permissions);
-   this.role.permissions.push(...permissions) 
+   if(label.includes(".")){
+      pojoName = label.split('.')[0];
+      pojo = this.findPojoByName(pojoName);
+      this.role.permissions.push({name:label, pojo:pojo})
+   }else{
+      pojo = this.findPojoByName(label);
+      let permissions:Permission[] = [];
+      const children = event.node.children;
+      //this.role.permissions = Object.values(this.pojo.permissions);
+      children ? children.forEach(child => {permissions.push({name:child.label,pojo:pojo})}) : false;
+      this.role.permissions.push(...permissions)
+   }
+    console.log(this.role.permissions)
+  }
+  nodeUnselect(event) {
+    const label:string = event.node.label;
+    let pojoName:string;
+    if(label.includes(".")){
+      pojoName = label.split('.')[0];
+      this.role.permissions = this.role.permissions.filter(permission=>(permission.pojo.name != label && permission.name != label));
+    }else{
+      this.role.permissions = this.role.permissions.filter(permission=>permission.pojo.name != label);
+    }
+    console.log(this.role.permissions)
+  /*  const children = event.node.children.map(child=>child.label);
+   this.role.permissions = Object.values(this.role.permissions);
+   this.role.permissions = this.role.permissions.filter(permission=> !children.includes(permission.name)) */
   }
   findPojoByName(name:string):Pojo{
     return this.pojos.find(pojo=>pojo.name == name);
   }
-  nodeUnselect(event) {
-   const children = event.node.children.map(child=>child.label);
-   this.role.permissions = Object.values(this.role.permissions);
-   this.role.permissions = this.role.permissions.filter(permission=> !children.includes(permission.name))
-  }
+
   editSavedRole(){
+    this.role.permissions = Object.values(this.role.permissions);
     this.roles[this.indexOfEditedRole] = this.role;
-    this.roleEditing = true;
+    this.roleEditing = false;
     this.roleDialog = false;
+    this.selectedFilesHistory.delete(this.indexOfEdited);
+    console.log(this.indexOfEdited)
+    this.selectedFilesHistory.set(this.indexOfEdited,this.selectedFiles2);
   }
   getSelectedFile(){
 
@@ -169,9 +197,9 @@ export class RoleListComponent implements OnInit {
     this.role = new RoleConfig();
     this.roleDialog = false;
     this.roleEditing = false;
-    console.log(this.selectedFiles2)
+    this.selectedFilesHistory.set(this.selectedFilesHistoryIndex,this.selectedFiles2)
+    this.selectedFilesHistoryIndex++;
     this.selectedFiles2 = [];
-     //this.selectedFiles2= [];
   }
 
   get roles() :RoleConfig[]{
