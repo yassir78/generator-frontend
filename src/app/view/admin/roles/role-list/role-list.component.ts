@@ -78,7 +78,7 @@ export class RoleListComponent implements OnInit {
   roleToTreeNode(role:RoleConfig){
      const pojos = [...new Set(role.permissions.map(permission=>permission.pojo.name))];
      const permissions = role.permissions.map(permission=>permission.name)
-     let object = pojos.map(pojo=>{
+     let object : any = pojos.map(pojo=>{
        return {"children":permissions.filter(permission=>permission.split(".")[0] == pojo).map(elem=>{return {"label":elem}}),"label":pojo,"parent":undefined,"partialSelected":false}
      })
      permissions.forEach(permission=>object.push({"label":permission,"partialSelected":false}))
