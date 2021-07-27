@@ -26,9 +26,9 @@ export class PojoAddComponent implements OnInit {
   formField = new FormGroup({ 
     name: new FormControl("",[Validators.required]),  
     category:new FormControl("",[Validators.required]),  
-    generic:new FormControl("",[Validators.required]),
-    simple: new FormControl("",[Validators.required]),
-    isList: new FormControl("",[Validators.required]),
+    generic:new FormControl("",[]),
+    simple: new FormControl("",[]),
+    isList: new FormControl("",[]),
     idOrReference:new FormControl("",[]),
 
   }); 
@@ -59,9 +59,9 @@ export class PojoAddComponent implements OnInit {
   this.formField = new FormGroup({ 
     name: new FormControl("",[Validators.required]),  
     category:new FormControl("",[Validators.required]),  
-    generic:new FormControl("",[Validators.required]),
-    simple: new FormControl("",[Validators.required]),
-    isList: new FormControl("",[Validators.required]),
+    generic:new FormControl("",[]),
+    simple: new FormControl("",[]),
+    isList: new FormControl("",[]),
     idOrReference:new FormControl("",[]),
 
   }); 

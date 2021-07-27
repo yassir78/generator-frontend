@@ -115,7 +115,7 @@
         </ng-template>
     </p-splitter>
 
-    <button pButton type="button" class="p-mr-4" style="margin-top: 3vh;" label="ADD FIELD" (click)="addField()"></button>
+    <button pButton type="button" class="p-mr-4" [disabled]="!formField.valid" style="margin-top: 3vh;" label="ADD FIELD" (click)="addField()"></button>
     <button pButton type="submit" label="Save" [disabled] = "(this.form.value.name != null && !this.form.value.name.length > 0) || !this.fieldsArray.length > 0" style="margin-top: 3vh;float: right;" (click)="submit()"></button>
  
 </p-dialog>
