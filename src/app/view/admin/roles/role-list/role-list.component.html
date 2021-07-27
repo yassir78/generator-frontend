@@ -47,13 +47,14 @@
                         </th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-role>
+                <ng-template pTemplate="body" let-role let-rowIndex="rowIndex">
                     <tr>
                         <td>
                             <p-tableCheckbox [value]="role"></p-tableCheckbox>
                         </td>
                         <td>
                             {{role.name}}
+                            <!--  <p-megaMenu [model]="items" orientation="vertical"></p-megaMenu> -->
                         </td>
                         <td><span *ngFor="let permission of role.permissions">{{permission.name}}<br></span>
 
@@ -61,7 +62,7 @@
 
                         <td>
                             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
-                                (click)="editRole(role)"></button>
+                                (click)="editRole(role,rowIndex)"></button>
                             <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
                                 (click)="deleteRole(role)"></button>
                         </td>
@@ -75,8 +76,8 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="roleDialog" [style]="{width: '450px'}" header="Product Details" [modal]="true"
-            styleClass="p-fluid">
+        <p-dialog [(visible)]="roleDialog" (onHide)="hideDialog()" [style]="{width: '450px'}" header="Product Details"
+            [modal]="true" styleClass="p-fluid">
             <ng-template pTemplate="content">
                 <div class="p-field">
                     <label for="name">Role Name</label>
@@ -95,8 +96,8 @@
             <ng-template pTemplate="footer">
                 <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
                     (click)="hideDialog()"></button>
-                <button pButton pRipple label="Save" *ngIf="!roleEditing" icon="pi pi-check" class="p-button-text"
-                    (click)="saveRole()"></button>
+                <button pButton pRipple label="Save" [disabled]="(!role.name != null && !role.permissions.length > 0)"
+                    *ngIf="!roleEditing" icon="pi pi-check" class="p-button-text" (click)="saveRole()"></button>
                 <button pButton pRipple label="Edit" *ngIf="roleEditing" icon="pi pi-check" class="p-button-text"
                     (click)="editSavedRole()"></button>
             </ng-template>
