@@ -117,16 +117,20 @@ export class RoleListComponent implements OnInit {
     console.log(this.role);
     this.indexOfEditedRole = this.roles.findIndex(r=>r.name === role.name)
     //this.selectedFiles2 = this.roleToTreeNode(role);
+    console.log( this.selectedFilesHistory)
     this.selectedFiles2=this.selectedFilesHistory.get(this.indexOfEdited);
     this.roleDialog = true;
 
   }
-  deleteRole(role: RoleConfig) {
+  deleteRole(role: RoleConfig,index:number) {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete ' + role.name + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+        console.log( this.selectedFilesHistory)
+        this.selectedFilesHistory.delete(index);
+        this.selectedFilesHistoryIndex--;
         this.roles = this.roles.filter(val => val.name !== role.name);
         this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Role '+role.name+' deleted successfully!', life: 3000});
       }
@@ -165,6 +169,7 @@ export class RoleListComponent implements OnInit {
   nodeUnselect(event) {
     const label:string = event.node.label;
     let pojoName:string;
+     this.role.permissions = Object.values(this.role.permissions);
     if(label.includes(".")){
       pojoName = label.split('.')[0];
       this.role.permissions = this.role.permissions.filter(permission=>(permission.pojo.name != label && permission.name != label));
@@ -179,14 +184,15 @@ export class RoleListComponent implements OnInit {
   findPojoByName(name:string):Pojo{
     return this.pojos.find(pojo=>pojo.name == name);
   }
-
+  navigateMenu(){
+     this.router.navigateByUrl("view/role/menu");
+  }
   editSavedRole(){
     this.role.permissions = Object.values(this.role.permissions);
     this.roles[this.indexOfEditedRole] = this.role;
     this.roleEditing = false;
     this.roleDialog = false;
     this.selectedFilesHistory.delete(this.indexOfEdited);
-    console.log(this.indexOfEdited)
     this.selectedFilesHistory.set(this.indexOfEdited,this.selectedFiles2);
   }
   getSelectedFile(){

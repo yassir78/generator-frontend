@@ -13,8 +13,8 @@
                 </ng-template>
 
                 <ng-template pTemplate="right">
-                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import"
-                        chooseLabel="Import" class="p-mr-2 p-mb-2 p-d-inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Next" icon="pi pi-arrow-right" class="p-button-info p-mb-2"
+                        (click)="navigateMenu()"></button>
                 </ng-template>
             </p-toolbar>
 
@@ -64,7 +64,7 @@
                             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
                                 (click)="editRole(role,rowIndex)"></button>
                             <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-                                (click)="deleteRole(role)"></button>
+                                (click)="deleteRole(role,rowIndex)"></button>
                         </td>
                     </tr>
                 </ng-template>
