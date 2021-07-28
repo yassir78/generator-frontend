@@ -80,7 +80,7 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="roleDialog" (onHide)="hideDialog()" [style]="{width: '450px'}" header="Product Details"
+        <p-dialog [(visible)]="roleDialog" (onHide)="hideDialog()" [style]="{width: '450px'}" [header]="roleEditing?'Modifier Role':'Ajouter un Role'"
                   [modal]="true" styleClass="p-fluid">
             <ng-template pTemplate="content">
                 <div class="p-field">
@@ -89,7 +89,7 @@
                     <small class="p-invalid" *ngIf="submitted && !role.name">Name is required.</small>
                 </div>
                 <div>
-                    <label for="name">privilège</label>
+                    <label for="name">Privilages</label>
 
                     <p-tree [value]="files3" selectionMode="checkbox" (onNodeSelect)="nodeSelect($event)"
                             (onNodeUnselect)="nodeUnselect($event)" [(selection)]="selectedFiles2"></p-tree>

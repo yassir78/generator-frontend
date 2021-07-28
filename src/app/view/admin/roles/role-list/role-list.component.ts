@@ -121,6 +121,10 @@ export class RoleListComponent implements OnInit {
     // });
   }
 
+  showPermissionName(permissionName){
+    return permissionName.splite('.')[1];
+  }
+
   editRole(role: RoleConfig,index:number) {
     this.indexOfEdited = index;
     this.roleEditing = true;

@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Pojo} from "../model/pojo";
 import {RoleConfig} from "../model/roleConfig";
 import {PojoService} from "./pojo.service";
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +16,32 @@ export class MenuService {
   private _selectes: Array<Menu>;
   private _addMenuDailog:boolean=false;
   private _editMenuDialog:boolean=false;
-
+  private _viewMenuDialog:boolean = false;
+  private _selectedMenu:Menu = new Menu();
+  public viewRefresh$ = new BehaviorSubject<boolean>(false);
+  private _menusToBeAffected:Menu[]=[];
+  private _affectedMenus:Menu[]=[];
   constructor(private http: HttpClient,pojoService:PojoService) { }
+  get affectedMenus(): Menu[] {
+    return this._affectedMenus;
+  }
+  set affectedMenus(value: Menu[]) {
+    this._affectedMenus= value;
+  }
+  get menusToBeAffected(): Menu[] {
+    return this._menusToBeAffected;
+  }
 
+  set menusToBeAffected(value: Menu[]) {
+    this._menusToBeAffected= value;
+  }
+  get selectedMenu(): Menu {
+    return this._selectedMenu;
+  }
+
+  set selectedMenu(value: Menu) {
+    this._selectedMenu = value;
+  }
   get editMenuDialog(): boolean {
     return this._editMenuDialog;
   }
@@ -54,6 +78,12 @@ export class MenuService {
   set addMenuDialog(value: boolean) {
     this._addMenuDailog = value;
   }
+   get viewMenuDialog(): boolean{
+        return this._viewMenuDialog;
+    }
 
+    set viewMenuDialog(value: boolean) {
+        this._viewMenuDialog = value;
+    }
 
 }
