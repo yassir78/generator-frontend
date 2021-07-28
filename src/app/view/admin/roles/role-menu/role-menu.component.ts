@@ -7,6 +7,7 @@ import {Pojo} from "../../../../controller/model/pojo";
 import {RoleConfig} from "../../../../controller/model/roleConfig";
 import {RoleService} from "../../../../controller/service/role.service";
 import {PojoService} from "../../../../controller/service/pojo.service";
+import {SplitterModule} from 'primeng/splitter';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -15,24 +16,48 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
   styleUrls: ['./role-menu.component.scss']
 })
 export class RoleMenuComponent implements OnInit {
-  menuForm: FormGroup;
-  sousMenu: FormArray;
+  menusArray: Menu[] = [];
   menuFormEdit:FormGroup;
   appear:boolean=false;
-  cols: any[];
-  colAttributs:any[];
   constructor(private formBuilder: FormBuilder, private confirmationService: ConfirmationService,
               private serviceMenu: MenuService, private serviceRole: RoleService,private servicePojo:PojoService,private router: Router) {
   }
 
+  menuForm = new FormGroup({ 
+    libelle:new FormControl("",[Validators.required]),
+    icone:new FormControl("",[Validators.required]),
+  });  
+
+  sousMenuForm = new FormGroup({ 
+    libelleS: new FormControl("",[Validators.required]), 
+    iconeS: new FormControl("",[Validators.required]), 
+
+  });
+
   ngOnInit(): void {
     this.initCol();
-     this.menuForm = this.formBuilder.group({
-      icon: new FormControl('',[Validators.required]),
-      libelle: new FormControl('',[Validators.required]),
-      sousMenu: this.formBuilder.array([ ])
+  }
+  addSousMenu(){
+    const souMenu = this.sousMenuForm.value;
+    this.menusArray.push({libelle:souMenu.libelleS,icone:souMenu.iconeS});
+    this.resetMenuForm();
+  }
+  resetMenuForm(){
+    this.sousMenuForm.reset();
+    this.sousMenuForm = new FormGroup({ 
+      libelleS: new FormControl("",[Validators.required]), 
+      iconeS: new FormControl("",[Validators.required]), 
+  
     });
   }
+
+  hide(){
+    this.menuForm.reset();
+    this.resetMenuForm(); 
+    this.serviceMenu.addMenuDialog = false;
+    this.menusArray = [];
+  }
+
   edit(menu:Menu){
     this.menuFormEdit = this.formBuilder.group({
       icon: new FormControl(menu.icone,[Validators.required]),
@@ -40,52 +65,54 @@ export class RoleMenuComponent implements OnInit {
       //sousMenu: this.formBuilder.array([ ])
     this.editMenuDialog = true;
   }
-  createItem(): FormGroup {
-    return this.formBuilder.group({
-      icon:  new FormControl('',[Validators.required]),
-      libelle:  new FormControl('',[Validators.required]),
-    });
-  }
-    addItem(): void {
-    this.sousMenu = this.menuForm.get('sousMenu') as FormArray;
-    this.sousMenu.push(this.createItem());
-  }
+  // createItem(): FormGroup {
+  //   return this.formBuilder.group({
+  //     icon:  new FormControl('',[Validators.required]),
+  //     libelle:  new FormControl('',[Validators.required]),
+  //   });
+  // }
+  //   addItem(): void {
+  //   this.sousMenu = this.menuForm.get('sousMenu') as FormArray;
+  //   this.sousMenu.push(this.createItem());
+  // }
   onSubmit(){
-     const formValues = this.menuForm.value;
-     const menuLibelle = formValues ? formValues.libelle : false;
-     const iconLibelle = formValues ? formValues.icon : false;
-     const sousMenu : Menu[] = formValues ? formValues.sousMenu : false;
-     let menu : Menu = {libelle:menuLibelle,icone:iconLibelle,menuItems:sousMenu};
-     console.log(menu)
+     const menuFormValues = this.menuForm.value;
+     const sousMenuFormValues = this.sousMenuForm.value;
+
+     const menuLibelle = menuFormValues ? menuFormValues.libelle : false;
+     const iconLibelle = menuFormValues ? menuFormValues.icone : false;
+     let menu : Menu;
+    if(this.menusArray != null){
+      menu = {libelle:menuLibelle,icone:iconLibelle,menuItems:this.menusArray};
+    }
+    else{
+      menu = {libelle:menuLibelle,icone:iconLibelle};
+    }
      this.menus.push(menu);
      console.log(this.menus)
-
-    console.log("%c *****************************", "color: blue; font-size: x-large");
-
-     console.log(this.menuForm)
-
-     console.log("%c *****************************", "color: blue; font-size: x-large");
+     this.menuForm.reset();
+     this.resetMenuForm();
+     this.menusArray = [];
+     this.addMenuDialog = false;
   }
+
+
   private initCol() {
     this.servicePojo.items.forEach(pojo=>{
-      this.menus.push({libelle:pojo.name,icone:"pi-list",pojo:pojo});
+      this.menus.push({libelle:pojo.name,icone:"pi pi-list",pojo:pojo});
     })
-    this.cols = [
-      {field: 'icone', header: 'Icone'},
-      {field: 'libelle', header: 'Libelle'},
-      {field: 'pojo', header: 'Pojo'},
-      {field: 'actions', header: 'Actions'}
-    ];
-
   }
+
+
   delete(menuToDelete:Menu){
     this.menus = this.menus.filter(menu=>menu.libelle != menuToDelete.libelle)
   }
 
+  deleteSousMenu(menu:Menu){
+    this.menusArray = this.menusArray.filter(m=>m.libelle != menu.libelle)
+  }
 
-
-
-
+//getters et setters
   get roles() :RoleConfig[]{
     return this.serviceRole.roles;
   }
@@ -116,9 +143,6 @@ export class RoleMenuComponent implements OnInit {
   }
   set editMenuDialog(value:boolean) {
     this.serviceMenu.editMenuDialog=value;
-  }
-  affecter(role: RoleConfig) {
-
   }
 
   addMenu() {
