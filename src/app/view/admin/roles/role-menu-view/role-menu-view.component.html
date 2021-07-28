@@ -1,15 +1,16 @@
-<p-dialog header="Menu view" (onHide)="hide()" [(visible)]="viewMenuDialog" [style]="{width: '80vw',height:'auto'}"
-    [contentStyle]="{minHeight:'25vh'}" [baseZIndex]="10000">
+<p-dialog header="Menu view" (onHide)="hide()" [(visible)]="viewMenuDialog" [style]="{width: '40vw',height:'auto'}"
+    [contentStyle]="{minHeight:'10vh'}" [baseZIndex]="10000">
     <div class="p-field p-grid">
         <label for="menuLibelle" class="p-col-fixed">Libelle</label>
         <div class="p-col">
             <input id="menuLibelle" type="text" pInputText [value]="this.selectedMenu.libelle" readonly>
         </div>
 
-        <label for="menuIcon" class="p-col-fixed">Icon</label>
+        <label for="menuIcon" class="p-col-fixed">Icon: </label>
         <div class="p-col">
-            <i [class]="this.selectedMenu.icone"></i>
-            <!--  <input id="menuIcon" type="text" pInputText formControlName="icone" readonly> -->
+            <div style="margin-top: 3%;">
+                <i [class]="this.selectedMenu.icone"></i>
+            </div>
         </div>
     </div>
     <p-splitter [panelSizes]="[25,65]" *ngIf="selectedMenu.menuItems != undefined">

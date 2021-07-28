@@ -178,7 +178,6 @@ export class PojoListComponent implements OnInit {
     this.service.selectedPojoToBeEdited = selected;
     this.appear = true;
     this.selected = selected;
-    // console.log('pojo to be edited: ',this.service.selectedPojoToBeEdited)
   }
   public openCreate() {
     this.selected = new Pojo();

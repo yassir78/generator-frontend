@@ -1,3 +1,4 @@
+<h3>Gestion des rôles</h3>
 <div class="p-grid">
     <div class="p-col-12">
 
@@ -19,11 +20,11 @@
                 </ng-template>
             </p-toolbar>
 
-            <p-table #dt [value]="roles" [columns]="cols" [rows]="10" [paginator]="true"
-                     [globalFilterFields]="['name','country.name','representative.name','status']"
+            <p-table #dt [value]="roles" [rows]="2" [paginator]="true"
+                     [globalFilterFields]="['name']"
                      [(selection)]="selectedRoles" [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                     [showCurrentPageReport]="true">
+                     [showCurrentPageReport]="true" class="p-col">
                 <ng-template pTemplate="caption">
                     <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
                         <h5 class="p-m-0">Manage Roles</h5>

@@ -50,7 +50,6 @@ export class RoleMenuComponent implements OnInit {
     this.initCol();
   }
   openViewDialog(menu:Menu){
-    console.log("open view Dialog")
     this.viewMenuDialog = true;
     this.selectedMenu = menu;
     this.serviceMenu.viewRefresh$.next(true);
@@ -92,6 +91,7 @@ export class RoleMenuComponent implements OnInit {
   }
  hideEdit(){
    this.menuFormEdit.reset();
+   if(this.editingMenuWithPojo = true) this.editingMenuWithPojo = false;
  }
   editSubMenu(menu:Menu){
     this.sousMenuEditing = true;
@@ -126,7 +126,7 @@ export class RoleMenuComponent implements OnInit {
      this.menuToBeEdited.icone = iconLibelle;
      this.menuToBeEdited.libelle = menuLibelle;
      this.sousMenuToBeEdited.length > 0 ? this.menuToBeEdited.menuItems = this.sousMenuToBeEdited : false;
-     console.log(this.menuToBeEdited)
+    
      this.editMenuDialog = false;
      this.sousMenuToBeEdited = [];
      this.menuFormEdit.reset();
@@ -154,6 +154,7 @@ export class RoleMenuComponent implements OnInit {
 
 
   private initCol() {
+    this.menus = [];
     this.servicePojo.items.forEach(pojo=>{
       this.menus.push({libelle:pojo.name,icone:"pi pi-list",pojo:pojo});
     })
@@ -170,7 +171,6 @@ export class RoleMenuComponent implements OnInit {
  openAffecterDialog(role:RoleConfig){
    this.affecterRoleDialog = true;
    this.selectedRole = role;
-   console.log("***********************")
    this.serviceRole.affecterRole$.next(true);
    } 
 //getters et setters
