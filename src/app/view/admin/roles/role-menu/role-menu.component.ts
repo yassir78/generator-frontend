@@ -154,6 +154,7 @@ export class RoleMenuComponent implements OnInit {
 
 
   private initCol() {
+    this.menus = [];
     this.servicePojo.items.forEach(pojo=>{
       this.menus.push({libelle:pojo.name,icone:"pi pi-list",pojo:pojo});
     })
