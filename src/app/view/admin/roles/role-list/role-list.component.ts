@@ -140,7 +140,6 @@ export class RoleListComponent implements OnInit {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        console.log( this.selectedFilesHistory)
         this.selectedFilesHistory.delete(index);
         this.selectedFilesHistoryIndex--;
         this.roles = this.roles.filter(val => val.name !== role.name);
@@ -159,7 +158,6 @@ export class RoleListComponent implements OnInit {
     }
   }
   nodeSelect(event) {
-   console.log(event)
    const label:string = event.node.label;
    let pojoName:string;
    let pojo:Pojo
@@ -176,7 +174,6 @@ export class RoleListComponent implements OnInit {
       children ? children.forEach(child => {permissions.push({name:child.label,pojo:pojo})}) : false;
       this.role.permissions.push(...permissions)
    }
-    console.log(this.role.permissions)
   }
   nodeUnselect(event) {
     const label:string = event.node.label;
@@ -188,7 +185,6 @@ export class RoleListComponent implements OnInit {
     }else{
       this.role.permissions = this.role.permissions.filter(permission=>permission.pojo.name != label);
     }
-    console.log(this.role.permissions)
   /*  const children = event.node.children.map(child=>child.label);
    this.role.permissions = Object.values(this.role.permissions);
    this.role.permissions = this.role.permissions.filter(permission=> !children.includes(permission.name)) */
