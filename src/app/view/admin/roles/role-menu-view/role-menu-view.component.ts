@@ -18,7 +18,9 @@ export class RoleMenuViewComponent implements OnInit {
   }
 
   // methods 
-
+  hide(){
+    this.viewMenuDialog = false
+  }
 
   // getters and setters 
     get selectedMenu(): Menu{

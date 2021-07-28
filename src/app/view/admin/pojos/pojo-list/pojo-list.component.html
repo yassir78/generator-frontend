@@ -12,12 +12,12 @@
                     <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger p-mb-2 p-mr-5"
                         (click)="deleteMultiple()" [disabled]="!selectes || !selectes.length"></button>
 
-                    <button pButton pRipple label="Next" icon="pi pi-arrow-right" class="p-button-info p-mb-2"
-                        (click)="navigate()"></button>
+                        <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help p-mb-2"
+                        (click)="onExport()"></button>
                 </ng-template>
                 <ng-template pTemplate="right">
-                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help p-mb-2"
-                        (click)="onExport()"></button>
+                        <button pButton pRipple label="Next" icon="pi pi-arrow-right" class="p-button-info p-mb-2"
+                        (click)="navigate()"></button>
                 </ng-template>
             </p-toolbar>
             <div class="p-grid">

@@ -37,13 +37,11 @@ export class PojoAddComponent implements OnInit {
     //la liste des pojos
     this.pojosNames = this.service.items.map(pojo=>{
       return { name: pojo.name } });
-      //console.log(this.pojosNames)
   }
 
    addField(): void {  
     const field = this.formField.value;
     const fieldProcessed = this.processFields(field);
-    // console.log("added field: ",fieldProcessed);
     this.fieldsArray.push(fieldProcessed);
     this.resetFieldForm();
   } 

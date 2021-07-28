@@ -49,7 +49,7 @@
 
 
                             <td>
-                                <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-info p-mr-2"
+                                <button pButton pRipple label="Affecter" class="p-button-rounded p-button-info p-mr-2"
                                     (click)="openAffecterDialog(role)"></button>
 
 
@@ -63,7 +63,7 @@
                     </ng-template>
                 </p-table>
 
-                <p-table #dt [rows]="5" [paginator]="true" [globalFilterFields]="['name']" [value]="menus"
+                <p-table #dt [rows]="4" [paginator]="true" [globalFilterFields]="['name']" [value]="menus"
                     [rowHover]="true" dataKey="name" styleClass="p-datatable-customers"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                     [showCurrentPageReport]="true" class="p-col">
@@ -88,7 +88,7 @@
                             <th pSortableColumn="pojo" class="p-column-title">Pojo
                                 <p-sortIcon field="pojo"></p-sortIcon>
                             </th>
-                            <th pSortableColumn="actions" class="p-column-title">Actions
+                            <th style="margin-left: 25vh" pSortableColumn="actions" class="p-column-title" >Actions
                                 <p-sortIcon field="actions"></p-sortIcon>
                             </th>
                         </tr>
@@ -100,7 +100,7 @@
                             <td>{{menu.libelle}}</td>
                             <td>{{menu.pojo != undefined ? menu.pojo.name : 'Pojo non défini'}}</td>
                             <td>
-                                <button pButton pRipple icon="pi pi-pencil"
+                                <button pButton pRipple icon="pi pi-list"
                                     class="p-button-rounded p-button-info p-mr-4"
                                     (click)="openViewDialog(menu)"></button>
                                 <button pButton pRipple icon="pi pi-pencil"
@@ -118,7 +118,7 @@
 
 
         <p-dialog header="Ajouter un Menu" (onHide)="hide()" [(visible)]="addMenuDialog"
-            [style]="{width: '80vw',height:'auto'}" [contentStyle]="{minHeight:'25vh'}" [baseZIndex]="10000">
+            [style]="{width: '70vw',height:'auto'}" [contentStyle]="{minHeight:'25vh'}" [baseZIndex]="10000">
             <div class="p-field p-grid" [formGroup]="menuForm">
                 <label for="menuLibelle" class="p-col-fixed">Libelle</label>
                 <div class="p-col">
@@ -202,55 +202,8 @@
                 style="margin-top: 3vh;float: right;" (click)="onSubmit()"></button>
 
         </p-dialog>
-        <!-- <p-dialog [(visible)]="addMenuDialog"  [style]="{width: '65vw',height:'auto'}"
-        [contentStyle]="{minHeight:'30vh'}" [baseZIndex]="10000" header="Menu Add" [modal]="true"
-            styleClass="p-fluid">
-            <p-splitter [style]="{'height': '300px'}" [panelSizes]="[50,50]" layout="horizontal">
-                <ng-template pTemplate="p-col-12" >
-                    <div class="p-fluid" [formGroup]="menuForm" style="padding: 20px; margin: 10px;">
-                        <div class="p-field">
-                            <label for="libelle">Libelle</label>
-                            <input type="text" pInputText id="libelle" formControlName="libelle" autofocus />
-                        </div>
-                        <div class="p-field">
-                            <label for="icon">Icon</label>
-                            <input type="text" pInputText id="icon" formControlName="icon" required autofocus />
-                            <span><a href="https://www.primefaces.org/diamond/icons.xhtml" target="_blank">Icons</a></span>
-                        </div>
-                        <div style="display: flex;justify-content: space-between;">
-                            <button type="p-button-rounded p-button-info p-mr-2" (click)="addItem()">Add Sous menu</button> 
-                            <button pButton label="Add Sous menu" (click)="addItem()"></button>
-                            <button type="p-button-rounded p-button-info p-mr-2" type="submit" [disabled]="menuForm.invalid"
-                                (click)="onSubmit()">Save</button>
-                        </div>
-                    </div>
-                </ng-template>
 
-                <ng-template pTemplate="p-col-12">
-                    <div formArrayName="sousMenu" class="p-fluid" style="padding: 20px; margin: 10px;"
-                    *ngFor="let item of menuForm.get('sousMenu')['controls']; let i = index;">
-                 
-                    <div [formGroupName]="i" class="p-fluid" style="margin-bottom: 6vh;">
-                        <div class="p-field">
-                            <label for="libelle">Libelle</label>
-                            <input type="text" pInputText id="libelle" formControlName="libelle" autofocus />
-                        </div>
-                        <div class="p-field">
-                            <label for="icon">Icon</label>
-                            <input type="text" pInputText id="icon" formControlName="icon" required autofocus />
-                    </div>
-                    </div>
-                    </div>
-                
-                </ng-template>
-            </p-splitter>
-           
-            <ng-template pTemplate="footer">
-                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"></button>
-                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
-            </ng-template>
-        </p-dialog> -->
-        <p-dialog [(visible)]="editMenuDialog" [style]="{width: '80vw',height:'auto'}" (onHide)="hideEdit()"
+        <p-dialog [(visible)]="editMenuDialog" [style]="{width: '70vw',height:'auto'}" (onHide)="hideEdit()"
             [contentStyle]="{minHeight:'25vh'}" header="Menu Edit" [modal]="true" styleClass="p-fluid">
             <div class="p-field p-grid" [formGroup]="menuFormEdit">
                 <label for="menuLibelle" class="p-col-fixed">Libelle</label>
@@ -264,9 +217,9 @@
                     <span><a href="https://www.primefaces.org/diamond/icons.xhtml" target="_blank">Check
                             icons</a></span>
                 </div>
-                <div class="p-col" *ngIf="editingMenuWithPojo">
-                    <label class="p-col-fixed">Pojo Name</label>
-                    <input type="text" pInputText [value]="menuToBeEdited.pojo.name" readonly>
+                <label for="pojoName" *ngIf="editingMenuWithPojo" class="p-col-fixed">Pojo name</label>
+                <div id="pojoName" class="p-col" *ngIf="editingMenuWithPojo">
+                    <input type="text" pInputText [value]="menuToBeEdited.pojo.name!=undefined?menuToBeEdited.pojo.name:''" readonly>
                 </div>
             </div>
             <span *ngIf="!editingMenuWithPojo" class="p-float-label" style="margin-bottom: 3vh;">Ajouter un sou menu
@@ -337,15 +290,12 @@
                     </p-table>
                 </ng-template>
             </p-splitter>
-            <div style="display: flex;justify-content: space-between;">
-                <div>
-                    <button pButton type="button" class="p-mr-4" *ngIf="!editingMenuWithPojo" label="edit sous menu"
+                    <button style="float: left;margin-right: 2vh;max-width: 20vh;margin-top: 3vh;" *ngIf="!editingMenuWithPojo" pButton type="button" class="p-mr-4" label="edit sous menu"
                         (click)="editSousMenuForm()" [disabled]="!sousMenuEditing"></button>
-                    <button pButton type="button" class="p-mr-4" *ngIf="!editingMenuWithPojo" label="ADD Sous menu"
+                    <button style="float: left;max-width: 20vh;margin-top: 3vh;" *ngIf="!editingMenuWithPojo" pButton type="button" class="p-mr-4"  label="ADD Sous menu"
                         (click)="addSousMenuEdit()" [disabled]="sousMenuEditing"></button>
-                </div>
-                <button pButton type="submit" label="Edit" (click)="editMenu()"></button>
-            </div>
+               
+            <button pButton type="submit" style="max-width: 15vh;margin-top: 3vh;float: right;" label="Edit" (click)="editMenu()"></button>
         </p-dialog>
     </div>
 </div>

@@ -129,10 +129,7 @@ export class RoleListComponent implements OnInit {
     this.indexOfEdited = index;
     this.roleEditing = true;
     this.role = {...role,permissions:{...role.permissions}};
-    console.log(this.role);
     this.indexOfEditedRole = this.roles.findIndex(r=>r.name === role.name)
-    //this.selectedFiles2 = this.roleToTreeNode(role);
-    console.log( this.selectedFilesHistory)
     this.selectedFiles2=this.selectedFilesHistory.get(this.indexOfEdited);
     this.roleDialog = true;
 
