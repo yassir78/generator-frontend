@@ -1,0 +1,47 @@
+<p-dialog header="Menu view" (onHide)="hide()" [(visible)]="viewMenuDialog" [style]="{width: '80vw',height:'auto'}"
+    [contentStyle]="{minHeight:'25vh'}" [baseZIndex]="10000">
+    <div class="p-field p-grid">
+        <label for="menuLibelle" class="p-col-fixed">Libelle</label>
+        <div class="p-col">
+            <input id="menuLibelle" type="text" pInputText [value]="this.selectedMenu.libelle" readonly>
+        </div>
+
+        <label for="menuIcon" class="p-col-fixed">Icon</label>
+        <div class="p-col">
+            <i [class]="this.selectedMenu.icone"></i>
+            <!--  <input id="menuIcon" type="text" pInputText formControlName="icone" readonly> -->
+        </div>
+    </div>
+    <p-splitter [panelSizes]="[25,65]" *ngIf="selectedMenu.menuItems != undefined">
+        <ng-template pTemplate>
+            <p-table #dt [rows]="4" [paginator]="true" [globalFilterFields]="['name']" [value]="selectedMenu.menuItems"
+                [rowHover]="true" dataKey="name" styleClass="p-datatable-customers"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [showCurrentPageReport]="true" class="p-col">
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="libelle">Libelle
+                            <p-sortIcon field="libelle"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="icon">Icon
+                            <p-sortIcon field="icon"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-menu>
+                    <tr>
+                        <td>{{menu.libelle}}</td>
+                        <td>
+                            <i class="{{menu.icone}}"></i>
+                        </td>
+                    </tr>
+                </ng-template>
+
+            </p-table>
+        </ng-template>
+    </p-splitter>
+
+    <button pButton label="Fermer" style="margin-top: 3vh;float: right;" (click)="hide()"></button>
+
+</p-dialog>

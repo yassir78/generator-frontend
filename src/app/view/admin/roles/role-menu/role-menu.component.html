@@ -50,7 +50,7 @@
 
                             <td>
                                 <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-info p-mr-2"
-                                    (click)="affecter(role)"></button>
+                                    (click)="openAffecterDialog(role)"></button>
 
 
                             </td>
@@ -63,7 +63,7 @@
                     </ng-template>
                 </p-table>
 
-                <p-table #dt [rows]="4" [paginator]="true" [globalFilterFields]="['name']" [value]="menus"
+                <p-table #dt [rows]="5" [paginator]="true" [globalFilterFields]="['name']" [value]="menus"
                     [rowHover]="true" dataKey="name" styleClass="p-datatable-customers"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                     [showCurrentPageReport]="true" class="p-col">
@@ -98,8 +98,11 @@
                             <td><i class="{{menu.icone}}"></i>
                             </td>
                             <td>{{menu.libelle}}</td>
-                            <td>{{menu.pojo != undefined ? menu.pojo.name : ''}}</td>
+                            <td>{{menu.pojo != undefined ? menu.pojo.name : 'Pojo non défini'}}</td>
                             <td>
+                                <button pButton pRipple icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-info p-mr-4"
+                                    (click)="openViewDialog(menu)"></button>
                                 <button pButton pRipple icon="pi pi-pencil"
                                     class="p-button-rounded p-button-success p-mr-2" (click)="edit(menu)"></button>
                                 <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
@@ -114,86 +117,91 @@
         </div>
 
 
- <p-dialog header="Ajouter un Menu" (onHide)="hide()" [(visible)]="addMenuDialog"  [style]="{width: '80vw',height:'auto'}"
-    [contentStyle]="{minHeight:'25vh'}" [baseZIndex]="10000" (onHide)="hide()">
-    <div class="p-field p-grid" [formGroup]="menuForm">
-        <label for="menuLibelle" class="p-col-fixed">Libelle</label>
-        <div class="p-col">
-            <input id="menuLibelle" type="text" pInputText formControlName="libelle">
-        </div>
+        <p-dialog header="Ajouter un Menu" (onHide)="hide()" [(visible)]="addMenuDialog"
+            [style]="{width: '80vw',height:'auto'}" [contentStyle]="{minHeight:'25vh'}" [baseZIndex]="10000">
+            <div class="p-field p-grid" [formGroup]="menuForm">
+                <label for="menuLibelle" class="p-col-fixed">Libelle</label>
+                <div class="p-col">
+                    <input id="menuLibelle" type="text" pInputText formControlName="libelle">
+                </div>
 
-        <label for="menuIcon" class="p-col-fixed">Icon</label>
-        <div class="p-col">
-            <input id="menuIcon" type="text" pInputText formControlName="icone">
-            <span><a href="https://www.primefaces.org/diamond/icons.xhtml" target="_blank">Check icons</a></span>
-        </div>
-    </div>
-    <span class="p-float-label" style="margin-bottom: 3vh;">Ajouter un sou menu (Optionnel)</span>
-    <p-splitter [panelSizes]="[25,65]">
-        <ng-template pTemplate class="p-col-12">
-            <div class="p-fluid" [formGroup]="sousMenuForm" style="padding: 20px; margin: 10px;">
-                <div class="p-fluid" style="margin-bottom: 6vh;">
-                    <div class="p-field">
-                        <span class="p-float-label">
-                            <input type="text" id="inputtext" pInputText formControlName="libelleS">
-                            <label for="inputtext">Libelle</label>
-                        </span>
-                    </div>
+                <label for="menuIcon" class="p-col-fixed">Icon</label>
+                <div class="p-col">
+                    <input id="menuIcon" type="text" pInputText formControlName="icone">
+                    <span><a href="https://www.primefaces.org/diamond/icons.xhtml" target="_blank">Check
+                            icons</a></span>
                 </div>
-                <div class="p-fluid" style="margin-bottom: 6vh;">
-                    <div class="p-field">
-                        <span class="p-float-label">
-                            <input type="text" id="inputtext" pInputText formControlName="iconeS">
-                            <label for="inputtext">Icon</label>
-                        </span>
-                    </div>
-                </div>
-        
-        
             </div>
-        </ng-template>
+            <span class="p-float-label" style="margin-bottom: 3vh;">Ajouter un sou menu (Optionnel)</span>
+            <p-splitter [panelSizes]="[25,65]">
+                <ng-template pTemplate class="p-col-12">
+                    <div class="p-fluid" [formGroup]="sousMenuForm" style="padding: 20px; margin: 10px;">
+                        <div class="p-fluid" style="margin-bottom: 6vh;">
+                            <div class="p-field">
+                                <span class="p-float-label">
+                                    <input type="text" id="inputtext" pInputText formControlName="libelleS">
+                                    <label for="inputtext">Libelle</label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-fluid" style="margin-bottom: 6vh;">
+                            <div class="p-field">
+                                <span class="p-float-label">
+                                    <input type="text" id="inputtext" pInputText formControlName="iconeS">
+                                    <label for="inputtext">Icon</label>
+                                </span>
+                            </div>
+                        </div>
 
-        <ng-template pTemplate>
-            <p-table #dt [rows]="4" [paginator]="true" [globalFilterFields]="['name']" [value]="menusArray"
-            [rowHover]="true" dataKey="name" styleClass="p-datatable-customers"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [showCurrentPageReport]="true" class="p-col">
-          
-            <ng-template pTemplate="header">
-                <tr>
-                    <th pSortableColumn="libelle">Libelle
-                        <p-sortIcon field="libelle"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="icon">Icon
-                        <p-sortIcon field="icon"></p-sortIcon>
-                    </th>
-                    <th style="display: flex;justify-content: space-between;align-items: center;padding-left: 6%;">Action
-        
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-menu>
-                <tr>
-                    <td>{{menu.libelle}}</td>
-                    <td>
-                        <i class="{{menu.icone}}"></i>
-                    </td>
-    
-                    <td>
-                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
-                            (click)="deleteSousMenu(menu)"></button>
-                    </td>
-                </tr>
-            </ng-template>
-        
-            </p-table>
-        </ng-template>
-    </p-splitter>
 
-    <button pButton type="button" class="p-mr-4" [disabled]="!sousMenuForm.valid" style="margin-top: 3vh;" label="ADD Sous menu" (click)="addSousMenu()"></button>
-    <button pButton type="submit" label="Save" [disabled] = "!menuForm.valid" style="margin-top: 3vh;float: right;" (click)="onSubmit()"></button>
- 
-</p-dialog>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate>
+                    <p-table #dt [rows]="4" [paginator]="true" [globalFilterFields]="['name']" [value]="menusArray"
+                        [rowHover]="true" dataKey="name" styleClass="p-datatable-customers"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        [showCurrentPageReport]="true" class="p-col">
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="libelle">Libelle
+                                    <p-sortIcon field="libelle"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="icon">Icon
+                                    <p-sortIcon field="icon"></p-sortIcon>
+                                </th>
+                                <th
+                                    style="display: flex;justify-content: space-between;align-items: center;padding-left: 6%;">
+                                    Action
+
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-menu>
+                            <tr>
+                                <td>{{menu.libelle}}</td>
+                                <td>
+                                    <i class="{{menu.icone}}"></i>
+                                </td>
+
+                                <td>
+                                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                                        (click)="deleteSousMenu(menu)"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+
+                    </p-table>
+                </ng-template>
+            </p-splitter>
+
+            <button pButton type="button" class="p-mr-4" [disabled]="!sousMenuForm.valid" style="margin-top: 3vh;"
+                label="ADD Sous menu" (click)="addSousMenu()"></button>
+            <button pButton type="submit" label="Save" [disabled]="!menuForm.valid"
+                style="margin-top: 3vh;float: right;" (click)="onSubmit()"></button>
+
+        </p-dialog>
         <!-- <p-dialog [(visible)]="addMenuDialog"  [style]="{width: '65vw',height:'auto'}"
         [contentStyle]="{minHeight:'30vh'}" [baseZIndex]="10000" header="Menu Add" [modal]="true"
             styleClass="p-fluid">
@@ -242,47 +250,104 @@
                 <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
             </ng-template>
         </p-dialog> -->
-        <p-dialog [(visible)]="editMenuDialog" [style]="{width: '50vw'}" header="Menu Edit" [modal]="true"
-            styleClass="p-fluid">
-            <ng-template pTemplate="content">
-                <div class="" [formGroup]="menuFormEdit">
-                    <div class="p-field">
-                        <label for="libelle">Libelle</label>
-                        <input type="text" pInputText id="libelle" formControlName="libelle" autofocus />
-                    </div>
-                    <div class="p-field">
-                        <label for="icon">Icon</label>
-                        <input type="text" pInputText id="icon" formControlName="icon" required autofocus />
-                        <span><a href="https://www.primefaces.org/diamond/icons.xhtml" target="_blank">Icons</a></span>
-                    </div>
+        <p-dialog [(visible)]="editMenuDialog" [style]="{width: '80vw',height:'auto'}" (onHide)="hideEdit()"
+            [contentStyle]="{minHeight:'25vh'}" header="Menu Edit" [modal]="true" styleClass="p-fluid">
+            <div class="p-field p-grid" [formGroup]="menuFormEdit">
+                <label for="menuLibelle" class="p-col-fixed">Libelle</label>
+                <div class="p-col">
+                    <input id="menuLibelle" type="text" pInputText formControlName="libelle">
+                </div>
 
-                    <!--    <div formArrayName="sousMenu" *ngFor="let item of menuForm.get('sousMenu')['controls']; let i = index;">
-                        <p-divider></p-divider>
-                        <p class="font-semibold">Sous Menu {{i}}</p>
-                        <div [formGroupName]="i">
+                <label for="menuIcon" class="p-col-fixed">Icon</label>
+                <div class="p-col">
+                    <input id="menuIcon" type="text" pInputText formControlName="icone">
+                    <span><a href="https://www.primefaces.org/diamond/icons.xhtml" target="_blank">Check
+                            icons</a></span>
+                </div>
+                <div class="p-col" *ngIf="editingMenuWithPojo">
+                    <label class="p-col-fixed">Pojo Name</label>
+                    <input type="text" pInputText [value]="menuToBeEdited.pojo.name" readonly>
+                </div>
+            </div>
+            <span *ngIf="!editingMenuWithPojo" class="p-float-label" style="margin-bottom: 3vh;">Ajouter un sou menu
+                (Optionnel)</span>
+            <p-splitter [panelSizes]="[25,65]" *ngIf="!editingMenuWithPojo">
+                <ng-template pTemplate class="p-col-12">
+                    <div class="p-fluid" [formGroup]="sousMenuFormEdit" style="padding: 20px; margin: 10px;">
+                        <div class="p-fluid" style="margin-bottom: 6vh;">
                             <div class="p-field">
-                                <label for="libelle">Libelle</label>
-                                <input type="text" pInputText id="libelle" formControlName="libelle" autofocus />
-                            </div>
-                            <div class="p-field">
-                                <label for="icon">Icon</label>
-                                <input type="text" pInputText id="icon" formControlName="icon" required autofocus />
+                                <span class="p-float-label">
+                                    <input type="text" id="inputtext" pInputText formControlName="libelle">
+                                    <label for="inputtext">Libelle</label>
+                                </span>
                             </div>
                         </div>
+                        <div class="p-fluid" style="margin-bottom: 6vh;">
+                            <div class="p-field">
+                                <span class="p-float-label">
+                                    <input type="text" id="inputtext" pInputText formControlName="icone">
+                                    <label for="inputtext">Icon</label>
+                                </span>
+                            </div>
+                        </div>
+
+
                     </div>
-                    <div style="display: flex;justify-content: space-between;">
-                        <button type="p-button-rounded p-button-info p-mr-2" (click)="addItem()">Add Sous menu</button>
-                        <button type="p-button-rounded p-button-info p-mr-2" type="submit" [disabled]="menuForm.invalid"
-                            (click)="onSubmit()">Save</button>
-                    </div> -->
+                </ng-template>
 
+                <ng-template pTemplate>
+                    <p-table #dt [rows]="4" [paginator]="true" [globalFilterFields]="['name']"
+                        [value]="sousMenuToBeEdited" [rowHover]="true" dataKey="name" styleClass="p-datatable-customers"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        [showCurrentPageReport]="true" class="p-col">
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="libelle">Libelle
+                                    <p-sortIcon field="libelle"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="icon">Icon
+                                    <p-sortIcon field="icon"></p-sortIcon>
+                                </th>
+                                <th
+                                    style="display: flex;justify-content: space-between;align-items: center;padding-left: 6%;">
+                                    Action
+
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-menu>
+                            <tr>
+                                <td>{{menu.libelle}}</td>
+                                <td>
+                                    <i class="{{menu.icone}}"></i>
+                                </td>
+
+                                <td>
+
+                                    <button pButton pRipple icon="pi pi-pencil"
+                                        class="p-button-rounded p-button-success p-mr-4"
+                                        (click)="editSubMenu(menu)"></button>
+                                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                                        (click)="deleteSousMenuToBeEdited(menu)"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+
+                    </p-table>
+                </ng-template>
+            </p-splitter>
+            <div style="display: flex;justify-content: space-between;">
+                <div>
+                    <button pButton type="button" class="p-mr-4" *ngIf="!editingMenuWithPojo" label="edit sous menu"
+                        (click)="editSousMenuForm()" [disabled]="!sousMenuEditing"></button>
+                    <button pButton type="button" class="p-mr-4" *ngIf="!editingMenuWithPojo" label="ADD Sous menu"
+                        (click)="addSousMenuEdit()" [disabled]="sousMenuEditing"></button>
                 </div>
-            </ng-template>
-
-            <ng-template pTemplate="footer">
-                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"></button>
-                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
-            </ng-template>
+                <button pButton type="submit" label="Edit" (click)="editMenu()"></button>
+            </div>
         </p-dialog>
     </div>
 </div>
+<app-role-menu-view></app-role-menu-view>
+<app-role-affectation></app-role-affectation>

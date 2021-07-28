@@ -17,7 +17,6 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 })
 export class RoleMenuComponent implements OnInit {
   menusArray: Menu[] = [];
-  menuFormEdit:FormGroup;
   appear:boolean=false;
   constructor(private formBuilder: FormBuilder, private confirmationService: ConfirmationService,
               private serviceMenu: MenuService, private serviceRole: RoleService,private servicePojo:PojoService,private router: Router) {
@@ -31,11 +30,30 @@ export class RoleMenuComponent implements OnInit {
   sousMenuForm = new FormGroup({ 
     libelleS: new FormControl("",[Validators.required]), 
     iconeS: new FormControl("",[Validators.required]), 
-
   });
-
+  
+  menuFormEdit = new FormGroup({ 
+    libelle:new FormControl("",[Validators.required]),
+    icone:new FormControl("",[Validators.required]),
+  });  
+  
+  sousMenuFormEdit = new FormGroup({ 
+    libelle:new FormControl("",[Validators.required]),
+    icone:new FormControl("",[Validators.required]),
+  });  
+  sousMenuToBeEdited:Menu[] = [];
+  sousMenuToBeEditedIndex:number;
+  menuToBeEdited:Menu;
+  sousMenuEditing:boolean = false;
+  editingMenuWithPojo:boolean=false;
   ngOnInit(): void {
     this.initCol();
+  }
+  openViewDialog(menu:Menu){
+    console.log("open view Dialog")
+    this.viewMenuDialog = true;
+    this.selectedMenu = menu;
+    this.serviceMenu.viewRefresh$.next(true);
   }
   addSousMenu(){
     const souMenu = this.sousMenuForm.value;
@@ -59,26 +77,64 @@ export class RoleMenuComponent implements OnInit {
   }
 
   edit(menu:Menu){
-    this.menuFormEdit = this.formBuilder.group({
-      icon: new FormControl(menu.icone,[Validators.required]),
-      libelle: new FormControl(menu.libelle,[Validators.required])});
-      //sousMenu: this.formBuilder.array([ ])
+    this.menuToBeEdited = menu;
+    this.menuFormEdit.patchValue({
+      icone:menu.icone,
+      libelle:menu.libelle
+    })
+    if(menu.menuItems != undefined){
+         this.sousMenuToBeEdited =  menu.menuItems.slice(0);
+    }else{
+          this.editingMenuWithPojo = true;
+    }
+    
     this.editMenuDialog = true;
   }
-  // createItem(): FormGroup {
-  //   return this.formBuilder.group({
-  //     icon:  new FormControl('',[Validators.required]),
-  //     libelle:  new FormControl('',[Validators.required]),
-  //   });
-  // }
-  //   addItem(): void {
-  //   this.sousMenu = this.menuForm.get('sousMenu') as FormArray;
-  //   this.sousMenu.push(this.createItem());
-  // }
+ hideEdit(){
+   this.menuFormEdit.reset();
+ }
+  editSubMenu(menu:Menu){
+    this.sousMenuEditing = true;
+    this.sousMenuFormEdit.patchValue({
+      icone:menu.icone,
+      libelle:menu.libelle
+    })
+    this.sousMenuToBeEditedIndex = this.sousMenuToBeEdited.findIndex(m=>m.libelle == menu.libelle);
+  }
+  addSousMenuEdit(){
+    const menuFormValues = this.sousMenuFormEdit.value;
+    const menuLibelle = menuFormValues ? menuFormValues.libelle : false;
+    const iconLibelle = menuFormValues ? menuFormValues.icone : false;
+    this.sousMenuToBeEdited.push({icone:iconLibelle,libelle:menuLibelle})
+    this.sousMenuFormEdit.reset();
+  }
+  editSousMenuForm(){
+    this.sousMenuEditing = false;
+    const menuFormValues = this.sousMenuFormEdit.value;
+    const menuLibelle = menuFormValues ? menuFormValues.libelle : false;
+    const iconLibelle = menuFormValues ? menuFormValues.icone : false;
+    this.sousMenuToBeEdited[this.sousMenuToBeEditedIndex]= {icone:iconLibelle,libelle:menuLibelle}
+    this.sousMenuFormEdit.reset();
+  }
+   deleteSousMenuToBeEdited(menu:Menu){
+    this.sousMenuToBeEdited = this.sousMenuToBeEdited.filter(m=>m.libelle != menu.libelle)
+  }
+  editMenu(){
+    const menuFormValues = this.menuFormEdit.value;
+     const menuLibelle = menuFormValues ? menuFormValues.libelle : false;
+     const iconLibelle = menuFormValues ? menuFormValues.icone : false;
+     this.menuToBeEdited.icone = iconLibelle;
+     this.menuToBeEdited.libelle = menuLibelle;
+     this.sousMenuToBeEdited.length > 0 ? this.menuToBeEdited.menuItems = this.sousMenuToBeEdited : false;
+     console.log(this.menuToBeEdited)
+     this.editMenuDialog = false;
+     this.sousMenuToBeEdited = [];
+     this.menuFormEdit.reset();
+     this.sousMenuForm.reset();
+  }
+
   onSubmit(){
      const menuFormValues = this.menuForm.value;
-     const sousMenuFormValues = this.sousMenuForm.value;
-
      const menuLibelle = menuFormValues ? menuFormValues.libelle : false;
      const iconLibelle = menuFormValues ? menuFormValues.icone : false;
      let menu : Menu;
@@ -110,8 +166,13 @@ export class RoleMenuComponent implements OnInit {
 
   deleteSousMenu(menu:Menu){
     this.menusArray = this.menusArray.filter(m=>m.libelle != menu.libelle)
-  }
-
+   }
+ openAffecterDialog(role:RoleConfig){
+   this.affecterRoleDialog = true;
+   this.selectedRole = role;
+   console.log("***********************")
+   this.serviceRole.affecterRole$.next(true);
+   } 
 //getters et setters
   get roles() :RoleConfig[]{
     return this.serviceRole.roles;
@@ -144,7 +205,36 @@ export class RoleMenuComponent implements OnInit {
   set editMenuDialog(value:boolean) {
     this.serviceMenu.editMenuDialog=value;
   }
-
+     get viewMenuDialog(): boolean {
+    return this.serviceMenu.viewMenuDialog;
+  }
+  set viewMenuDialog(value:boolean) {
+    this.serviceMenu.viewMenuDialog=value;
+  }
+       get selectedMenu(): Menu {
+    return this.serviceMenu.selectedMenu;
+  }
+  set selectedMenu(value:Menu) {
+    this.serviceMenu.selectedMenu=value;
+  }
+get affecterRoleDialog(): boolean{
+        return this.serviceRole.affecterRoleDialog;
+    }
+    set affecterRoleDialog(value: boolean) {
+        this.serviceRole.affecterRoleDialog = value;
+    }
+    get selectedRole(): RoleConfig{
+        return this.serviceRole.selectedRole;
+    }
+    set selectedRole(value: RoleConfig) {
+        this.serviceRole.selectedRole = value;
+    }
+      get menusToBeAffected(): Menu[]{
+        return this.serviceMenu.menusToBeAffected;
+    }
+    set menusToBeAffected(value: Menu[]) {
+        this.serviceMenu.menusToBeAffected = value;
+    }
   addMenu() {
     this.addMenuDialog=true;
   }

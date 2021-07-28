@@ -140,6 +140,8 @@ import { PojoAddFieldComponent } from './view/admin/pojos/pojo-add-field/pojo-ad
 import { FieldEditComponent } from './view/admin/pojos/field-edit/field-edit.component';
 import { RoleListComponent } from './view/admin/roles/role-list/role-list.component';
 import { RoleMenuComponent } from './view/admin/roles/role-menu/role-menu.component';
+import { RoleMenuViewComponent } from './view/admin/roles/role-menu-view/role-menu-view.component';
+import { RoleAffectationComponent } from './view/admin/roles/role-affectation/role-affectation.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -276,6 +278,8 @@ import { RoleMenuComponent } from './view/admin/roles/role-menu/role-menu.compon
     FieldEditComponent,
     RoleListComponent,
     RoleMenuComponent,
+    RoleMenuViewComponent,
+    RoleAffectationComponent,
   ],
   entryComponents:[
     FileLoadComponent,
