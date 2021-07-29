@@ -6,5 +6,6 @@ export class Menu{
     public icone:string;
     public menuRoles?:Array<MenuRole>;
     public pojo?:Pojo;
+    public page?:string;
     public menuItems?:Array<Menu>;
 }

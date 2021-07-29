@@ -1,0 +1,12 @@
+{
+    "data": [ 
+        {"icon": "pi pi-send"}, 
+        {"icon": "pi pi-book"}, 
+        {"icon": "pi pi-backward"}, 
+        {"icon": "pi pi-fast-backward"}, 
+        {"icon": "pi pi-check"}, 
+        {"icon": "pi pi-list"}, 
+        {"icon": "pi pi-plus"}, 
+        {"icon": "pi pi-minus"}
+    ]
+}

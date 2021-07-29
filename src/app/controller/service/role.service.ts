@@ -19,9 +19,15 @@ export class RoleService {
     private _menuRole:MenuRole[] = new Array<MenuRole>();
     private _selectedRole:RoleConfig= new RoleConfig();
     private _affecterRoleDialog:boolean=false;
+    private _addRoleDialog:boolean=false;
     public affecterRole$= new BehaviorSubject<boolean>(false);
     constructor(private http: HttpClient,pojoService:PojoService) { }
-
+    get addRoleDialog(): boolean{
+        return this._addRoleDialog;
+    }
+    set addRoleDialog(value: boolean) {
+        this._addRoleDialog = value;
+    }
     get affecterRoleDialog(): boolean{
         return this._affecterRoleDialog;
     }

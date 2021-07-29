@@ -1,0 +1,129 @@
+<p-dialog header="Ajouter un rôle" [(visible)]="addRoleDialog" [style]="{width: '80vw',height:'auto'}"
+    [contentStyle]="{minHeight:'25vh'}" [baseZIndex]="10000" (onHide)="hide()">
+    <div class="p-field p-grid" [formGroup]="addRoleForm">
+        <label for="pojoName" class="p-col-fixed" style="width:100px">Role Name</label>
+        <div class="p-col">
+            <input id="pojoName" type="text" pInputText formControlName="name">
+        </div>
+
+    </div>
+
+    <p-splitter [panelSizes]="[50,50]">
+        <ng-template pTemplate class="p-col-12">
+            <div class="p-fluid" [formGroup]="addMenuForm" style="padding: 20px; margin: 10px;">
+                <div class="p-fluid" style="margin-bottom: 6vh;">
+                    <div class="p-field">
+                        <span class="p-float-label">
+                            <input type="text" id="inputtext" pInputText formControlName="libelle">
+                            <label for="inputtext">libelle</label>
+                        </span>
+
+                    </div>
+                    <div class="p-field">
+                        <span class="p-float-label">
+                            <p-autoComplete formControlName="icon" [suggestions]="filtredIcons"
+                                (completeMethod)="filterIcon($event)" field="icon" [minLength]="1"></p-autoComplete>
+                            <span class="p-mt-2"><a href="https://www.primefaces.org/diamond/icons.xhtml"
+                                    target="_blank">Check
+                                    icons</a></span>
+                        </span>
+
+                    </div>
+
+                    <div class="p-field">
+                        <span class="p-float-label">
+                            <span>Ajouter Sous menu <button pButton pRipple icon="pi pi-plus"
+                                    (click)="addSubMenuFormShow = !addSubMenuFormShow"></button> </span>
+                            <span>Ajouter page <button pButton pRipple icon="pi pi-plus"
+                                    (click)="addChildSubMenuFormShow = !addChildSubMenuFormShow"></button> </span>
+                            <p-tree [value]="files3" selectionMode="checkbox" (onNodeSelect)="nodeSelect($event)"
+                                (onNodeUnselect)="nodeUnselect($event)" [(selection)]="selectedFiles2"></p-tree>
+                        </span>
+                    </div>
+                </div>
+                <div class="p-fluid" [formGroup]="addSubMenuForm" *ngIf="addSubMenuFormShow">
+                    <div class="p-field">
+                        <span class="p-float-label">
+                            <input type="text" id="inputtext" pInputText formControlName="libelle">
+                            <label for="inputtext">libelle</label>
+                        </span>
+
+                    </div>
+                    <div class="p-field">
+                        <span class="p-float-label">
+                            <input type="text" id="inputtext" pInputText formControlName="icon">
+                            <label for="inputtext">icon</label>
+                        </span>
+
+                    </div>
+                    <button pButton type="button" class="p-mr-4" label="ADD SUBMENU" [disabled]="addSubMenuForm.invalid"
+                        (click)="addChildToPtree()"></button>
+                </div>
+                <div class="p-fluid" [formGroup]="addChildToSubMenuForm" *ngIf="addChildSubMenuFormShow">
+                    <div class="p-field">
+                        <span class="p-float-label">
+                            <p-dropdown [options]="menus" formControlName="menuName" optionLabel="name"></p-dropdown>
+                        </span>
+
+
+                        <span class="p-float-label">
+                            <input type="text" id="inputtext" pInputText formControlName="libelle">
+                            <label for="inputtext">libelle</label>
+                        </span>
+
+                    </div>
+                    <div class="p-field">
+                        <span class="p-float-label">
+                            <input type="text" id="inputtext" pInputText formControlName="icon">
+                            <label for="inputtext">icon</label>
+                        </span>
+
+                    </div>
+                    <button pButton type="button" class="p-mr-4" label="ADD CHILD"
+                        [disabled]="addChildToSubMenuForm.invalid" (click)="addSiblingToPtree()"></button>
+                </div>
+            </div>
+
+        </ng-template>
+
+        <ng-template pTemplate>
+            <p-table #dt [rows]="4" [paginator]="true" [globalFilterFields]="['name']" [value]="menuRoles"
+                [rowHover]="true" dataKey="name" styleClass="p-datatable-customers"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [showCurrentPageReport]="true" class="p-col">
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Libelle
+                        </th>
+                        <th>Icon
+                        </th>
+                        <th>Sous Menu
+                        </th>
+                        <th>Ordre
+                        </th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-menuRole>
+                    <tr>
+                        <td>{{menuRole.menu.libelle}}</td>
+                        <td>{{menuRole.menu.icon}}</td>
+                        <td>{{menuRole.menu.menuItems[0]}}</td>
+                        <td>
+                            <p-inputNumber [(ngModel)]="menuRole.order"></p-inputNumber>
+                        </td>
+                    </tr>
+                </ng-template>
+
+            </p-table>
+        </ng-template>
+    </p-splitter>
+
+    <button pButton type="button" class="p-mr-4" [disabled]="addMenuForm.invalid" style="margin-top: 3vh;"
+        label="ADD MENU" (click)="addMenu()"></button>
+    <!-- <button pButton type="submit" label="Save"
+        [disabled]="(this.form.value.name != null && !this.form.value.name.length > 0) || !this.fieldsArray.length > 0"
+        style="margin-top: 3vh;float: right;" (click)="submit()"></button> -->
+
+</p-dialog>

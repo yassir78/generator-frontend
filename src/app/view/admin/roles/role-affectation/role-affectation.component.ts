@@ -41,12 +41,12 @@ export class RoleAffectationComponent implements OnInit {
 
     //submit
     addAffectedMenus(menu) {
-        console.log("resssss" + this.selectedRole.menuRoles)
+     /*    console.log("resssss" + this.selectedRole.menuRoles)
 
-        this.affectedMenus.push({menu: menu, role: this.selectedRole, order: "" + this.countt})
+       // this.affectedMenus.push({menu: menu, role: this.selectedRole, order: "" + this.countt})
         this.menusToBeAffected = this.menusToBeAffected.filter(m => m.libelle != menu.libelle)
         this.countt++;
-        console.log(this.affectedMenus[0].order);
+        console.log(this.affectedMenus[0].order); */
         // TO DO
         // 1- inserer LE MENU DANS LE ROLE (selectedRole)
         // 2- inserer le menu et le role dans la liste menuRole

@@ -8,30 +8,28 @@
             <p-toolbar styleClass="p-mb-4">
                 <ng-template pTemplate="left">
                     <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2"
-                            (click)="openNew()"></button>
+                        (click)="openNew()"></button>
                     <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger p-mb-2"
-                            (click)="deleteSelectedRole()"
-                            [disabled]="!selectedRoles || !selectedRoles.length"></button>
+                        (click)="deleteSelectedRole()" [disabled]="!selectedRoles || !selectedRoles.length"></button>
                 </ng-template>
 
                 <ng-template pTemplate="right">
                     <button pButton pRipple label="Next" icon="pi pi-arrow-right" class="p-button-info p-mb-2"
-                            (click)="navigateMenu()"></button>
+                        (click)="navigateMenu()"></button>
                 </ng-template>
             </p-toolbar>
 
-            <p-table #dt [value]="roles" [rows]="2" [paginator]="true"
-                     [globalFilterFields]="['name']"
-                     [(selection)]="selectedRoles" [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
-                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                     [showCurrentPageReport]="true" class="p-col">
+            <p-table #dt [value]="roles" [rows]="2" [paginator]="true" [globalFilterFields]="['name']"
+                [(selection)]="selectedRoles" [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [showCurrentPageReport]="true" class="p-col">
                 <ng-template pTemplate="caption">
                     <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
                         <h5 class="p-m-0">Manage Roles</h5>
                         <span class="p-input-icon-left">
                             <i class="pi pi-search"></i>
                             <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                   placeholder="Search..."/>
+                                placeholder="Search..." />
                         </span>
                     </div>
                 </ng-template>
@@ -67,9 +65,9 @@
 
                         <td>
                             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
-                                    (click)="editRole(role,rowIndex)"></button>
+                                (click)="editRole(role,rowIndex)"></button>
                             <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-                                    (click)="deleteRole(role,rowIndex)"></button>
+                                (click)="deleteRole(role,rowIndex)"></button>
                         </td>
                     </tr>
                 </ng-template>
@@ -81,33 +79,34 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="roleDialog" (onHide)="hideDialog()" [style]="{width: '450px'}" [header]="roleEditing?'Modifier Role':'Ajouter un Role'"
-                  [modal]="true" styleClass="p-fluid">
+        <p-dialog [(visible)]="roleDialog" (onHide)="hideDialog()" [style]="{width: '450px'}"
+            [header]="roleEditing?'Modifier Role':'Ajouter un Role'" [modal]="true" styleClass="p-fluid">
             <ng-template pTemplate="content">
                 <div class="p-field">
                     <label for="name">Role Name</label>
-                    <input type="text" pInputText id="name" [(ngModel)]="role.name" required autofocus/>
+                    <input type="text" pInputText id="name" [(ngModel)]="role.name" required autofocus />
                     <small class="p-invalid" *ngIf="submitted && !role.name">Name is required.</small>
                 </div>
                 <div>
                     <label for="name">Privilages</label>
 
                     <p-tree [value]="files3" selectionMode="checkbox" (onNodeSelect)="nodeSelect($event)"
-                            (onNodeUnselect)="nodeUnselect($event)" [(selection)]="selectedFiles2"></p-tree>
+                        (onNodeUnselect)="nodeUnselect($event)" [(selection)]="selectedFiles2"></p-tree>
 
                 </div>
             </ng-template>
 
             <ng-template pTemplate="footer">
                 <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
-                        (click)="hideDialog()"></button>
+                    (click)="hideDialog()"></button>
                 <button pButton pRipple label="Save" [disabled]="(!role.name != null && !role.permissions.length > 0)"
-                        *ngIf="!roleEditing" icon="pi pi-check" class="p-button-text" (click)="saveRole()"></button>
+                    *ngIf="!roleEditing" icon="pi pi-check" class="p-button-text" (click)="saveRole()"></button>
                 <button pButton pRipple label="Edit" *ngIf="roleEditing" icon="pi pi-check" class="p-button-text"
-                        (click)="editSavedRole()"></button>
+                    (click)="editSavedRole()"></button>
             </ng-template>
         </p-dialog>
 
         <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
     </div>
 </div>
+<app-role-add></app-role-add>

@@ -91,7 +91,7 @@ export class RoleListComponent implements OnInit {
   openNew() {
     this.role = new RoleConfig();
     this.submitted = false;
-    this.roleDialog = true;
+    this.addRoleDialog = true;
 
   }
 
@@ -133,6 +133,9 @@ export class RoleListComponent implements OnInit {
     this.selectedFiles2=this.selectedFilesHistory.get(this.indexOfEdited);
     this.roleDialog = true;
 
+  }
+      findPojoByName(name:string):Pojo{
+    return this.pojos.find(pojo=>pojo.name == name);
   }
   deleteRole(role: RoleConfig,index:number) {
     this.confirmationService.confirm({
@@ -189,9 +192,7 @@ export class RoleListComponent implements OnInit {
    this.role.permissions = Object.values(this.role.permissions);
    this.role.permissions = this.role.permissions.filter(permission=> !children.includes(permission.name)) */
   }
-  findPojoByName(name:string):Pojo{
-    return this.pojos.find(pojo=>pojo.name == name);
-  }
+
   navigateMenu(){
      this.router.navigateByUrl("view/role/menu");
   }
@@ -236,6 +237,12 @@ export class RoleListComponent implements OnInit {
     set role(value: RoleConfig) {
         this.roleService.role = value;
     }
+  get addRoleDialog(): boolean{
+    return this.roleService.addRoleDialog;
+    }
 
+  set addRoleDialog(value: boolean) {
+    this.roleService.addRoleDialog = value;
+    }
 
 }
