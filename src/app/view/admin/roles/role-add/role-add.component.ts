@@ -54,6 +54,17 @@ export class RoleAddComponent implements OnInit {
     });
 
   } 
+
+  showAddSubmenuForm(){
+    this.addChildSubMenuFormShow = false;
+    this.addSubMenuFormShow = true;
+  }
+
+  showPageAddForm(){
+    this.addChildSubMenuFormShow = true;
+    this.addSubMenuFormShow = false;
+  }
+
     filterIcon(event) {
     let filtered: any[] = [];
     let query = event.query;
@@ -133,16 +144,20 @@ export class RoleAddComponent implements OnInit {
     let sousMenu = this.files3.find(file=>file.label == menuName);
     sousMenu.children.push({label:libelle,icon:icon})
 
-  
+    this.addChildToSubMenuForm.reset();
+    this.addChildSubMenuFormShow = false;
   }
+
 addChildToPtree(){
   const formValues = this.addSubMenuForm.value;
   console.log(formValues)
   const libelle = formValues.libelle;
-  const icon = formValues.icon
-  this.files3.push({"label":libelle});
+  const icon = formValues.icon.icon
+  let sousMenu:TreeNode = {"label":libelle,"children":[]}
+  this.files3.push(sousMenu);
   this.menus.push({"name":libelle})
   this.addSubMenuForm.reset();
+  this.addSubMenuFormShow = false;
 }
     findPojoByName(name:string):Pojo{
     return this.pojos.find(pojo=>pojo.name == name);

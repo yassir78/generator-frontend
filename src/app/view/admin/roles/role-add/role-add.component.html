@@ -1,5 +1,5 @@
 <p-dialog header="Ajouter un rôle" [(visible)]="addRoleDialog" [style]="{width: '80vw',height:'auto'}"
-    [contentStyle]="{minHeight:'25vh'}" [baseZIndex]="10000" (onHide)="hide()">
+    [contentStyle]="{minHeight:'32vh'}" [baseZIndex]="10000" (onHide)="hide()">
     <div class="p-field p-grid" [formGroup]="addRoleForm">
         <label for="pojoName" class="p-col-fixed" style="width:100px">Role Name</label>
         <div class="p-col">
@@ -8,7 +8,7 @@
 
     </div>
 
-    <p-splitter [panelSizes]="[50,50]">
+    <p-splitter [panelSizes]="[35,65]">
         <ng-template pTemplate class="p-col-12">
             <div class="p-fluid" [formGroup]="addMenuForm" style="padding: 20px; margin: 10px;">
                 <div class="p-fluid" style="margin-bottom: 6vh;">
@@ -29,14 +29,16 @@
                         </span>
 
                     </div>
-
+                    
                     <div class="p-field">
                         <span class="p-float-label">
-                            <span>Ajouter Sous menu <button pButton pRipple icon="pi pi-plus"
-                                    (click)="addSubMenuFormShow = !addSubMenuFormShow"></button> </span>
-                            <span>Ajouter page <button pButton pRipple icon="pi pi-plus"
-                                    (click)="addChildSubMenuFormShow = !addChildSubMenuFormShow"></button> </span>
-                            <p-tree [value]="files3" selectionMode="checkbox" (onNodeSelect)="nodeSelect($event)"
+                            <div class="p-field">
+                                <button label="Sous menu" pButton pRipple icon="pi pi-plus" style="margin-bottom: 2vh;max-width: 20vh;"
+                                (click)="showAddSubmenuForm()"></button>
+                                <button label="Page" pButton pRipple icon="pi pi-plus" style="margin-bottom: 2vh;max-width: 20vh;"
+                                (click)="showPageAddForm()"></button>
+                            </div>
+                        <p-tree [value]="files3" selectionMode="checkbox" (onNodeSelect)="nodeSelect($event)"
                                 (onNodeUnselect)="nodeUnselect($event)" [(selection)]="selectedFiles2"></p-tree>
                         </span>
                     </div>
@@ -51,8 +53,11 @@
                     </div>
                     <div class="p-field">
                         <span class="p-float-label">
-                            <input type="text" id="inputtext" pInputText formControlName="icon">
-                            <label for="inputtext">icon</label>
+                            <p-autoComplete formControlName="icon" [suggestions]="filtredIcons"
+                            (completeMethod)="filterIcon($event)" field="icon" [minLength]="1"></p-autoComplete>
+                        <span class="p-mt-2"><a href="https://www.primefaces.org/diamond/icons.xhtml"
+                                target="_blank">Check
+                                icons</a></span>
                         </span>
 
                     </div>
@@ -60,22 +65,27 @@
                         (click)="addChildToPtree()"></button>
                 </div>
                 <div class="p-fluid" [formGroup]="addChildToSubMenuForm" *ngIf="addChildSubMenuFormShow">
+                   
                     <div class="p-field">
                         <span class="p-float-label">
                             <p-dropdown [options]="menus" formControlName="menuName" optionLabel="name"></p-dropdown>
                         </span>
+                    </div>
 
-
+                    <div class="p-field">
                         <span class="p-float-label">
                             <input type="text" id="inputtext" pInputText formControlName="libelle">
                             <label for="inputtext">libelle</label>
                         </span>
-
                     </div>
+
                     <div class="p-field">
                         <span class="p-float-label">
-                            <input type="text" id="inputtext" pInputText formControlName="icon">
-                            <label for="inputtext">icon</label>
+                            <p-autoComplete formControlName="icon" [suggestions]="filtredIcons"
+                            (completeMethod)="filterIcon($event)" field="icon" [minLength]="1"></p-autoComplete>
+                        <span class="p-mt-2"><a href="https://www.primefaces.org/diamond/icons.xhtml"
+                                target="_blank">Check
+                                icons</a></span>
                         </span>
 
                     </div>
@@ -110,8 +120,16 @@
                         <td>{{menuRole.menu.libelle}}</td>
                         <td>{{menuRole.menu.icon}}</td>
                         <td>{{menuRole.menu.menuItems[0]}}</td>
-                        <td>
-                            <p-inputNumber [(ngModel)]="menuRole.order"></p-inputNumber>
+                        <td pEditableColumn>
+                            <!-- <p-inputNumber [(ngModel)]="menuRole.order"></p-inputNumber> -->
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input style="max-width: 10vh;" pInputText type="number" [(ngModel)]="menuRole.order">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{menuRole.order}}
+                                </ng-template>
+                            </p-cellEditor>
                         </td>
                     </tr>
                 </ng-template>
