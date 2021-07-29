@@ -5,6 +5,7 @@ import {Pojo} from "../model/pojo";
 import {RoleConfig} from "../model/roleConfig";
 import {PojoService} from "./pojo.service";
 import { BehaviorSubject } from 'rxjs';
+import {MenuRole} from "../model/menuRole";
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +21,12 @@ export class MenuService {
   private _selectedMenu:Menu = new Menu();
   public viewRefresh$ = new BehaviorSubject<boolean>(false);
   private _menusToBeAffected:Menu[]=[];
-  private _affectedMenus:Menu[]=[];
+  private _affectedMenus:MenuRole[]=[];
   constructor(private http: HttpClient,pojoService:PojoService) { }
-  get affectedMenus(): Menu[] {
+  get affectedMenus(): MenuRole[] {
     return this._affectedMenus;
   }
-  set affectedMenus(value: Menu[]) {
+  set affectedMenus(value: MenuRole[]) {
     this._affectedMenus= value;
   }
   get menusToBeAffected(): Menu[] {

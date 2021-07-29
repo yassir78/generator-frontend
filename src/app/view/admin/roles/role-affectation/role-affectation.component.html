@@ -1,115 +1,135 @@
-<p-dialog header="Affecter au Role" (onHide)="hide()" [(visible)]="affecterRoleDialog" [style]="{width: '80vw',height:'auto'}"
-    [contentStyle]="{minHeight:'25vh'}" [baseZIndex]="10000">
+<p-dialog header="Affecter au Role {{selectedRole.name}}" (onHide)="hide()" [(visible)]="affecterRoleDialog"
+          [style]="{width: '80vw',height:'auto'}"
+          [contentStyle]="{minHeight:'25vh'}" [baseZIndex]="10000">
 
     <p-splitter [panelSizes]="[50,50]" layout="horizontal">
         <ng-template pTemplate>
             <p-table #dt [value]="menusToBeAffected" [rows]="4" [paginator]="true" [globalFilterFields]="['name']"
-            [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-            class="p-col">
-            <ng-template pTemplate="caption">
-                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                    <h5 class="p-m-0">List menus</h5>
-                    <span class="p-input-icon-left">
+                     [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
+                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                     [showCurrentPageReport]="false"
+                     class="p-col">
+                <ng-template pTemplate="caption">
+                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                        <h5 class="p-m-0">List menus</h5>
+                        <span class="p-input-icon-left">
                         <i class="pi pi-search"></i>
-                        <input pInputText type="text" placeholder="Search..." />
+                        <input pInputText type="text" placeholder="Search..."/>
                     </span>
-                </div>
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr>
-                    <th class="center" style="width: 3rem">
-                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                    </th>
-                    <th pSortableColumn="name">Libelle
-                        <p-sortIcon field="name"></p-sortIcon>
-                    </th>
-                    <th style="padding-left: 4%;">Icon</th>
-                    <th style="padding-left: 4%;">Ajouter</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-menu>
-                <tr>
-                    <td>
-                        <p-tableCheckbox [value]="menu"></p-tableCheckbox>
-                    </td>
-                    <td>
-                        <span>{{menu.libelle}}</span>
-                    </td>
-                    <td>
-                        <i class="{{menu.icone}}" style="margin-left: 3vh;"></i>
-                    </td>
-                    <td>
-                        <!-- <button pButton pRipple icon="pi pi-pencil"
-                                        class="p-button-rounded p-button-success p-mr-2" (click)="edit(pojo)"></button> -->
-                        <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-info p-mr-2"
-                            (click)="affecter(menu)"></button>
-    
-    
-                    </td>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="summary">
-                <div class="p-d-flex p-ai-center p-jc-between">
-                    In total there are {{items ? items.length : 0 }} items.
-                </div>
-            </ng-template>
-        </p-table>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="center" style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="name">Libelle
+                            <p-sortIcon field="name"></p-sortIcon>
+                        </th>
+                        <th style="padding-left: 4%;">Icon</th>
+                        <th style="padding-left: 4%;">Ajouter</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-menu>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="menu"></p-tableCheckbox>
+                        </td>
+                        <td>
+                            <span>{{menu.libelle}}</span>
+                        </td>
+                        <td>
+                            <i class="{{menu.icone}}" style="margin-left: 3vh;"></i>
+                        </td>
+                        <td>
+                            <!-- <button pButton pRipple icon="pi pi-pencil"
+                                            class="p-button-rounded p-button-success p-mr-2" (click)="edit(pojo)"></button> -->
+                            <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-info p-mr-2"
+                                    (click)="addAffectedMenus(menu)"></button>
+
+
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="p-d-flex p-ai-center p-jc-between">
+                        In total there are {{items ? items.length : 0 }} items.
+                    </div>
+                </ng-template>
+            </p-table>
         </ng-template>
 
         <ng-template pTemplate>
-            <p-table #dt [value]="affectedMenus" [rows]="4" [paginator]="true" [globalFilterFields]="['name']" [rowHover]="true"
-        dataKey="id" styleClass="p-datatable-customers"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-        class="p-col">
-        <ng-template pTemplate="caption">
-            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                <h5 class="p-m-0">Menus Affectés</h5>
-                <span class="p-input-icon-left">
+            <p-table #dt [value]="affectedMenus" (onEditComplete)="onEditComplete($event)" [rows]="4" [paginator]="true"
+                     [globalFilterFields]="['name']"
+                     [rowHover]="true"
+                     dataKey="id" styleClass="p-datatable-customers"
+                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                     [showCurrentPageReport]="false"
+                     class="p-col"
+            >
+                <ng-template pTemplate="caption">
+                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                        <h5 class="p-m-0">Menus Affectés</h5>
+                        <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" placeholder="Search..." />
+                    <input pInputText type="text" placeholder="Search..."/>
                 </span>
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th class="center" style="width: 3rem">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
-                <th pSortableColumn="name">Libelle
-                    <p-sortIcon field="name"></p-sortIcon>
-                </th>
-                <th style="padding-left: 4%;">Icon</th>
-                <th style="padding-left: 4%;">Ajouter</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-menu>
-            <tr>
-                <td>
-                    <p-tableCheckbox [value]="menu"></p-tableCheckbox>
-                </td>
-                <td>
-                    <span>{{menu.libelle}}</span>
-                </td>
-                <td>
-                    <i class="{{menu.icone}}"></i>
-                </td>
-                <td>
-                    <!-- <button pButton pRipple icon="pi pi-pencil"
-                                    class="p-button-rounded p-button-success p-mr-2" (click)="edit(pojo)"></button> -->
-                    <button pButton pRipple icon="pi pi-minus" class="p-button-rounded p-button-danger p-mr-2"
-                        (click)="delete(menu)"></button>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="center" style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="name">Libelle
+                            <p-sortIcon field="name"></p-sortIcon>
+                        </th>
+
+                        <th style="padding-left: 4%;">Icon</th>
+                        <th pSortableColumn="name">Order
+                            <p-sortIcon field="order"></p-sortIcon>
+                        </th>
+                        <th style="padding-left: 4%;">Ajouter</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-menuRole>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="menuRole"></p-tableCheckbox>
+                        </td>
+                        <td>
+                            <span>{{menuRole.menu.libelle}}</span>
+                        </td>
+                        <td>
+                            <i class="{{menuRole.menu.icone}}"></i>
+                        </td>
+                        <td pEditableColumn [pEditableColumn]="menuRole" [pEditableColumnField]="'order'">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="number" [(ngModel)]="menuRole.order">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{menuRole.order}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <!-- <button pButton pRipple icon="pi pi-pencil"
+                                            class="p-button-rounded p-button-success p-mr-2" (click)="edit(pojo)"></button> -->
+                            <button pButton pRipple icon="pi pi-times" class="p-button-rounded p-button-danger p-mr-2"
+                                    (click)="delete(menuRole)"></button>
 
 
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="summary">
-            <div class="p-d-flex p-ai-center p-jc-between">
-                In total there are {{items ? items.length : 0 }} items.
-            </div>
-        </ng-template>
-    </p-table>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="p-d-flex p-ai-center p-jc-between">
+                        In total there are {{items ? items.length : 0 }} items.
+                    </div>
+                </ng-template>
+            </p-table>
         </ng-template>
     </p-splitter>
     <button pButton type="submit" label="Affecter" style="margin-top: 3vh;float: right;" (click)="affecter()"></button>

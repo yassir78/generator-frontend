@@ -4,5 +4,5 @@ import {MenuRole} from "./menuRole";
 export class RoleConfig {
     public name:string;
     public permissions?:Array<Permission> = [];
-    public menuRoles?:Array<MenuRole>;
+    public menuRoles?:Array<MenuRole>=[];
 }

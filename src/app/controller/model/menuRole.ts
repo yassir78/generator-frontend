@@ -1,8 +1,8 @@
-import {Menu} from "primeng/menu";
 import {RoleConfig} from "./roleConfig";
+import {Menu} from "./menu";
 
 export class MenuRole {
     public menu: Menu;
     public role: RoleConfig;
-    public ordre: string;
+    public order: string;
 }

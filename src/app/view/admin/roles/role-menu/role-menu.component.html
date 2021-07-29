@@ -6,7 +6,7 @@
             <p-toolbar styleClass="p-mb-4">
                 <ng-template pTemplate="left">
                     <button pButton pRipple label="Add Menu" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2"
-                        (click)="addMenu()"></button>
+                            (click)="addMenu()"></button>
                     <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger p-mb-2"></button>
                 </ng-template>
 
@@ -16,9 +16,9 @@
             </p-toolbar>
             <div class="p-grid">
                 <p-table #dt [value]="roles" [rows]="4" [paginator]="true" [globalFilterFields]="['name']"
-                    [(selection)]="selectes" [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                    [showCurrentPageReport]="true" class="p-col">
+                         [(selection)]="selectes" [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
+                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                         [showCurrentPageReport]="true" class="p-col">
                     <ng-template pTemplate="caption">
                         <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
                             <h5 class="p-m-0">Roles</h5>
@@ -51,7 +51,7 @@
 
                             <td>
                                 <button pButton pRipple label="Affecter" class="p-button-rounded p-button-info p-mr-2"
-                                    (click)="openAffecterDialog(role)"></button>
+                                        (click)="openAffecterDialog(role)"></button>
 
 
                             </td>
@@ -65,9 +65,9 @@
                 </p-table>
 
                 <p-table #dt [rows]="4" [paginator]="true" [globalFilterFields]="['name']" [value]="menus"
-                    [rowHover]="true" dataKey="name" styleClass="p-datatable-customers"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                    [showCurrentPageReport]="true" class="p-col">
+                         [rowHover]="true" dataKey="name" styleClass="p-datatable-customers"
+                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                         [showCurrentPageReport]="true" class="p-col">
                     <ng-template pTemplate="caption">
                         <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
                             <h5 class="p-m-0">Menus</h5>
@@ -102,12 +102,12 @@
                             <td>{{menu.pojo != undefined ? menu.pojo.name : 'Pojo non défini'}}</td>
                             <td>
                                 <button pButton pRipple icon="pi pi-list"
-                                    class="p-button-rounded p-button-info p-mr-4"
-                                    (click)="openViewDialog(menu)"></button>
+                                        class="p-button-rounded p-button-info p-mr-4"
+                                        (click)="openViewDialog(menu)"></button>
                                 <button pButton pRipple icon="pi pi-pencil"
-                                    class="p-button-rounded p-button-success p-mr-2" (click)="edit(menu)"></button>
+                                        class="p-button-rounded p-button-success p-mr-2" (click)="edit(menu)"></button>
                                 <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
-                                    (click)="delete(menu)"></button>
+                                        (click)="delete(menu)"></button>
                             </td>
                         </tr>
                     </ng-template>
@@ -116,26 +116,10 @@
 
             </div>
         </div>
-<<<<<<< HEAD
-        <p-dialog [(visible)]="addMenuDialog" [style]="{width: '50vw'}" header="Menu Add" [modal]="true"
-            styleClass="p-fluid">
-            <ng-template pTemplate="content">
-                <div class="p-formgroup-inline" [formGroup]="menuForm">
-                    <div class="p-field">
-                        <label for="libelle">Libelle</label>
-                        <input type="text" pInputText id="libelle" formControlName="libelle" autofocus />
-                    </div>
-                    <div class="p-field">
-                        <label for="icon">Icon</label>
-                        <input type="text" pInputText id="icon" formControlName="icon" required autofocus />
-                        <span><a href="https://www.primefaces.org/diamond/icons.xhtml" target="_blank">Icons</a></span>
-                    </div>
-=======
->>>>>>> ab09034eb4b9efb2c88a672e336d2a88f113dead
 
 
         <p-dialog header="Ajouter un Menu" (onHide)="hide()" [(visible)]="addMenuDialog"
-            [style]="{width: '70vw',height:'auto'}" [contentStyle]="{minHeight:'25vh'}" [baseZIndex]="10000">
+                  [style]="{width: '70vw',height:'auto'}" [contentStyle]="{minHeight:'25vh'}" [baseZIndex]="10000">
             <div class="p-field p-grid" [formGroup]="menuForm">
                 <label for="menuLibelle" class="p-col-fixed">Libelle</label>
                 <div class="p-col">
@@ -176,9 +160,9 @@
 
                 <ng-template pTemplate>
                     <p-table #dt [rows]="4" [paginator]="true" [globalFilterFields]="['name']" [value]="menusArray"
-                        [rowHover]="true" dataKey="name" styleClass="p-datatable-customers"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                        [showCurrentPageReport]="true" class="p-col">
+                             [rowHover]="true" dataKey="name" styleClass="p-datatable-customers"
+                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                             [showCurrentPageReport]="true" class="p-col">
 
                         <ng-template pTemplate="header">
                             <tr>
@@ -189,7 +173,7 @@
                                     <p-sortIcon field="icon"></p-sortIcon>
                                 </th>
                                 <th
-                                    style="display: flex;justify-content: space-between;align-items: center;padding-left: 6%;">
+                                        style="display: flex;justify-content: space-between;align-items: center;padding-left: 6%;">
                                     Action
 
                                 </th>
@@ -204,7 +188,7 @@
 
                                 <td>
                                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
-                                        (click)="deleteSousMenu(menu)"></button>
+                                            (click)="deleteSousMenu(menu)"></button>
                                 </td>
                             </tr>
                         </ng-template>
@@ -214,14 +198,14 @@
             </p-splitter>
 
             <button pButton type="button" class="p-mr-4" [disabled]="!sousMenuForm.valid" style="margin-top: 3vh;"
-                label="ADD Sous menu" (click)="addSousMenu()"></button>
+                    label="ADD Sous menu" (click)="addSousMenu()"></button>
             <button pButton type="submit" label="Save" [disabled]="!menuForm.valid"
-                style="margin-top: 3vh;float: right;" (click)="onSubmit()"></button>
+                    style="margin-top: 3vh;float: right;" (click)="onSubmit()"></button>
 
         </p-dialog>
 
         <p-dialog [(visible)]="editMenuDialog" [style]="{width: '70vw',height:'auto'}" (onHide)="hideEdit()"
-            [contentStyle]="{minHeight:'25vh'}" header="Menu Edit" [modal]="true" styleClass="p-fluid">
+                  [contentStyle]="{minHeight:'25vh'}" header="Menu Edit" [modal]="true" styleClass="p-fluid">
             <div class="p-field p-grid" [formGroup]="menuFormEdit">
                 <label for="menuLibelle" class="p-col-fixed">Libelle</label>
                 <div class="p-col">
@@ -267,9 +251,9 @@
 
                 <ng-template pTemplate>
                     <p-table #dt [rows]="4" [paginator]="true" [globalFilterFields]="['name']"
-                        [value]="sousMenuToBeEdited" [rowHover]="true" dataKey="name" styleClass="p-datatable-customers"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                        [showCurrentPageReport]="true" class="p-col">
+                             [value]="sousMenuToBeEdited" [rowHover]="true" dataKey="name" styleClass="p-datatable-customers"
+                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                             [showCurrentPageReport]="true" class="p-col">
 
                         <ng-template pTemplate="header">
                             <tr>
@@ -280,7 +264,7 @@
                                     <p-sortIcon field="icon"></p-sortIcon>
                                 </th>
                                 <th
-                                    style="display: flex;justify-content: space-between;align-items: center;padding-left: 6%;">
+                                        style="display: flex;justify-content: space-between;align-items: center;padding-left: 6%;">
                                     Action
 
                                 </th>
@@ -296,10 +280,10 @@
                                 <td>
 
                                     <button pButton pRipple icon="pi pi-pencil"
-                                        class="p-button-rounded p-button-success p-mr-4"
-                                        (click)="editSubMenu(menu)"></button>
+                                            class="p-button-rounded p-button-success p-mr-4"
+                                            (click)="editSubMenu(menu)"></button>
                                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
-                                        (click)="deleteSousMenuToBeEdited(menu)"></button>
+                                            (click)="deleteSousMenuToBeEdited(menu)"></button>
                                 </td>
                             </tr>
                         </ng-template>
@@ -307,17 +291,14 @@
                     </p-table>
                 </ng-template>
             </p-splitter>
-                    <button style="float: left;margin-right: 2vh;max-width: 20vh;margin-top: 3vh;" *ngIf="!editingMenuWithPojo" pButton type="button" class="p-mr-4" label="edit sous menu"
-                        (click)="editSousMenuForm()" [disabled]="!sousMenuEditing"></button>
-                    <button style="float: left;max-width: 20vh;margin-top: 3vh;" *ngIf="!editingMenuWithPojo" pButton type="button" class="p-mr-4"  label="ADD Sous menu"
-                        (click)="addSousMenuEdit()" [disabled]="sousMenuEditing"></button>
-               
+            <button style="float: left;margin-right: 2vh;max-width: 20vh;margin-top: 3vh;" *ngIf="!editingMenuWithPojo" pButton type="button" class="p-mr-4" label="edit sous menu"
+                    (click)="editSousMenuForm()" [disabled]="!sousMenuEditing"></button>
+            <button style="float: left;max-width: 20vh;margin-top: 3vh;" *ngIf="!editingMenuWithPojo" pButton type="button" class="p-mr-4"  label="ADD Sous menu"
+                    (click)="addSousMenuEdit()" [disabled]="sousMenuEditing"></button>
+
             <button pButton type="submit" style="max-width: 15vh;margin-top: 3vh;float: right;" label="Edit" (click)="editMenu()"></button>
         </p-dialog>
     </div>
 </div>
-<<<<<<< HEAD
-=======
 <app-role-menu-view></app-role-menu-view>
 <app-role-affectation></app-role-affectation>
->>>>>>> ab09034eb4b9efb2c88a672e336d2a88f113dead
