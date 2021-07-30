@@ -16,11 +16,12 @@ export class RoleService {
     private _pojos:Array<Pojo>;
     private _roles:Array<RoleConfig> = new Array<RoleConfig>();
     private _role: RoleConfig = new RoleConfig();
-    private _menuRole:MenuRole[] = new Array<MenuRole>();
+    private _menuRoles:MenuRole[] = new Array<MenuRole>();
     private _selectedRole:RoleConfig= new RoleConfig();
     private _affecterRoleDialog:boolean=false;
     private _addRoleDialog:boolean=false;
     public affecterRole$= new BehaviorSubject<boolean>(false);
+    public menusHierarchyTree=new Map();
     constructor(private http: HttpClient,pojoService:PojoService) { }
     get addRoleDialog(): boolean{
         return this._addRoleDialog;
@@ -34,12 +35,12 @@ export class RoleService {
     set affecterRoleDialog(value: boolean) {
         this._affecterRoleDialog = value;
     }
-    get menuRole(): MenuRole[]{
-        return this._menuRole;
+    get menuRoles(): MenuRole[]{
+        return this._menuRoles;
     }
 
-    set menuRole(value: MenuRole[]) {
-        this._menuRole = value;
+    set menuRoles(value: MenuRole[]) {
+        this._menuRoles = value;
     }
 
      get selectedRole(): RoleConfig{

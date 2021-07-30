@@ -39,6 +39,7 @@ export class RoleListComponent implements OnInit {
 
   roleDialog: boolean;
   roleEditing:boolean=false;
+  
   indexOfEditedRole:number;
   items: MegaMenuItem[];
   selectedRoles: RoleConfig[];
@@ -49,7 +50,7 @@ export class RoleListComponent implements OnInit {
   selectedFiles2;
   selectedFilesHistory = new Map();
   selectedFilesHistoryIndex = 0;
-
+  
   constructor(private roleService: RoleService, private messageService: MessageService,
               private confirmationService: ConfirmationService,private pojoService:PojoService,private router: Router) {}
 
@@ -74,6 +75,7 @@ export class RoleListComponent implements OnInit {
       {field: 'name', header: 'Name'}
      ];
   }
+  
   roleToTreeNode(role:RoleConfig){
      const pojos = [...new Set(role.permissions.map(permission=>permission.pojo.name))];
      const permissions = role.permissions.map(permission=>permission.name)
@@ -244,5 +246,9 @@ export class RoleListComponent implements OnInit {
   set addRoleDialog(value: boolean) {
     this.roleService.addRoleDialog = value;
     }
+  get menusHierarchyTree(){
+    return this.roleService.menusHierarchyTree;
+    }
+
 
 }

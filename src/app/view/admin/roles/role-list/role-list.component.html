@@ -41,7 +41,7 @@
                         <th pSortableColumn="name" class="p-column-title">Name
                             <p-sortIcon field="name"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="name" class="p-column-title">Permission
+                        <th pSortableColumn="name" class="p-column-title">Menus
                             <p-sortIcon field="name">
                             </p-sortIcon>
                         </th>
@@ -59,7 +59,10 @@
                             {{role.name}}
                             <!--  <p-megaMenu [model]="items" orientation="vertical"></p-megaMenu> -->
                         </td>
-                        <td><span *ngFor="let permission of role.permissions">{{permission.name}}<br></span>
+                        <td>
+                            <div *ngFor="let item of menusHierarchyTree | keyvalue">
+                                <p-tree *ngIf="keyvalue == rowIndex" [value]="tem.value"></p-tree>
+                            </div>
 
                         </td>
 

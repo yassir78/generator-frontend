@@ -9,6 +9,7 @@ import { RoleService } from 'src/app/controller/service/role.service';
 import { IconService } from 'src/app/controller/service/icon.service';
 import { Menu } from 'src/app/controller/model/menu';
 import { MenuRole } from 'src/app/controller/model/menuRole';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-role-add',
@@ -17,6 +18,7 @@ import { MenuRole } from 'src/app/controller/model/menuRole';
 })
 export class RoleAddComponent implements OnInit {
   files3: TreeNode[];
+  menusHierarchy:[TreeNode[]]=[];
   selectedFiles2;
   icons :any[];;
   filtredIcons :any[];
@@ -59,7 +61,16 @@ export class RoleAddComponent implements OnInit {
     this.addChildSubMenuFormShow = false;
     this.addSubMenuFormShow = true;
   }
-
+ menuToTreeNode(menu:Menu){
+   let object = {
+    label:menu.libelle,
+    expandedIcon: menu.icone.icon,
+    collapsedIcon: menu.icone.icon,
+    children: menu.menuItems.map(menu=>{return {label:menu.libelle,expandedIcon : menu.icone,collapsedIcon : menu.icone}})
+   };
+   console.log(object)
+   return object;
+ }
   showPageAddForm(){
     this.addChildSubMenuFormShow = true;
     this.addSubMenuFormShow = false;
@@ -82,8 +93,10 @@ export class RoleAddComponent implements OnInit {
    menu.icone = this.menuIcon.value;
    menu.libelle = this.menuLibelle.value;
    menu.menuItems = this.menusLayer2;
-   this.menuRoles.push({menu:menu,role:this.role,order:1})
-   console.log(this.menuRoles)
+   this.menuRoles.push({menu:menu,order:1})
+   this.menusHierarchy.push([this.menuToTreeNode(menu)])
+    this.selectedFiles2 = [];
+    this.addMenuForm.reset()
  }
 
   hide(){
@@ -114,9 +127,18 @@ export class RoleAddComponent implements OnInit {
       const children = event.node.children;
       console.log(children)
       let menusToAdd : Menu[] = children ? children.map(child=> {return  {"libelle":child.label.split('.')[1],"icone":"pi pi-list",page:`${pojo.name.toLowerCase()}/${child.label.split('.')[1]}`} }) : [];
-      this.menusLayer2.push({libelle:pojo.name,icone:"pi pi-list",menuItems:menusToAdd})
+      this.menusLayer2.push({libelle:pojo != undefined?pojo.name: label,icone:"pi pi-list",menuItems:menusToAdd})
    }
    console.log(this.menusLayer2)
+  }
+  deleteMenuRole(menuRole:MenuRole){
+    this.menuRoles = this.menuRoles.filter(mR=>mR.menu.libelle != menuRole.menu.libelle);
+    console.log("zzzzzzzzzzzzzzzz")
+    console.log(this.menuRoles)
+    this.menusHierarchy = this.menusHierarchy.filter(menuHierarchy=>menuHierarchy[0].label != menuRole.menu.libelle)
+     console.log("mmmmmmmmmmmmm")
+    console.log(this.menuRoles)
+    
   }
   nodeUnselect(event) {
     const label:string = event.node.label;
@@ -139,11 +161,8 @@ export class RoleAddComponent implements OnInit {
     const menuName = formValues.menuName.name;
     const libelle = formValues.libelle;
     const icon = formValues.icon;
-    console.log(menuName);
-    console.log(this.files3)
     let sousMenu = this.files3.find(file=>file.label == menuName);
     sousMenu.children.push({label:libelle,icon:icon})
-
     this.addChildToSubMenuForm.reset();
     this.addChildSubMenuFormShow = false;
   }
@@ -158,6 +177,14 @@ addChildToPtree(){
   this.menus.push({"name":libelle})
   this.addSubMenuForm.reset();
   this.addSubMenuFormShow = false;
+}
+submit(){
+  const roleName = this.addRoleForm.value.name;
+   this.roles.push({name:roleName,menuRoles:this.menuRoles})
+  // this.roleService.menusHierarchyTree.set({name:roleName,menuRoles:this.menuRoles},this.menuRoles this.menuToTreeNode(this.menuRoles) )
+   console.log(this.roleService.menusHierarchyTree)
+   this.menuRolesService = this.menuRoles;
+   this.addRoleForm.reset();
 }
     findPojoByName(name:string):Pojo{
     return this.pojos.find(pojo=>pojo.name == name);
@@ -188,6 +215,19 @@ addChildToPtree(){
 
   set addRoleDialog(value: boolean) {
     this.roleService.addRoleDialog = value;
+    }
+       get roles() :RoleConfig[]{
+        return this.roleService.roles;
+    }
+    set roles(value: Array<RoleConfig>) {
+          this.roleService.roles = value;
+    }
+        get menuRolesService(): MenuRole[]{
+        return this.roleService.menuRoles;
+    }
+
+    set menuRolesService(value: MenuRole[]) {
+        this.roleService.menuRoles = value;
     }
   
 
