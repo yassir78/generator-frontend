@@ -1,4 +1,4 @@
-<p-dialog header="Ajouter un rôle" [(visible)]="addRoleDialog" [style]="{width: '80vw',height:'auto'}"
+<p-dialog header="Ajouter un rôle" (onHide) = "hide()" [(visible)]="addRoleDialog" [style]="{width: '80vw',height:'auto'}"
     [contentStyle]="{minHeight:'32vh'}" [baseZIndex]="10000" (onHide)="hide()">
     <div class="p-field p-grid" [formGroup]="addRoleForm">
         <label for="pojoName" class="p-col-fixed" style="width:100px">Role Name</label>
@@ -101,52 +101,53 @@
         </ng-template>
 
         <ng-template pTemplate>
-            <p-table #dt [rows]="4" [paginator]="true" [globalFilterFields]="['name']" [value]="menuRoles"
-                [rowHover]="true" dataKey="name" styleClass="p-datatable-customers"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                [showCurrentPageReport]="true" class="p-col">
-
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th>Sous Menu
-                        </th>
-                        <th>Ordre
-                        </th>
-                        <th>Delete
-                        </th>
-
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-menuRole let-i="rowIndex">
-                    <tr>
-                        <td>
-                            <p-tree [value]="menusHierarchy[i]"></p-tree>
-                        </td>
-                        <td pEditableColumn>
-                            <!-- <p-inputNumber [(ngModel)]="menuRole.order"></p-inputNumber> -->
-                            <p-cellEditor>
-                                <ng-template pTemplate="input">
-                                    <input style="max-width: 10vh;" pInputText type="number"
-                                        [(ngModel)]="menuRole.order">
-                                </ng-template>
-                                <ng-template pTemplate="output">
-                                    {{menuRole.order}}
-                                </ng-template>
-                            </p-cellEditor>
-                        </td>
-                        <td>
-                            <button pButton pRounded type="button" icon="pi pi-trash"
-                                class="p-button-rounded p-button-danger" (click)="deleteMenuRole(menuRole)"></button>
-                        </td>
-                    </tr>
-                </ng-template>
-
-            </p-table>
+            <p-scrollPanel [style]="{width: '100%', height: '100%'}">
+                <p-table #dt [rows]="4" [globalFilterFields]="['name']" [value]="menuRoles"
+                    [rowHover]="true" styleClass="p-datatable-customers"
+                   class="p-col" >
+    
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Sous Menu
+                            </th>
+                            <th>Ordre
+                            </th>
+                            <th>Delete
+                            </th>
+    
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-menuRole let-i="rowIndex">
+                        <tr>
+                            <td>
+                                <p-tree [value]="menusHierarchy[i]"></p-tree>
+                            </td>
+                            <td pEditableColumn>
+                                <!-- <p-inputNumber [(ngModel)]="menuRole.order"></p-inputNumber> -->
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <input style="max-width: 10vh;" pInputText type="number"
+                                            [(ngModel)]="menuRole.order">
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{menuRole.order}}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
+                            <td>
+                                <button pButton pRounded type="button" icon="pi pi-trash"
+                                    class="p-button-rounded p-button-danger" (click)="deleteMenuRole(menuRole)"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+    
+                </p-table>
+            </p-scrollPanel>
         </ng-template>
     </p-splitter>
 
     <button pButton type="button" class="p-mr-4" [disabled]="addMenuForm.invalid" style="margin-top: 3vh;"
         label="ADD MENU" (click)="addMenu()"></button>
-    <button pButton type="submit" label="Save" (click)="submit()"></button>
+    <button pButton type="submit" label="Save" [disabled]="addRoleForm.invalid || !this.menuRoles.length > 0" (click)="submit()"></button>
 
 </p-dialog>

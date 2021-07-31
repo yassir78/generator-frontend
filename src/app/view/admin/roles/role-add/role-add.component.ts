@@ -18,7 +18,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 })
 export class RoleAddComponent implements OnInit {
   files3: TreeNode[];
-  menusHierarchy:[TreeNode[]]=[];
+  menusHierarchy:any[] = [];
   selectedFiles2;
   icons :any[];;
   filtredIcons :any[];
@@ -61,16 +61,24 @@ export class RoleAddComponent implements OnInit {
     this.addChildSubMenuFormShow = false;
     this.addSubMenuFormShow = true;
   }
+
+
  menuToTreeNode(menu:Menu){
+   console.log('*************************',menu)
    let object = {
     label:menu.libelle,
-    expandedIcon: menu.icone.icon,
-    collapsedIcon: menu.icone.icon,
-    children: menu.menuItems.map(menu=>{return {label:menu.libelle,expandedIcon : menu.icone,collapsedIcon : menu.icone}})
+    expandedIcon: menu.icone,
+    collapsedIcon: menu.icone,
+    children: menu.menuItems.map(menu=>{return {label:menu.libelle,expandedIcon : menu.icone,collapsedIcon : menu.icone,children:this.nextChildren(menu)}})
    };
    console.log(object)
    return object;
  }
+
+ nextChildren(menu:Menu){
+    return menu.menuItems.map(m=>{return {label:m.libelle,expandedIcon : m.icone,collapsedIcon : m.icone}})
+ }
+
   showPageAddForm(){
     this.addChildSubMenuFormShow = true;
     this.addSubMenuFormShow = false;
@@ -94,14 +102,13 @@ export class RoleAddComponent implements OnInit {
    menu.libelle = this.menuLibelle.value;
    menu.menuItems = this.menusLayer2;
    this.menuRoles.push({menu:menu,order:1})
+   this.menusLayer2 = [];
    this.menusHierarchy.push([this.menuToTreeNode(menu)])
     this.selectedFiles2 = [];
     this.addMenuForm.reset()
  }
 
-  hide(){
-      this.addRoleDialog = false;
-  }
+  
     pojoToTreeNode(){
     return this.pojos.map(pojo=>{
       return { "label": pojo.name ,"children":pojo.permissions.map(prem=>{return {"label":prem.name}})} });
@@ -125,12 +132,19 @@ export class RoleAddComponent implements OnInit {
    }else{
       pojo = this.findPojoByName(label);
       const children = event.node.children;
-      console.log(children)
-      let menusToAdd : Menu[] = children ? children.map(child=> {return  {"libelle":child.label.split('.')[1],"icone":"pi pi-list",page:`${pojo.name.toLowerCase()}/${child.label.split('.')[1]}`} }) : [];
-      this.menusLayer2.push({libelle:pojo != undefined?pojo.name: label,icone:"pi pi-list",menuItems:menusToAdd})
+
+      if(pojo != undefined){
+        let menusToAdd : Menu[] = children ? children.map(child=> {return  {"libelle":child.label.split('.')[1],"icone":"pi pi-list",page:`${pojo.name.toLowerCase()}/${child.label.split('.')[1]}`} }) : [];
+        this.menusLayer2.push({libelle:pojo != undefined?pojo.name: label,icone:"pi pi-list",menuItems:menusToAdd})
+      }else{
+        let menusToAdd : Menu[] = children ? children.map(child=> {return  {"libelle":child.label,"icone":child.icon,page:`${label.toLowerCase()}/${child.label}`} }) : [];
+        this.menusLayer2.push({libelle:pojo != undefined?pojo.name: label,icone:event.node.icon,menuItems:menusToAdd})
+      }
    }
    console.log(this.menusLayer2)
   }
+
+
   deleteMenuRole(menuRole:MenuRole){
     this.menuRoles = this.menuRoles.filter(mR=>mR.menu.libelle != menuRole.menu.libelle);
     console.log("zzzzzzzzzzzzzzzz")
@@ -171,8 +185,8 @@ addChildToPtree(){
   const formValues = this.addSubMenuForm.value;
   console.log(formValues)
   const libelle = formValues.libelle;
-  const icon = formValues.icon.icon
-  let sousMenu:TreeNode = {"label":libelle,"children":[]}
+  const icon = formValues.icon;
+  let sousMenu:TreeNode = {"label":libelle,"icon":icon,"children":[]}
   this.files3.push(sousMenu);
   this.menus.push({"name":libelle})
   this.addSubMenuForm.reset();
@@ -184,8 +198,27 @@ submit(){
   // this.roleService.menusHierarchyTree.set({name:roleName,menuRoles:this.menuRoles},this.menuRoles this.menuToTreeNode(this.menuRoles) )
    console.log(this.roleService.menusHierarchyTree)
    this.menuRolesService = this.menuRoles;
+   this.menuRoles = [];
+   this.addRoleDialog = false
    this.addRoleForm.reset();
+   this.addMenuForm.reset();
+   this.addSubMenuForm.reset();
+   this.addSubMenuFormShow = false;
+   this.addChildToSubMenuForm.reset();
+   this.addChildSubMenuFormShow = false;
 }
+
+hide(){
+  this.menuRoles = [];
+  this.addRoleDialog = false
+  this.addRoleForm.reset();
+  this.addMenuForm.reset();
+  this.addSubMenuForm.reset();
+  this.addSubMenuFormShow = false;
+  this.addChildToSubMenuForm.reset();
+  this.addChildSubMenuFormShow = false;
+}
+
     findPojoByName(name:string):Pojo{
     return this.pojos.find(pojo=>pojo.name == name);
   }
