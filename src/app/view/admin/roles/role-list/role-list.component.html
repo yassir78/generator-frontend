@@ -82,7 +82,7 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="roleDialog" (onHide)="hideDialog()" [style]="{width: '450px'}"
+        <!-- <p-dialog [(visible)]="roleDialog" (onHide)="hideDialog()" [style]="{width: '450px'}"
             [header]="roleEditing?'Modifier Role':'Ajouter un Role'" [modal]="true" styleClass="p-fluid">
             <ng-template pTemplate="content">
                 <div class="p-field">
@@ -107,7 +107,7 @@
                 <button pButton pRipple label="Edit" *ngIf="roleEditing" icon="pi pi-check" class="p-button-text"
                     (click)="editSavedRole()"></button>
             </ng-template>
-        </p-dialog>
+        </p-dialog> -->
 
         <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
     </div>

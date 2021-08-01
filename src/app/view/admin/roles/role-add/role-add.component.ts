@@ -98,7 +98,7 @@ export class RoleAddComponent implements OnInit {
   }
  addMenu(){
    let menu = new Menu();
-   menu.icone = this.menuIcon.value;
+   menu.icone = this.menuIcon.value.icon;
    menu.libelle = this.menuLibelle.value;
    menu.menuItems = this.menusLayer2;
    this.menuRoles.push({menu:menu,order:1})
@@ -174,7 +174,7 @@ export class RoleAddComponent implements OnInit {
     console.log(formValues)
     const menuName = formValues.menuName.name;
     const libelle = formValues.libelle;
-    const icon = formValues.icon;
+    const icon = formValues.icon.icon;
     let sousMenu = this.files3.find(file=>file.label == menuName);
     sousMenu.children.push({label:libelle,icon:icon})
     this.addChildToSubMenuForm.reset();
@@ -185,7 +185,7 @@ addChildToPtree(){
   const formValues = this.addSubMenuForm.value;
   console.log(formValues)
   const libelle = formValues.libelle;
-  const icon = formValues.icon;
+  const icon = formValues.icon.icon;
   let sousMenu:TreeNode = {"label":libelle,"icon":icon,"children":[]}
   this.files3.push(sousMenu);
   this.menus.push({"name":libelle})
@@ -196,9 +196,12 @@ submit(){
   const roleName = this.addRoleForm.value.name;
    this.roles.push({name:roleName,menuRoles:this.menuRoles})
   // this.roleService.menusHierarchyTree.set({name:roleName,menuRoles:this.menuRoles},this.menuRoles this.menuToTreeNode(this.menuRoles) )
-   console.log(this.roleService.menusHierarchyTree)
+   console.log("*************************************",{name:roleName,menuRoles:this.menuRoles})
    this.menuRolesService = this.menuRoles;
    this.menuRoles = [];
+   this.menusHierarchy = [];
+   this.selectedFiles2 = [];
+   this.menusLayer2 = [];
    this.addRoleDialog = false
    this.addRoleForm.reset();
    this.addMenuForm.reset();
@@ -209,7 +212,12 @@ submit(){
 }
 
 hide(){
+  console.log('hideeeeeeeeee',this.menusLayer2);
+  this.menusLayer2 = [];
+  console.log('hideeeeeeeeee',this.menusLayer2);
+  this.selectedFiles2 = [];
   this.menuRoles = [];
+  this.menusHierarchy = [];
   this.addRoleDialog = false
   this.addRoleForm.reset();
   this.addMenuForm.reset();
