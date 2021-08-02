@@ -44,11 +44,11 @@ export class RoleService {
     }
 
      get selectedRole(): RoleConfig{
-        return this._role;
+        return this._selectedRole;
     }
 
     set selectedRole(value: RoleConfig) {
-        this._role = value;
+        this._selectedRole = value;
     }
      get role(): RoleConfig{
         return this._role;
@@ -72,3 +72,4 @@ export class RoleService {
         this._roles = value;
     }
 }
+

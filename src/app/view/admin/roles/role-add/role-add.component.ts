@@ -64,14 +64,12 @@ export class RoleAddComponent implements OnInit {
 
 
  menuToTreeNode(menu:Menu){
-   console.log('*************************',menu)
    let object = {
     label:menu.libelle,
     expandedIcon: menu.icone,
     collapsedIcon: menu.icone,
     children: menu.menuItems.map(menu=>{return {label:menu.libelle,expandedIcon : menu.icone,collapsedIcon : menu.icone,children:this.nextChildren(menu)}})
    };
-   console.log(object)
    return object;
  }
 
@@ -104,7 +102,9 @@ export class RoleAddComponent implements OnInit {
    this.menuRoles.push({menu:menu,order:1})
    this.menusLayer2 = [];
    this.menusHierarchy.push([this.menuToTreeNode(menu)])
+   console.log(this.menusHierarchy)
     this.selectedFiles2 = [];
+  
     this.addMenuForm.reset()
  }
 
@@ -196,7 +196,6 @@ submit(){
   const roleName = this.addRoleForm.value.name;
    this.roles.push({name:roleName,menuRoles:this.menuRoles})
   // this.roleService.menusHierarchyTree.set({name:roleName,menuRoles:this.menuRoles},this.menuRoles this.menuToTreeNode(this.menuRoles) )
-   console.log("*************************************",{name:roleName,menuRoles:this.menuRoles})
    this.menuRolesService = this.menuRoles;
    this.menuRoles = [];
    this.menusHierarchy = [];
@@ -209,12 +208,11 @@ submit(){
    this.addSubMenuFormShow = false;
    this.addChildToSubMenuForm.reset();
    this.addChildSubMenuFormShow = false;
+     console.log(this.roles)
 }
 
 hide(){
-  console.log('hideeeeeeeeee',this.menusLayer2);
   this.menusLayer2 = [];
-  console.log('hideeeeeeeeee',this.menusLayer2);
   this.selectedFiles2 = [];
   this.menuRoles = [];
   this.menusHierarchy = [];

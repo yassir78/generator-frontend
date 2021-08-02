@@ -9,6 +9,8 @@ import {TreeNode} from "primeng/api/primeng-api";
 import {CdkTreeNode} from "@angular/cdk/tree";
 import {Permission} from "../../../../controller/model/permission";
 import {Router} from "@angular/router";
+import { Menu } from 'src/app/controller/model/menu';
+import { Tree } from 'primeng/tree';
 
 @Component({
   selector: 'app-role-list',
@@ -218,7 +220,24 @@ export class RoleListComponent implements OnInit {
     this.selectedFilesHistoryIndex++;
     this.selectedFiles2 = [];
   }
+  details(role:RoleConfig){
+      this.selectedRole = role;
+  }
+   menuToTreeNode(menu:Menu):TreeNode[]{
+   let object = {
+    label:menu.libelle,
+    expandedIcon: menu.icone,
+    collapsedIcon: menu.icone,
+    parent:undefined,
+    children: menu.menuItems.map(m=>{return {label:m.libelle,expandedIcon : m.icone,collapsedIcon : m.icone,children:this.nextChildren(m)}})
+   };
+   console.log([object])
+   return [object];
+ }
 
+ nextChildren(menu:Menu){
+    return menu.menuItems.map(m=>{return {label:m.libelle,expandedIcon : m.icone,collapsedIcon : m.icone}})
+ }
   get roles() :RoleConfig[]{
     return this.roleService.roles;
   }
@@ -249,6 +268,12 @@ export class RoleListComponent implements OnInit {
   get menusHierarchyTree(){
     return this.roleService.menusHierarchyTree;
     }
+    get selectedRole(): RoleConfig{
+        return this.roleService.selectedRole;
+    }
 
+    set selectedRole(value: RoleConfig) {
+        this.roleService.selectedRole = value;
+    }
 
 }
