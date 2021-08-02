@@ -109,7 +109,7 @@
                             <!--<th></th>-->
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-menuRole>
+                    <ng-template pTemplate="body" let-menuRole let-i="rowIndex">
                         <tr>
                             <!--   <td>
                                                                        <p-tableCheckbox [value]="commande"></p-tableCheckbox>
@@ -117,7 +117,7 @@
 
                             <td>{{menuRole.order}}</td>
                             <td>
-                                <p-tree [value]="menuToTreeNode(menuRole.menu)"></p-tree>
+                                <p-tree [value]="menusHierarchy[i]"></p-tree>
                             </td>
 
 

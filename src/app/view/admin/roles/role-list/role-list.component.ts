@@ -41,7 +41,8 @@ export class RoleListComponent implements OnInit {
 
   roleDialog: boolean;
   roleEditing:boolean=false;
-  
+    menusHierarchy:any[] = [];
+
   indexOfEditedRole:number;
   items: MegaMenuItem[];
   selectedRoles: RoleConfig[];
@@ -222,8 +223,13 @@ export class RoleListComponent implements OnInit {
   }
   details(role:RoleConfig){
       this.selectedRole = role;
+      this.menusHierarchy = [];
+      role.menuRoles.forEach(menuRole=>{
+       this.menusHierarchy.push([this.menuToTreeNode(menuRole.menu)])
+      });
+      console.log(this.menusHierarchy)
   }
-   menuToTreeNode(menu:Menu):TreeNode[]{
+   menuToTreeNode(menu:Menu){
    let object = {
     label:menu.libelle,
     expandedIcon: menu.icone,
@@ -231,8 +237,7 @@ export class RoleListComponent implements OnInit {
     parent:undefined,
     children: menu.menuItems.map(m=>{return {label:m.libelle,expandedIcon : m.icone,collapsedIcon : m.icone,children:this.nextChildren(m)}})
    };
-   console.log([object])
-   return [object];
+   return object;
  }
 
  nextChildren(menu:Menu){
