@@ -18,10 +18,10 @@
                         (click)="navigateMenu()"></button>
                 </ng-template>
             </p-toolbar>
-            <div class="p-grid">
 
-
-                <p-table #dt [value]="roles" [rows]="4" [paginator]="true" [globalFilterFields]="['name']"
+                <p-splitter [panelSizes]="[40,60]" >
+                    <ng-template pTemplate>
+                       <p-table #dt [value]="roles" [rows]="4" [paginator]="true" [globalFilterFields]="['name']"
                     [(selection)]="selectedRoles" [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                     [showCurrentPageReport]="true" class="p-col">
@@ -69,7 +69,7 @@
                                 <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-info p-mr-2"
                                     (click)="details(role)"></button>
                                 <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
-                                    (click)="delete(role)"></button>
+                                    (click)="deleteRole(role)"></button>
 
                             </td>
                         </tr>
@@ -79,62 +79,64 @@
                             In total there are {{items ? items.length : 0 }} items.
                         </div>
                     </ng-template>
-                </p-table>
-
-
-                <p-table #dt [rows]="4" [paginator]="true" [globalFilterFields]="['name']"
-                    [value]="selectedRole.menuRoles" [rowHover]="true" dataKey="name" styleClass="p-datatable-customers"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                    [showCurrentPageReport]="true" class="p-col">
-                    <ng-template pTemplate="caption">
-                        <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                            <h5 class="p-m-0">Fields</h5>
-                            <span class="p-input-icon-left">
-                                <i class="pi pi-search"></i>
-                                <input pInputText type="text" placeholder="Search..." />
-                            </span>
-                        </div>
+                       </p-table> 
                     </ng-template>
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <!--   <th class="center" style="width: 3rem">
-                                                                       <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                                                                   </th>-->
-                            <th pSortableColumn="name">Name
-                                <p-sortIcon field="name"></p-sortIcon>
-                            </th>
-                            <th pSortableColumn="type.simpleName">Type
-                                <p-sortIcon field="type.simpleName"></p-sortIcon>
-                            </th>
-                            <!--<th></th>-->
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-menuRole let-i="rowIndex">
-                        <tr>
-                            <!--   <td>
-                                                                       <p-tableCheckbox [value]="commande"></p-tableCheckbox>
-                                                                   </td>-->
+                
+                 <ng-template pTemplate>
+                     <p-scrollPanel [style]="{width: '100%', height: '100%'}">
+                        <p-table #dt  [globalFilterFields]="['name']"
+                            [value]="selectedRole.menuRoles" [rowHover]="true" dataKey="name" styleClass="p-datatable-customers"
+                             class="p-col">
+                            <ng-template pTemplate="caption">
+                                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                                    <h5 class="p-m-0">Menus</h5>
+                                    <span class="p-input-icon-left">
+                                        <i class="pi pi-search"></i>
+                                        <input pInputText type="text" placeholder="Search..." />
+                                    </span>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <!--   <th class="center" style="width: 3rem">
+                                                                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                                                        </th>-->
+                                    <th pSortableColumn="ordre">Ordre
+                                        <p-sortIcon field="ordre"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="menu">Menu
+                                        <p-sortIcon field="menu"></p-sortIcon>
+                                    </th>
+                                    <th>Actions</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-menuRole let-i="rowIndex">
+                                <tr>
+                                    <!--   <td>
+                                                                            <p-tableCheckbox [value]="commande"></p-tableCheckbox>
+                                                                        </td>-->
 
-                            <td>{{menuRole.order}}</td>
-                            <td>
-                                <p-tree [value]="menusHierarchy[i]"></p-tree>
-                            </td>
+                                    <td>{{menuRole.order}}</td>
+                                    <td>
+                                        <p-tree [value]="menusHierarchy[i]"></p-tree>
+                                    </td>
 
 
-                            <!--  <td>
-                                <button pButton pRipple icon="pi pi-pencil"
-                                    class="p-button-rounded p-button-success p-mr-2"
-                                    (click)="editFieldDialog(field)"></button>
-                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
-                                    (click)="deleteField(field)"></button>
-                            </td> -->
-                        </tr>
-                    </ng-template>
+                                    <td>
+                                        <button pButton pRipple icon="pi pi-pencil"
+                                            class="p-button-rounded p-button-success p-mr-2"
+                                            (click)="editMenuRole(menuRole)"></button>
+                                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                                            (click)="deleteMenuRole(menuRole)"></button>
+                                    </td>
+                                </tr>
+                            </ng-template>
 
-                </p-table>
-
-
-            </div>
+                        </p-table>
+                    </p-scrollPanel>
+                 </ng-template>
+               
+                </p-splitter>
 
         </div>
 

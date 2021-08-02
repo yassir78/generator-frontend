@@ -155,7 +155,6 @@ export class RoleMenuComponent implements OnInit {
             menu = {libelle: menuLibelle, icone: iconLibelle};
         }
         this.menus.push(menu);
-        console.log(this.menus)
         this.menuForm.reset();
         this.resetMenuForm();
         this.menusArray = [];

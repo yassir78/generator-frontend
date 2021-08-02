@@ -51,7 +51,6 @@ export class RoleAddComponent implements OnInit {
      this.menus = this.pojos.map(pojo=>{ return {"name":pojo.name}});
      this.addChildToSubMenuForm.get('menuName').setValue({name:this.menus[0].name})
         this.iconService.getIcons().then(icons => {
-          console.log(icons);
       this.icons = icons;
     });
 
@@ -102,9 +101,7 @@ export class RoleAddComponent implements OnInit {
    this.menuRoles.push({menu:menu,order:1})
    this.menusLayer2 = [];
    this.menusHierarchy.push([this.menuToTreeNode(menu)])
-   console.log(this.menusHierarchy)
     this.selectedFiles2 = [];
-  
     this.addMenuForm.reset()
  }
 
@@ -141,19 +138,14 @@ export class RoleAddComponent implements OnInit {
         this.menusLayer2.push({libelle:pojo != undefined?pojo.name: label,icone:event.node.icon,menuItems:menusToAdd})
       }
    }
-   console.log(this.menusLayer2)
   }
 
 
   deleteMenuRole(menuRole:MenuRole){
     this.menuRoles = this.menuRoles.filter(mR=>mR.menu.libelle != menuRole.menu.libelle);
-    console.log("zzzzzzzzzzzzzzzz")
-    console.log(this.menuRoles)
     this.menusHierarchy = this.menusHierarchy.filter(menuHierarchy=>menuHierarchy[0].label != menuRole.menu.libelle)
-     console.log("mmmmmmmmmmmmm")
-    console.log(this.menuRoles)
-    
   }
+
   nodeUnselect(event) {
     const label:string = event.node.label;
     let pojoName:string;
@@ -167,11 +159,10 @@ export class RoleAddComponent implements OnInit {
     }else{
       this.menusLayer2 = this.menusLayer2.filter(menu=>menu.libelle != label);
     }
-    console.log(this.menusLayer2)
   }
+
   addSiblingToPtree(){
     const formValues = this.addChildToSubMenuForm.value;
-    console.log(formValues)
     const menuName = formValues.menuName.name;
     const libelle = formValues.libelle;
     const icon = formValues.icon.icon;
@@ -183,7 +174,6 @@ export class RoleAddComponent implements OnInit {
 
 addChildToPtree(){
   const formValues = this.addSubMenuForm.value;
-  console.log(formValues)
   const libelle = formValues.libelle;
   const icon = formValues.icon.icon;
   let sousMenu:TreeNode = {"label":libelle,"icon":icon,"children":[]}
@@ -208,7 +198,6 @@ submit(){
    this.addSubMenuFormShow = false;
    this.addChildToSubMenuForm.reset();
    this.addChildSubMenuFormShow = false;
-     console.log(this.roles)
 }
 
 hide(){

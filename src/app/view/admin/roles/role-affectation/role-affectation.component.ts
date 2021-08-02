@@ -23,7 +23,6 @@ export class RoleAffectationComponent implements OnInit {
             if (value) {
                 let pojoNames = [...new Set(this.selectedRole.permissions.map(permission => permission.name.split('.')[0]))];
                 this.menusToBeAffected = this.menus.filter(menu => (menu.pojo && pojoNames.includes(menu.pojo.name) || (menu.pojo == undefined)))
-                console.log(this.menusToBeAffected)
             }
         });
         this.cols = [
@@ -55,9 +54,7 @@ export class RoleAffectationComponent implements OnInit {
     }
 
     affecter() {
-        console.log(this.selectedRole.permissions)
         this.affectedMenus.map(mr => this.selectedRole.menuRoles.push(mr));
-        console.log(this.selectedRole.menuRoles)
 
         this.affecterRoleDialog = false;
         this.affectedMenus = [];
@@ -67,14 +64,12 @@ export class RoleAffectationComponent implements OnInit {
     onEditComplete(event) {
         this.affectedMenus.sort((n1, n2) => (n1.order > n2.order) ? 1 : -1);
         this.affectedMenus
-        console.log(event)
 
 
     }
 
     delete(menuRole) {
         this.menusToBeAffected.push(menuRole.menu)
-        console.log(menuRole.menu.libelle)
 
         //mr=>{mr.menu.libelle != menuRole.menu.libelle});
         this.affectedMenus = this.affectedMenus.filter(m => m.menu.libelle != menuRole.menu.libelle)
