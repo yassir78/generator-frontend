@@ -7,11 +7,12 @@
         </div>
 
     </div>
-
+    
     <p-splitter [panelSizes]="[35,65]">
         <ng-template pTemplate class="p-col-12">
             <div class="p-fluid" [formGroup]="addMenuForm" style="padding: 20px; margin: 10px;">
                 <div class="p-fluid" style="margin-bottom: 6vh;">
+                    <span class="p-float-label">Ajouter un menu</span><br>
                     <div class="p-field">
                         <span class="p-float-label">
                             <input type="text" id="inputtext" pInputText formControlName="libelle">
@@ -21,7 +22,8 @@
                     </div>
                     <div class="p-field">
                         <span class="p-float-label">
-                            <p-autoComplete formControlName="icon" [suggestions]="filtredIcons"
+                            <label for="icon">Ajouter une icone</label>
+                            <p-autoComplete id="icon" formControlName="icon" [suggestions]="filtredIcons"
                                 (completeMethod)="filterIcon($event)" field="icon" [minLength]="1"></p-autoComplete>
                             <span class="p-mt-2"><a href="https://www.primefaces.org/diamond/icons.xhtml"
                                     target="_blank">Check
@@ -29,7 +31,7 @@
                         </span>
 
                     </div>
-
+                    <span class="p-float-label">Ajouter un sous menu</span><br>
                     <div class="p-field">
                         <span class="p-float-label">
                             <div style="display: flex;flex-direction: row;justify-content: space-between;">
@@ -50,14 +52,14 @@
                 <div class="p-fluid" [formGroup]="addSubMenuForm" *ngIf="addSubMenuFormShow">
                     <div class="p-field">
                         <span class="p-float-label">
-                            <input type="text" id="inputtext" pInputText formControlName="libelle">
-                            <label for="inputtext">libelle</label>
+                            <input id="inputtext2" type="text" pInputText formControlName="libelle">
+                            <label for="inputtext2">libelle</label>
                         </span>
 
                     </div>
                     <div class="p-field">
                         <span class="p-float-label">
-                            <p-autoComplete formControlName="icon" [suggestions]="filtredIcons"
+                            <p-autoComplete id="icon" formControlName="icon" [suggestions]="filtredIcons"
                                 (completeMethod)="filterIcon($event)" field="icon" [minLength]="1"></p-autoComplete>
                             <span class="p-mt-2"><a href="https://www.primefaces.org/diamond/icons.xhtml"
                                     target="_blank">Check
@@ -71,8 +73,9 @@
                 <div class="p-fluid" [formGroup]="addChildToSubMenuForm" *ngIf="addChildSubMenuFormShow">
 
                     <div class="p-field">
+                        <label for="addpage"></label>
                         <span class="p-float-label">
-                            <p-dropdown [options]="menus" formControlName="menuName" optionLabel="name"></p-dropdown>
+                            <p-dropdown id="addpage" [options]="menus" formControlName="menuName" optionLabel="name"></p-dropdown>
                         </span>
                     </div>
 
@@ -93,7 +96,7 @@
                         </span>
 
                     </div>
-                    <button pButton type="button" class="p-mr-4" label="ADD CHILD"
+                    <button pButton type="button" class="p-mr-4" label="ADD PAGE"
                         [disabled]="addChildToSubMenuForm.invalid" (click)="addSiblingToPtree()"></button>
                 </div>
             </div>
@@ -149,6 +152,6 @@
     <button pButton type="button" class="p-mr-4" [disabled]="addMenuForm.invalid" style="margin-top: 3vh;"
         label="ADD MENU" (click)="addMenu()"></button>
     <button pButton type="submit" label="Save" [disabled]="addRoleForm.invalid || !this.menuRoles.length > 0"
-        (click)="submit()"></button>
+        (click)="submit()" style="margin-top: 3vh;float: right;"></button>
 
 </p-dialog>
