@@ -20,7 +20,7 @@ export class RoleAddComponent implements OnInit {
   files3: TreeNode[];
   menusHierarchy:any[] = [];
   selectedFiles2;
-  icons :any[];;
+  icons :any[];
   filtredIcons :any[];
   menusLayer2:Menu[] = [];
   menuRoles:MenuRole[]=[];

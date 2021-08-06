@@ -1,6 +1,9 @@
+import { Pojo } from './../../../../controller/model/pojo';
+import { PojoService } from './../../../../controller/service/pojo.service';
+import { IconService } from 'src/app/controller/service/icon.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
-import { Menu } from 'src/app/controller/model/menu';
 import { MenuRole } from 'src/app/controller/model/menuRole';
 import { RoleService } from 'src/app/controller/service/role.service';
 
@@ -11,14 +14,53 @@ import { RoleService } from 'src/app/controller/service/role.service';
 })
 export class RoleEditComponent implements OnInit {
     cols: any[];
-        files: TreeNode[];
+    files: TreeNode[];
+    icons :any[];
+    filtredIcons :any[];
+    menus:any[] = [];
+    addSubMenuFormShow:boolean=false;
+    addChildSubMenuFormShow:boolean=false;
 
-  constructor(private roleService:RoleService) { }
+    addChildToSubMenuForm = new FormGroup({
+      menuName:new FormControl("",null),
+       icon:new FormControl('',Validators.required),
+      libelle:new FormControl('',Validators.required),
+    });
+
+    addSubMenuForm:FormGroup = new FormGroup({
+      libelle:new FormControl('',Validators.required),
+      icon:new FormControl('',Validators.required),
+    });
+
+    editMenuRoleForm:FormGroup = new FormGroup({
+      libelle:new FormControl('',Validators.required),
+      icon:new FormControl('',Validators.required),
+      ordre:new FormControl('',Validators.required)
+    });
+
+  constructor(private roleService:RoleService,private iconService:IconService) { }
   
   ngOnInit(): void {
+    //get icons
+    this.iconService.getIcons().then(icons => {
+      this.icons = icons;
+    });
+
   this.files = [];
+
   this.roleService.editMenuRole$.subscribe(value=>{
     if(value){
+      //setting the values of the form
+      this.editMenuRoleForm.setValue({
+        libelle: this.menuRoleToBeEdited.menu.libelle,
+        icon: this.menuRoleToBeEdited.menu.icone,
+        ordre: this.menuRoleToBeEdited.order
+      })
+
+       //get menus
+   this.menus = this.menuRoleToBeEdited.menu.menuItems.map(menu=>{ return {"libelle":menu.libelle}});
+   console.log('***********',this.menus)
+
       this.files = [];
          this.menuRoleToBeEdited.menu.menuItems.forEach(menuItem=>{
          let node = {
@@ -34,7 +76,7 @@ export class RoleEditComponent implements OnInit {
         this.files.push(node)
          // set form value
   }) 
- console.log(JSON. stringify(this.files))  //Read Object 
+    console.log(this.files)
     }
   })
   this.cols = [
@@ -43,29 +85,91 @@ export class RoleEditComponent implements OnInit {
             { field: 'action', header: 'Action' }
         ];
 }
-  MenuToTreeNode(){
 
+//methods
+
+filterIcon(event) {
+  let filtered: any[] = [];
+  let query = event.query;
+  for (let i = 0; i < this.icons.length; i++) {
+    let icon = this.icons[i];
+    if (icon.icon.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+      filtered.push(icon);
+    }
   }
-   menuToTreeNode(menu:Menu){
-   let object = {
-    label:menu.libelle,
-    expandedIcon: menu.icone,
-    collapsedIcon: menu.icone,
-    children: menu.menuItems.map(menu=>{return {label:menu.libelle,expandedIcon : menu.icone,collapsedIcon : menu.icone,children:this.nextChildren(menu)}})
-   };
-   return object;
- }
 
- nextChildren(menu:Menu){
-    return menu.menuItems.map(m=>{return {label:m.libelle,expandedIcon : m.icone,collapsedIcon : m.icone}})
- }
+  this.filtredIcons = filtered;
+}
+
+showAddSubmenuForm(){
+  this.addChildSubMenuFormShow = false;
+  this.addSubMenuFormShow = !this.addSubMenuFormShow;
+}
+
+showPageAddForm(){
+  this.addSubMenuFormShow = false;
+  this.addChildSubMenuFormShow = !this.addChildSubMenuFormShow;
+}
+
   hide(){
     this.roleService.editMenuRoleDialog = false;
+    this.addSubMenuForm.reset();
+    this.addChildToSubMenuForm.reset();
+    this.addSubMenuFormShow = false;
+    this.addChildSubMenuFormShow = false;
   }
+
+  addChildToPtree(){
+    const formValues = this.addChildToSubMenuForm.value;
+    const menuName = formValues.menuName.name;
+    const libelle = formValues.libelle;
+    const icon = formValues.icon.icon;
+    let sousMenu = this.files.find(file=>file.data.libelle == menuName);
+    console.log('child',sousMenu)
+    sousMenu.children.push({
+      data:{
+        libelle:libelle,
+        icone:icon
+      },
+      children:[]
+    })
+
+    this.addChildToSubMenuForm.reset();
+    this.addChildSubMenuFormShow = false;
+  }
+  
+  addSiblingToPtree(){
+  const formValues = this.addSubMenuForm.value;
+  const libelle= formValues.libelle;
+  const icon= formValues.icon.icon;
+  let node:any = {
+    data:{  
+        libelle:libelle,
+        icone:icon,
+    },
+    children: [],
+};
+  this.files.push(node);
+  console.log(this.files)
+  this.menus.push({"libelle":libelle})
+  this.addSubMenuForm.reset();
+  this.addSubMenuFormShow = false;
+}
+
+  submit(){
+
+  }
+
+  delete(){
+
+  }
+
+
+  //getters and setters
     get menuRoleToBeEdited():  MenuRole{
       return this.roleService.menuRoleToBeEdited;
     }
-    set menuRoleToBeEdite(value: MenuRole) {
+    set menuRoleToBeEdited(value: MenuRole) {
       this.roleService.menuRoleToBeEdited = value;
     }
     get editMenuRoleDialog():  boolean{
@@ -74,4 +178,5 @@ export class RoleEditComponent implements OnInit {
     set editMenuRoleDialog(value: boolean) {
       this.roleService.editMenuRoleDialog = value;
     }
+
 }
