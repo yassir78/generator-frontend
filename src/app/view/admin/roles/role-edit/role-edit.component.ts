@@ -121,7 +121,7 @@ showPageAddForm(){
 
   addChildToPtree(){
     const formValues = this.addChildToSubMenuForm.value;
-    const menuName = formValues.menuName.name;
+    const menuName = formValues.menuName.libelle;
     const libelle = formValues.libelle;
     const icon = formValues.icon.icon;
     console.log(formValues)
