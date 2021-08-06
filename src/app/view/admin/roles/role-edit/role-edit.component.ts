@@ -124,15 +124,23 @@ showPageAddForm(){
     const menuName = formValues.menuName.name;
     const libelle = formValues.libelle;
     const icon = formValues.icon.icon;
-    let sousMenu = this.files.find(file=>file.data.libelle == menuName);
+    console.log(formValues)
+    console.log(this.files)
+    console.log(menuName)
+    let sousMenu:any = this.files.find(file=>file.data.libelle == menuName);
     console.log('child',sousMenu)
-    sousMenu.children.push({
+    if(sousMenu.children == undefined){
+      sousMenu.children = {data:{libelle:libelle,icone:icon},children:[]};
+    }else{
+        sousMenu.children.push({
       data:{
         libelle:libelle,
         icone:icon
       },
       children:[]
     })
+    }
+
 
     this.addChildToSubMenuForm.reset();
     this.addChildSubMenuFormShow = false;
@@ -149,7 +157,7 @@ showPageAddForm(){
     },
     children: [],
 };
-  this.files.push(node);
+  this.files =[...this.files, node];;
   console.log(this.files)
   this.menus.push({"libelle":libelle})
   this.addSubMenuForm.reset();
