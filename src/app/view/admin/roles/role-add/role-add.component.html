@@ -12,95 +12,100 @@
         <ng-template pTemplate class="p-col-12">
             <div class="p-fluid" [formGroup]="addMenuForm" style="padding: 20px; margin: 10px;">
                 <div class="p-fluid" style="margin-bottom: 6vh;">
-                    <span class="p-float-label">Ajouter un menu</span><br>
+                    <span class="p-float-label bold">Ajouter un menu</span><br>
                     <div class="p-field">
                         <span class="p-float-label">
-                            <input type="text" id="menuLibelle" pInputText formControlName="libelle">
-                            <label for="menuLibelle">libelle</label>
+                            <input type="text" id="menuLibelle" placeholder="libelle" pInputText formControlName="libelle">
                         </span>
 
                     </div>
                     <div class="p-field">
                         <span class="p-float-label">
-                            <p-autoComplete id="menuIcon" formControlName="icon" [suggestions]="filtredIcons"
-                            (completeMethod)="filterIcon($event)" field="icon" [minLength]="1"></p-autoComplete>
                             <label for="menuIcon">Ajouter une icone</label>
+                            <p-autoComplete id="menuIcon" formControlName="icon" [suggestions]="filtredIcons"
+                            (completeMethod)="filterIcon($event)" field="icon" [minLength]="1" placeholder="Icon"></p-autoComplete>
                             <span class="p-mt-2"><a href="https://www.primefaces.org/diamond/icons.xhtml"
                                     target="_blank">Check
                                     icons</a></span>
                         </span>
 
                     </div>
-                    <span class="p-float-label">Ajouter un sous menu</span><br>
+                    <span class="p-float-label bold">Selectionner un/des sous menu(s)</span><br>
                     <div class="p-field">
                         <span class="p-float-label">
-                            <div style="display: flex;flex-direction: row;justify-content: space-between;">
-                                <button label="Sous menu" pButton pRipple icon="pi pi-plus"
-                                    style="margin-bottom: 2vh;max-width: 15vh;font-size: .8rem;"
-                                    (click)="showAddSubmenuForm()"></button>
-                                <button label="Page" pButton pRipple icon="pi pi-plus"
-                                    style="margin-bottom: 2vh;max-width: 15vh;font-size: .8rem;"
-                                    (click)="showPageAddForm()"></button>
-                            </div>
                             <p-scrollPanel [style]="{width: '100%'}">
                                 <p-tree [value]="files3" selectionMode="checkbox" (onNodeSelect)="nodeSelect($event)"
-                                    (onNodeUnselect)="nodeUnselect($event)" [(selection)]="selectedFiles2"></p-tree>
+                                (onNodeUnselect)="nodeUnselect($event)" [(selection)]="selectedFiles2"></p-tree>
                             </p-scrollPanel>
+                            
+                            <div style="display: flex;flex-direction: row;justify-content: space-between; width: '100%';">
+                                <button label="Sous menu" pButton pRipple icon="pi pi-{{!addSubMenuFormShow ? 'plus' : 'minus'}}"
+                                    style="max-width: 15vh;font-size: .8rem;"
+                                    (click)="showAddSubmenuForm()"></button>
+                                <button label="Page" pButton pRipple icon="pi pi-{{!addChildSubMenuFormShow ? 'plus' : 'minus'}}"
+                                    style="max-width: 15vh;font-size: .8rem;"
+                                    (click)="showPageAddForm()"></button>
+                            </div>
                         </span>
                     </div>
                 </div>
+
+
+
+
                 <div class="p-fluid" [formGroup]="addSubMenuForm" *ngIf="addSubMenuFormShow">
+                    <span class="p-float-label bold">Ajouter un sous menu</span><br>
                     <div class="p-field">
                         <span class="p-float-label">
-                            <input id="subMenuLibelle" type="text" pInputText formControlName="libelle">
-                            <label for="subMenuLibelle">libelle</label>
+                            <input id="subMenuLibelle" type="text" placeholder="libelle" pInputText formControlName="libelle">
                         </span>
-
+                        
                     </div>
                     <div class="p-field">
                         <span class="p-float-label">
-                            <p-autoComplete id="subMenuIcon" formControlName="icon" [suggestions]="filtredIcons"
+                            <p-autoComplete id="subMenuIcon" formControlName="icon" placeholder="icon" [suggestions]="filtredIcons"
                             (completeMethod)="filterIcon($event)" field="icon" [minLength]="1"></p-autoComplete>
-                            <label for="subMenuIcon">Ajouter une icone</label>
                             <span class="p-mt-2"><a href="https://www.primefaces.org/diamond/icons.xhtml"
-                                    target="_blank">Check
-                                    icons</a></span>
+                                    target="_blank">Check icons</a></span>
                         </span>
 
                     </div>
                     <button pButton type="button" class="p-mr-4" label="ADD SUBMENU" [disabled]="addSubMenuForm.invalid"
                         (click)="addChildToPtree()"></button>
                 </div>
+
+
+
                 <div class="p-fluid" [formGroup]="addChildToSubMenuForm" *ngIf="addChildSubMenuFormShow">
-
+                    
+                    <span class="p-float-label bold">Ajouter une page</span><br>
                     <div class="p-field">
-                        <label for="addpage">Choisir sous menu</label>
                         <span class="p-float-label">
-                            <p-dropdown id="addpage" [options]="menus" formControlName="menuName" optionLabel="name"></p-dropdown>
+                            <p-dropdown id="addpage" placeholder="Choisir sous menu (Optionnel)" [options]="menus" formControlName="menuName" optionLabel="name"></p-dropdown>
+                        </span>
+                    </div>
+                    
+                    <div class="p-field">
+                        <span class="p-float-label">
+                            <input type="text" id="pageLibelle" placeholder="libelle" pInputText formControlName="libelle">
                         </span>
                     </div>
 
                     <div class="p-field">
                         <span class="p-float-label">
-                            <input type="text" id="pageLibelle" pInputText formControlName="libelle">
-                            <label for="pageLibelle">libelle</label>
-                        </span>
-                    </div>
-
-                    <div class="p-field">
-                        <span class="p-float-label">
-                            <p-autoComplete id="pageIcon" formControlName="icon" [suggestions]="filtredIcons"
+                            <p-autoComplete id="pageIcon" placeholder="icon" formControlName="icon" [suggestions]="filtredIcons"
                             (completeMethod)="filterIcon($event)" field="icon" [minLength]="1"></p-autoComplete>
-                            <label for="pageIcon">Ajouter une icone</label>
                             <span class="p-mt-2"><a href="https://www.primefaces.org/diamond/icons.xhtml"
-                                    target="_blank">Check
-                                    icons</a></span>
+                                    target="_blank">Check icons</a></span>
                         </span>
 
                     </div>
                     <button pButton type="button" class="p-mr-4" label="ADD PAGE"
                         [disabled]="addChildToSubMenuForm.invalid" (click)="addSiblingToPtree()"></button>
                 </div>
+
+
+
             </div>
 
         </ng-template>
@@ -112,13 +117,9 @@
 
                     <ng-template pTemplate="header">
                         <tr>
-                            <th>Menu
-                            </th>
-                            <th>Ordre
-                            </th>
-                            <th>Delete
-                            </th>
-
+                            <th>Menu</th>
+                            <th>Ordre</th>
+                            <th>Delete</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-menuRole let-i="rowIndex">

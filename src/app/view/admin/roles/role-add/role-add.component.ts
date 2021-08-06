@@ -58,7 +58,7 @@ export class RoleAddComponent implements OnInit {
 
   showAddSubmenuForm(){
     this.addChildSubMenuFormShow = false;
-    this.addSubMenuFormShow = true;
+    this.addSubMenuFormShow = !this.addSubMenuFormShow;
   }
 
 
@@ -77,11 +77,11 @@ export class RoleAddComponent implements OnInit {
  }
 
   showPageAddForm(){
-    this.addChildSubMenuFormShow = true;
     this.addSubMenuFormShow = false;
+    this.addChildSubMenuFormShow = !this.addChildSubMenuFormShow;
   }
 
-    filterIcon(event) {
+  filterIcon(event) {
     let filtered: any[] = [];
     let query = event.query;
     for (let i = 0; i < this.icons.length; i++) {
@@ -93,6 +93,7 @@ export class RoleAddComponent implements OnInit {
 
     this.filtredIcons = filtered;
   }
+
  addMenu(){
    let menu = new Menu();
    menu.icone = this.menuIcon.value.icon;
@@ -104,12 +105,12 @@ export class RoleAddComponent implements OnInit {
     this.selectedFiles2 = [];
     this.addMenuForm.reset()
  }
-
   
-    pojoToTreeNode(){
+  pojoToTreeNode(){
     return this.pojos.map(pojo=>{
       return { "label": pojo.name ,"children":pojo.permissions.map(prem=>{return {"label":prem.name}})} });
   }
+
   nodeSelect(event) {
    const label:string = event.node.label;
    let pojoName:string;
