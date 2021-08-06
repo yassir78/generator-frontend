@@ -134,6 +134,12 @@ export class RoleListComponent implements OnInit {
  nextChildren(menu:Menu){
     return menu.menuItems.map(m=>{return {label:m.libelle,expandedIcon : m.icone,collapsedIcon : m.icone}})
  }
+ editMenuRole(menuRole:MenuRole){
+   console.log("hellowwwwwwwwwwww")
+   this.editMenuRoleDialog = true;
+   this.roleService.menuRoleToBeEdited = menuRole;
+   this.roleService.editMenuRole$.next(true);
+ }
   get roles() :RoleConfig[]{
     return this.roleService.roles;
   }
@@ -170,6 +176,13 @@ export class RoleListComponent implements OnInit {
 
     set selectedRole(value: RoleConfig) {
         this.roleService.selectedRole = value;
+    }
+        get editMenuRoleDialog(): boolean{
+        return this.roleService.editMenuRoleDialog;
+    }
+
+    set editMenuRoleDialog(value: boolean) {
+        this.roleService.editMenuRoleDialog = value;
     }
 
 }

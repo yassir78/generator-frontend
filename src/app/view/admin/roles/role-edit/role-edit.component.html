@@ -1,0 +1,36 @@
+<p-dialog header="Ajouter un rôle" (onHide)="hide()" [(visible)]="editMenuRoleDialog"
+    [style]="{width: '80vw',height:'auto'}" [contentStyle]="{minHeight:'32vh'}" [baseZIndex]="10000" (onHide)="hide()">
+    <p-treeTable [value]="files" [columns]="cols" [paginator]="true" [rows]="10">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns">
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+            <tr>
+                <td *ngFor="let col of columns; let i = index" ttEditableColumn
+                    [ngClass]="{'p-toggler-column': i === 0}">
+                    <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
+                    <p-treeTableCellEditor *ngIf="col.field != 'action';else action">
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="rowData[col.field]">
+                        </ng-template>
+                        <ng-template pTemplate="output">{{rowData[col.field]}}</ng-template>
+                        <i [class]="rowData[col.field]" *ngIf="col.field == 'icone'"></i>
+
+                    </p-treeTableCellEditor>
+                    <ng-template #action>
+                        <button>hello world</button>
+                    </ng-template>
+
+                    <!--   <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
+                    <i [class]="rowData[col.field]" *ngIf="col.field == 'icone'"></i>
+                    {{rowData[col.field]}} -->
+                </td>
+            </tr>
+        </ng-template>
+    </p-treeTable>
+
+</p-dialog>

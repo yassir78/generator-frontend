@@ -20,9 +20,25 @@ export class RoleService {
     private _selectedRole:RoleConfig= new RoleConfig();
     private _affecterRoleDialog:boolean=false;
     private _addRoleDialog:boolean=false;
+    private _editMenuRoleDialog:boolean=false;
+    public editMenuRole$ = new BehaviorSubject<boolean>(false);
     public affecterRole$= new BehaviorSubject<boolean>(false);
+    private _menuRoleToBeEdited:MenuRole = new MenuRole();
     public menusHierarchyTree=new Map();
+
     constructor(private http: HttpClient,pojoService:PojoService) { }
+        get menuRoleToBeEdited(): MenuRole{
+        return this._menuRoleToBeEdited;
+    }
+        set menuRoleToBeEdited(value: MenuRole) {
+        this._menuRoleToBeEdited = value;
+    }
+    get editMenuRoleDialog(): boolean{
+        return this._editMenuRoleDialog;
+    }
+    set editMenuRoleDialog(value: boolean) {
+        this._editMenuRoleDialog = value;
+    }
     get addRoleDialog(): boolean{
         return this._addRoleDialog;
     }

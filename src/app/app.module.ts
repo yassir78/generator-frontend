@@ -143,6 +143,7 @@ import { RoleMenuComponent } from './view/admin/roles/role-menu/role-menu.compon
 import { RoleMenuViewComponent } from './view/admin/roles/role-menu-view/role-menu-view.component';
 import { RoleAffectationComponent } from './view/admin/roles/role-affectation/role-affectation.component';
 import { RoleAddComponent } from './view/admin/roles/role-add/role-add.component';
+import { RoleEditComponent } from './view/admin/roles/role-edit/role-edit.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -282,6 +283,7 @@ import { RoleAddComponent } from './view/admin/roles/role-add/role-add.component
     RoleMenuViewComponent,
     RoleAffectationComponent,
     RoleAddComponent,
+    RoleEditComponent,
   ],
   entryComponents:[
     FileLoadComponent,
