@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { MenuRole } from 'src/app/controller/model/menuRole';
 import { RoleService } from 'src/app/controller/service/role.service';
+import { Menu } from 'src/app/controller/model/menu';
 
 @Component({
   selector: 'app-role-edit',
@@ -165,7 +166,28 @@ showPageAddForm(){
 }
 
   submit(){
-
+    let menu = new Menu();
+    const formValues = this.editMenuRoleForm.value;
+    const libelle = formValues.libelle;
+    const icon = formValues.icon;
+    menu.libelle = libelle;
+    menu.icone = icon;
+    menu.menuItems= this.treeNodeToMenus(this.files)
+    this.menuRoleToBeEdited.menu = menu;
+    this.editMenuRoleDialog = false;
+  }
+  treeNodeToMenus(treeNodes:TreeNode<any>[]){
+   let menus:Menu[]=[];
+    treeNodes.forEach(treeNode=>{
+      let menu:Menu = new Menu();
+      const libelle = treeNode.data.libelle;
+      const icone = treeNode.data.icones;
+      menu.libelle = treeNode.data.libelle;
+      menu.icone = treeNode.data.icon;
+      menu.menuItems = treeNode.children.map(child=>{return {libelle:child.data.libelle,icone:child.data.libellle}})
+      menus.push(menu);
+    })
+    return menus;
   }
 
   delete(){
