@@ -1,53 +1,55 @@
 <p-dialog header="Ajouter un champ" [(visible)]="addFieldToExistingPojoDialog" [formGroup]="form"
-    [style]="{width: '58vw',height:'auto'}" (onHide)="hide()" [contentStyle]="{minHeight:'10vh'}" [baseZIndex]="10000">
-   
-        <div class="p-fluid p-grid" 
-            style="border: 2px outset rgba(56, 59, 59, 0.521); padding: 10px; margin: 5px;">
+          [style]="{width: '58vw',height:'auto'}" (onHide)="hide()" [contentStyle]="{minHeight:'10vh'}"
+          [baseZIndex]="10000">
 
-            <div class="p-field p-col-12 p-md-4">
+    <div class="p-fluid p-grid"
+         style="border: 2px outset rgba(56, 59, 59, 0.521); padding: 10px; margin: 5px;">
+
+        <div class="p-field p-col-12 p-md-4">
                 <span class="p-float-label">
                     <input type="text" id="inputtext" pInputText formControlName="name">
                     <label for="inputtext">Field name</label>
                 </span>
-            </div>
+        </div>
 
-            <div class="p-field p-col-12 p-md-4">
+        <div class="p-field p-col-12 p-md-4">
                 <span class="p-float-label">
                     <p-dropdown inputId="category" [autoDisplayFirst]="false" [options]="categories"
-                        formControlName="category" optionLabel="name"></p-dropdown>
+                                formControlName="category" optionLabel="name"></p-dropdown>
                     <label for="category">category</label>
                 </span>
-            </div>
+        </div>
 
-            <div class="p-field p-col-12 p-md-4" *ngIf="fieldValueByIndex()=='Complexe'">
+        <div class="p-field p-col-12 p-md-4" *ngIf="fieldValueByIndex()=='Complexe'">
                 <span class="p-float-label">
                     <p-dropdown inputId="generic" [autoDisplayFirst]="false" [options]="pojosNames"
-                        formControlName="generic" optionLabel="name"></p-dropdown>
+                                formControlName="generic" optionLabel="name"></p-dropdown>
                     <label for="generic">type Complexe </label>
                 </span>
-            </div>
-            <div class="p-field p-col-4 p-md-4" *ngIf="fieldValueByIndex()=='Complexe'">
+        </div>
+        <div class="p-field p-col-4 p-md-4" *ngIf="fieldValueByIndex()=='Complexe'">
                 <span class="p-float-label">
                     <h6>Is List</h6>
                     <p-inputSwitch formControlName="isList"></p-inputSwitch>
                 </span>
-            </div>
-            <div class="p-field p-col-12 p-md-4" *ngIf="fieldValueByIndex()=='Simple'">
+        </div>
+        <div class="p-field p-col-12 p-md-4" *ngIf="fieldValueByIndex()=='Simple'">
                 <span class="p-float-label">
                     <p-dropdown inputId="simple" [autoDisplayFirst]="false" [options]="typesSimple"
-                        formControlName="simple" optionLabel="type"></p-dropdown>
+                                formControlName="simple" optionLabel="type"></p-dropdown>
                     <label for="simple">type Simple</label>
                 </span>
-            </div>
-            <div class="p-field p-col-12 p-md-4">
+        </div>
+        <div class="p-field p-col-12 p-md-4">
                 <span class="p-float-label">
                     <p-dropdown inputId="idOrReference" [autoDisplayFirst]="false" [options]="idOrReferenceValue"
-                        formControlName="idOrReference" optionLabel="name"></p-dropdown>
+                                formControlName="idOrReference" optionLabel="name"></p-dropdown>
                     <label for="idOrReference">Id Or Ref</label>
 
                 </span>
-            </div>
         </div>
-    <button pButton type="submit" [disabled] = "!form.valid" label="Save" style="margin-top: 3vh;float: right;" (click)="submit()"></button>
+    </div>
+    <button pButton type="submit" [disabled]="!form.valid" label="Save" style="margin-top: 3vh;float: right;"
+            (click)="submit()"></button>
     <!-- <button pButton type="submit" [disabled] = "!form.value.name?.legth > 0 || !form.value.category?.length > 0" label="Save" (click)="submit()"></button> -->
 </p-dialog>
