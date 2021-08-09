@@ -209,88 +209,88 @@ export class AppMenuComponent implements OnInit {
           },
         ],
       }, */
-      {
-        label: "Pages",
-        icon: "pi pi-fw pi-check-square",
-        routerLink: ["/pages"],
-        items: [
-          /*       {
-            label: "Commande",
-            icon: "pi pi-fw pi-globe",
-            routerLink: ["/view/commande"],
-          }, */
-          {
-            label: "Pojo Load",
-            icon: "pi pi-fw pi-globe",
-            routerLink: ["/view/pojo/load"],
-          },
-          {
-            label: "Pojo Show",
-            icon: "pi pi-fw pi-globe",
-            routerLink: ["/view/pojo/show"],
-          },
-          {
-            label: "Role management",
-            icon: "pi pi-fw pi-globe",
-            routerLink: ["view/role/show"],
-          },
-          {
-            label: "Pojo Generate",
-            icon: "pi pi-fw pi-globe",
-            routerLink: ["/view/pojo/generate"],
-          },
-          {
-            label: "Crud",
-            icon: "pi pi-fw pi-pencil",
-            routerLink: ["/pages/crud"],
-          },
-          /*     {
-            label: "Calendar",
-            icon: "pi pi-fw pi-calendar-plus",
-            routerLink: ["/pages/calendar"],
-          }, */
-          /*     {
-            label: "Timeline",
-            icon: "pi pi-fw pi-calendar",
-            routerLink: ["/pages/timeline"],
-          }, */
-          /*     {
-            label: "Landing",
-            icon: "pi pi-fw pi-globe",
-            url: "assets/pages/landing.html",
-            target: "_blank",
-          }, */
-          /*     {
-            label: "Login",
-            icon: "pi pi-fw pi-sign-in",
-            routerLink: ["/login"],
-            target: "_blank",
-          }, */
-          /*      {
-            label: "Error",
-            icon: "pi pi-fw pi-exclamation-triangle",
-            routerLink: ["/error"],
-            target: "_blank",
-          }, */
-          /*      {
-            label: "404",
-            icon: "pi pi-fw pi-times",
-            routerLink: ["/404"],
-            target: "_blank",
-          }, */
-          /*        {
-            label: "Access Denied",
-            icon: "pi pi-fw pi-ban",
-            routerLink: ["/accessdenied"],
-            target: "_blank",
-          }, */
-          /*      {
-            label: "Empty",
-            icon: "pi pi-fw pi-clone",
-            routerLink: ["/pages/empty"],
-          }, */
-        ],
-      },
+      // {
+      //   label: "Pages",
+      //   icon: "pi pi-fw pi-check-square",
+      //   routerLink: ["/pages"],
+      //   items: [
+      //     /*       {
+      //       label: "Commande",
+      //       icon: "pi pi-fw pi-globe",
+      //       routerLink: ["/view/commande"],
+      //     }, */
+      //     {
+      //       label: "Pojo Load",
+      //       icon: "pi pi-fw pi-globe",
+      //       routerLink: ["/view/pojo/load"],
+      //     },
+      //     {
+      //       label: "Pojo Show",
+      //       icon: "pi pi-fw pi-globe",
+      //       routerLink: ["/view/pojo/show"],
+      //     },
+      //     {
+      //       label: "Role management",
+      //       icon: "pi pi-fw pi-globe",
+      //       routerLink: ["view/role/show"],
+      //     },
+      //     {
+      //       label: "Pojo Generate",
+      //       icon: "pi pi-fw pi-globe",
+      //       routerLink: ["/view/pojo/generate"],
+      //     },
+      //     {
+      //       label: "Crud",
+      //       icon: "pi pi-fw pi-pencil",
+      //       routerLink: ["/pages/crud"],
+      //     },
+      //     /*     {
+      //       label: "Calendar",
+      //       icon: "pi pi-fw pi-calendar-plus",
+      //       routerLink: ["/pages/calendar"],
+      //     }, */
+      //     /*     {
+      //       label: "Timeline",
+      //       icon: "pi pi-fw pi-calendar",
+      //       routerLink: ["/pages/timeline"],
+      //     }, */
+      //     /*     {
+      //       label: "Landing",
+      //       icon: "pi pi-fw pi-globe",
+      //       url: "assets/pages/landing.html",
+      //       target: "_blank",
+      //     }, */
+      //     /*     {
+      //       label: "Login",
+      //       icon: "pi pi-fw pi-sign-in",
+      //       routerLink: ["/login"],
+      //       target: "_blank",
+      //     }, */
+      //     /*      {
+      //       label: "Error",
+      //       icon: "pi pi-fw pi-exclamation-triangle",
+      //       routerLink: ["/error"],
+      //       target: "_blank",
+      //     }, */
+      //     /*      {
+      //       label: "404",
+      //       icon: "pi pi-fw pi-times",
+      //       routerLink: ["/404"],
+      //       target: "_blank",
+      //     }, */
+      //     /*        {
+      //       label: "Access Denied",
+      //       icon: "pi pi-fw pi-ban",
+      //       routerLink: ["/accessdenied"],
+      //       target: "_blank",
+      //     }, */
+      //     /*      {
+      //       label: "Empty",
+      //       icon: "pi pi-fw pi-clone",
+      //       routerLink: ["/pages/empty"],
+      //     }, */
+      //   ],
+      // },
       /*    {
                 label: 'Hierarchy', icon: 'pi pi-fw pi-sitemap',
                 items: [
