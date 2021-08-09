@@ -175,6 +175,8 @@ showPageAddForm(){
     menu.menuItems= this.treeNodeToMenus(this.files)
     this.menuRoleToBeEdited.menu = menu;
     this.editMenuRoleDialog = false;
+
+    
   }
   treeNodeToMenus(treeNodes:TreeNode<any>[]){
    let menus:Menu[]=[];
