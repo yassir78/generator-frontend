@@ -61,8 +61,6 @@ export class RoleEditComponent implements OnInit {
 
        //get menus
    this.menus = this.menuRoleToBeEdited.menu.menuItems.map(menu=>{ return {"libelle":menu.libelle}});
-   console.log('***********',this.menus)
-
       this.files = [];
          this.menuRoleToBeEdited.menu.menuItems.forEach(menuItem=>{
          let node = {
@@ -194,8 +192,19 @@ showPageAddForm(){
     return menus;
   }
 
-  delete(libelle){
-    console.log(libelle)
+  delete(libelleToDelete,rowNode){
+    const level = rowNode.level;
+    if(level == 0){
+      this.files = this.files.filter(treeNode => treeNode.data.libelle != libelleToDelete)
+    }else{
+      console.log("m in")
+      const parent = rowNode.parent.data.libelle;
+      const child = rowNode.node.data.libelle;
+      this.files.forEach(treeNode=>{
+        console.log(treeNode.data.libelle)
+         treeNode.data.libelle == parent?treeNode.children = treeNode.children.filter(subTreeNode=>subTreeNode.data.libelle != child):false;
+    });
+  }
   }
 
 
