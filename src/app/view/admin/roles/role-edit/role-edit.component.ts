@@ -76,7 +76,6 @@ export class RoleEditComponent implements OnInit {
         this.files.push(node)
          // set form value
   }) 
-    console.log(this.files)
     }
   })
   this.cols = [
@@ -124,11 +123,7 @@ showPageAddForm(){
     const menuName = formValues.menuName.libelle;
     const libelle = formValues.libelle;
     const icon = formValues.icon.icon;
-    console.log(formValues)
-    console.log(this.files)
-    console.log(menuName)
     let sousMenu:any = this.files.find(file=>file.data.libelle == menuName);
-    console.log('child',sousMenu)
     if(sousMenu.children == undefined){
       sousMenu.children = {data:{libelle:libelle,icone:icon},children:[]};
     }else{
@@ -158,7 +153,6 @@ showPageAddForm(){
     children: [],
 };
   this.files =[...this.files, node];
-  console.log(this.files)
   this.menus.push({"libelle":libelle})
   this.addSubMenuForm.reset();
   this.addSubMenuFormShow = false;
@@ -172,7 +166,6 @@ showPageAddForm(){
     menu.libelle = libelle;
     menu.icone = icon;
     menu.menuItems= this.treeNodeToMenus(this.files)
-    console.log('ffffffffffffffffffffff',menu.menuItems)
     this.menuRoleToBeEdited.menu = menu;
     this.editMenuRoleDialog = false;
     this.roleService.selectedRole = new RoleConfig();    

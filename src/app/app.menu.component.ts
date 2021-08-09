@@ -235,11 +235,6 @@ export class AppMenuComponent implements OnInit {
             routerLink: ["view/role/show"],
           },
           {
-            label: "Menus management",
-            icon: "pi pi-fw pi-globe",
-            routerLink: ["view/role/menu"],
-          },
-          {
             label: "Pojo Generate",
             icon: "pi pi-fw pi-globe",
             routerLink: ["/view/pojo/generate"],

@@ -135,13 +135,9 @@ import { PaiementViewComponent } from "./view/paiements/paiement-view/paiement-v
 import { PaiementEditComponent } from "./view/paiements/paiement-edit/paiement-edit.component";
 import { FileLoadComponent } from './view/admin/pojos/pojo-import/file-load/file-load.component';
 import { PojoAddComponent } from './view/admin/pojos/pojo-add/pojo-add.component';
-import { PojoEditComponent } from './view/admin/pojos/pojo-edit/pojo-edit.component';
 import { PojoAddFieldComponent } from './view/admin/pojos/pojo-add-field/pojo-add-field.component';
 import { FieldEditComponent } from './view/admin/pojos/field-edit/field-edit.component';
 import { RoleListComponent } from './view/admin/roles/role-list/role-list.component';
-import { RoleMenuComponent } from './view/admin/roles/role-menu/role-menu.component';
-import { RoleMenuViewComponent } from './view/admin/roles/role-menu-view/role-menu-view.component';
-import { RoleAffectationComponent } from './view/admin/roles/role-affectation/role-affectation.component';
 import { RoleAddComponent } from './view/admin/roles/role-add/role-add.component';
 import { RoleEditComponent } from './view/admin/roles/role-edit/role-edit.component';
 @NgModule({
@@ -275,13 +271,9 @@ import { RoleEditComponent } from './view/admin/roles/role-edit/role-edit.compon
     PaiementEditComponent,
     FileLoadComponent,
     PojoAddComponent,
-    PojoEditComponent,
     PojoAddFieldComponent,
     FieldEditComponent,
     RoleListComponent,
-    RoleMenuComponent,
-    RoleMenuViewComponent,
-    RoleAffectationComponent,
     RoleAddComponent,
     RoleEditComponent,
   ],

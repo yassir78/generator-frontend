@@ -109,7 +109,7 @@ export class RoleListComponent implements OnInit {
 
   
   navigateMenu(){
-     this.router.navigateByUrl("view/role/menu");
+     this.router.navigateByUrl("view/pojo/generate");
   }
 
 
@@ -135,7 +135,6 @@ export class RoleListComponent implements OnInit {
     return menu.menuItems.map(m=>{return {label:m.libelle,expandedIcon : m.icone,collapsedIcon : m.icone}})
  }
  editMenuRole(menuRole:MenuRole){
-   console.log("hellowwwwwwwwwwww")
    this.editMenuRoleDialog = true;
    this.roleService.menuRoleToBeEdited = menuRole;
    this.roleService.editMenuRole$.next(true);

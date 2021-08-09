@@ -11,7 +11,6 @@ import { PojoListComponent } from "./view/admin/pojos/pojo-list/pojo-list.compon
 import { PojoImportComponent } from "./view/admin/pojos/pojo-import/pojo-import.component";
 import { PojoGenerateComponent } from "./view/admin/pojos/pojo-generate/pojo-generate.component";
 import { RoleListComponent } from "./view/admin/roles/role-list/role-list.component";
-import { RoleMenuComponent } from "./view/admin/roles/role-menu/role-menu.component";
 
 
 @NgModule({
@@ -28,7 +27,6 @@ import { RoleMenuComponent } from "./view/admin/roles/role-menu/role-menu.compon
             { path: "view/pojo/generate", component: PojoGenerateComponent },
             { path: "dashboard", component: DashboardDemoComponent },
             { path: "view/role/show", component: RoleListComponent },
-            { path: "view/role/menu", component: RoleMenuComponent },
               /*  {path: 'view/commande', component: CommandesComponent},
                       {path: 'uikit/formlayout', component: FormLayoutDemoComponent},
                       {path: 'uikit/floatlabel', component: FloatLabelDemoComponent},
