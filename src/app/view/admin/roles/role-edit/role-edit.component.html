@@ -14,7 +14,7 @@
                     <div class="p-field">
                         <span class="p-float-label">
                             <p-autoComplete id="menuIcon" formControlName="icon" [suggestions]="filtredIcons"
-                            (completeMethod)="filterIcon($event)" field="icon" [minLength]="1" placeholder="Icon"></p-autoComplete>
+                            (completeMethod)="filterIcon($event)" field="icon" [minLength]="1"></p-autoComplete>
                             <span class="p-mt-2"><a href="https://www.primefaces.org/diamond/icons.xhtml"
                                     target="_blank">Check
                                     icons</a></span>
@@ -113,9 +113,8 @@
                                     <ng-template pTemplate="input">
                                         <input pInputText type="text" [(ngModel)]="rowData[col.field]">
                                     </ng-template>
-                                    <ng-template pTemplate="output">{{rowData[col.field]}}</ng-template>
-                                    <i [class]="rowData[col.field]" *ngIf="col.field == 'icone'"></i>
-            
+                                    <ng-template pTemplate="output">{{rowData[col.field]}} <i [class]="rowData[col.field]" *ngIf="col.field == 'icone'"></i></ng-template>
+                                    
                                 </p-treeTableCellEditor>
                                 <ng-template #action>
                                     <button pButton pRounded type="button" icon="pi pi-trash"
