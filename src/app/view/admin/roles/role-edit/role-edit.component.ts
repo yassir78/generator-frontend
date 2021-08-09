@@ -194,16 +194,20 @@ showPageAddForm(){
 
   delete(libelleToDelete,rowNode){
     const level = rowNode.level;
+   
     if(level == 0){
       this.files = this.files.filter(treeNode => treeNode.data.libelle != libelleToDelete)
     }else{
       console.log("m in")
+      let treeNodes = [];
       const parent = rowNode.parent.data.libelle;
       const child = rowNode.node.data.libelle;
       this.files.forEach(treeNode=>{
-        console.log(treeNode.data.libelle)
          treeNode.data.libelle == parent?treeNode.children = treeNode.children.filter(subTreeNode=>subTreeNode.data.libelle != child):false;
+         treeNodes = [...treeNodes,treeNode]
     });
+    this.files = [];
+    this.files = treeNodes;
   }
   }
 
