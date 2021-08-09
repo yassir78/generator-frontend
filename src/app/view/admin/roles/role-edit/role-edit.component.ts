@@ -7,6 +7,7 @@ import { TreeNode } from 'primeng/api';
 import { MenuRole } from 'src/app/controller/model/menuRole';
 import { RoleService } from 'src/app/controller/service/role.service';
 import { Menu } from 'src/app/controller/model/menu';
+import { RoleConfig } from 'src/app/controller/model/roleConfig';
 
 @Component({
   selector: 'app-role-edit',
@@ -158,7 +159,7 @@ showPageAddForm(){
     },
     children: [],
 };
-  this.files =[...this.files, node];;
+  this.files =[...this.files, node];
   console.log(this.files)
   this.menus.push({"libelle":libelle})
   this.addSubMenuForm.reset();
@@ -173,27 +174,28 @@ showPageAddForm(){
     menu.libelle = libelle;
     menu.icone = icon;
     menu.menuItems= this.treeNodeToMenus(this.files)
+    console.log('ffffffffffffffffffffff',menu.menuItems)
     this.menuRoleToBeEdited.menu = menu;
     this.editMenuRoleDialog = false;
-
-    
+    this.roleService.selectedRole = new RoleConfig();    
   }
+
   treeNodeToMenus(treeNodes:TreeNode<any>[]){
    let menus:Menu[]=[];
     treeNodes.forEach(treeNode=>{
       let menu:Menu = new Menu();
       const libelle = treeNode.data.libelle;
-      const icone = treeNode.data.icones;
-      menu.libelle = treeNode.data.libelle;
-      menu.icone = treeNode.data.icon;
-      menu.menuItems = treeNode.children.map(child=>{return {libelle:child.data.libelle,icone:child.data.libellle}})
+      const icone = treeNode.data.icone;
+      menu.libelle = libelle;
+      menu.icone = icone;
+      menu.menuItems = treeNode.children.map(child=>{return {libelle:child.data.libelle,icone:child.data.icone}})
       menus.push(menu);
     })
     return menus;
   }
 
-  delete(){
-
+  delete(libelle){
+    console.log(libelle)
   }
 
 
