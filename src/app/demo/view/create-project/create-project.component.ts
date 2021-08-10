@@ -22,6 +22,11 @@ export class CreateProjectComponent implements OnInit {
   constructor(private userConfigService:UserConfigService,private router:Router) { }
 
   ngOnInit(): void {
+    this.createProjectForm.setValue({
+      domain:this.domain,
+      projectName:this.projectName,
+      groupId:this.groupId
+    })
     this.onChanges();
   }
 
@@ -33,7 +38,6 @@ onChanges(): void {
     this.projectNameDisplay = projectName == '' ? 'projectName' : projectName;
     this.domainDisplay = domain == '' ? 'com' : domain;
     this.groupIdDisplay = groupId == '' ? 'example' : groupId;
-
   });
 }
 submit(){
@@ -49,25 +53,25 @@ submit(){
 
 }
  get domain(): string {
-    return this.userConfigService.domain;
+    return this.userConfigService.userConfig.config.domain;
   }
 
   set domain(value: string) {
-    this.userConfigService.domain= value;
+    this.userConfigService.userConfig.config.domain= value;
   }
       get groupId(): string {
-    return this.userConfigService.groupId;
+    return this.userConfigService.userConfig.config.groupId;
   }
 
   set groupId(value: string) {
-    this.userConfigService.groupId = value;
+    this.userConfigService.userConfig.config.groupId = value;
   }
         get projectName(): string {
-    return this.userConfigService.projectName;
+    return this.userConfigService.userConfig.config.projectName;
   }
 
   set projectName(value: string) {
-    this.userConfigService.projectName= value;
+    this.userConfigService.userConfig.config.projectName= value;
   }
 
 }

@@ -12,6 +12,7 @@ import {Permission} from "../../../../controller/model/permission";
 import {Router} from "@angular/router";
 import { Menu } from 'src/app/controller/model/menu';
 import { Tree } from 'primeng/tree';
+import { UserConfigService } from 'src/app/controller/service/userConfigService';
 
 @Component({
   selector: 'app-role-list',
@@ -47,7 +48,7 @@ export class RoleListComponent implements OnInit {
   selectedFiles2;
   
   constructor(private roleService: RoleService, private messageService: MessageService,
-              private confirmationService: ConfirmationService,private pojoService:PojoService,private router: Router) {}
+              private confirmationService: ConfirmationService,private pojoService:PojoService,private router: Router,private userConfigService:UserConfigService) {}
 
   ngOnInit() {
   
@@ -110,6 +111,8 @@ export class RoleListComponent implements OnInit {
   
   navigateMenu(){
      this.router.navigateByUrl("view/pojo/generate");
+     this.userConfigService.userConfig.roles = this.roles;
+     console.log(this.userConfigService)
   }
 
 

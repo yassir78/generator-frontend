@@ -2,9 +2,9 @@ import { BackendConfig } from './backend-config';
 
 export class ProjectConfig {
 
-	 projectName :string = "generated";
-	 groupId :string = "zs";
-	 domain :string = "ma";
+	 projectName :string = "projectName";
+	 groupId :string = "example";
+	 domain :string = "com";
 	 bean :string = "bean";
 	 dao :string = "dao";
 	 service :string = "service";

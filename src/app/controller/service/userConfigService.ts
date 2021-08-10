@@ -137,9 +137,6 @@ export class UserConfigService {
     this.userConfig.frontend.technologie = new Technology();
     this.userConfig.frontend.technologie.name = this.frontendSelectedTechnology.name;
     this.userConfig.frontend.technologie.category = CATEGORY.FRONTEND;
-    this.userConfig.domain = this.domain;
-    this.userConfig.groupId = this.groupId;
-    this.userConfig.projectName = this.projectName;
   }
 
 }
