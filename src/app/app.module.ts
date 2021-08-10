@@ -140,6 +140,7 @@ import { FieldEditComponent } from './view/admin/pojos/field-edit/field-edit.com
 import { RoleListComponent } from './view/admin/roles/role-list/role-list.component';
 import { RoleAddComponent } from './view/admin/roles/role-add/role-add.component';
 import { RoleEditComponent } from './view/admin/roles/role-edit/role-edit.component';
+import { CreateProjectComponent } from './demo/view/create-project/create-project.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -276,6 +277,7 @@ import { RoleEditComponent } from './view/admin/roles/role-edit/role-edit.compon
     RoleListComponent,
     RoleAddComponent,
     RoleEditComponent,
+    CreateProjectComponent,
   ],
   entryComponents:[
     FileLoadComponent,

@@ -59,7 +59,9 @@ export class PojoImportComponent implements OnInit {
   public importJavaFiles(){
     //TODO
   }
-
+toCreatePage(){
+  this.router.navigate(['/create'])
+}
   public importYamlFile(){
     const ref = this.dialogService.open(FileLoadComponent, {
       header: 'Choose a YAML file',

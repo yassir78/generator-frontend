@@ -11,6 +11,7 @@ import { PojoListComponent } from "./view/admin/pojos/pojo-list/pojo-list.compon
 import { PojoImportComponent } from "./view/admin/pojos/pojo-import/pojo-import.component";
 import { PojoGenerateComponent } from "./view/admin/pojos/pojo-generate/pojo-generate.component";
 import { RoleListComponent } from "./view/admin/roles/role-list/role-list.component";
+import { CreateProjectComponent } from "./demo/view/create-project/create-project.component";
 
 
 @NgModule({
@@ -21,11 +22,12 @@ import { RoleListComponent } from "./view/admin/roles/role-list/role-list.compon
           path: "",
           component: AppMainComponent,
           children: [
-            { path: "", component: PojoImportComponent },
+            { path: "", component: DashboardDemoComponent },
             { path: "view/pojo/load", component: PojoImportComponent },
             { path: "view/pojo/show", component: PojoListComponent },
             { path: "view/pojo/generate", component: PojoGenerateComponent },
             { path: "dashboard", component: DashboardDemoComponent },
+             { path: "create", component: CreateProjectComponent },
             { path: "view/role/show", component: RoleListComponent },
               /*  {path: 'view/commande', component: CommandesComponent},
                       {path: 'uikit/formlayout', component: FormLayoutDemoComponent},

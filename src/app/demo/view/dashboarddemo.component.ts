@@ -5,6 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { ProductService } from '../service/productservice';
+import { Router } from '@angular/router';
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -24,7 +25,7 @@ export class DashboardDemoComponent implements OnInit {
 
     fullcalendarOptions: any;
 
-    constructor(private eventService: EventService, private productService: ProductService) {}
+    constructor(private eventService: EventService, private productService: ProductService,private router:Router) {}
 
     ngOnInit() {
         this.productService.getProducts().then(data => this.products = data);
@@ -115,5 +116,8 @@ export class DashboardDemoComponent implements OnInit {
             },
             editable: true
         };
+    }
+    newProject(){
+        this.router.navigate(['/create'])
     }
 }

@@ -9,4 +9,7 @@ export class UserConfig {
     frontend:ProjectTemplate = new ProjectTemplate();
     pojos:Array<Pojo>= new Array<Pojo>();
     config:ProjectConfig = new ProjectConfig();
+    groupId:string;
+    domain:string;
+    projectName:string;
 }

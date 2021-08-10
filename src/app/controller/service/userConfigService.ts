@@ -22,6 +22,32 @@ export class UserConfigService {
   private _userConfig: UserConfig;
   private _showBackendTemplates: boolean;
   private _showFrontTemplates: boolean;
+  private _domain:string;
+  private _groupId:string;
+  private _projectName:string;
+
+ 
+    get domain(): string {
+    return this._domain;
+  }
+
+  set domain(value: string) {
+    this._domain= value;
+  }
+      get groupId(): string {
+    return this._groupId;
+  }
+
+  set groupId(value: string) {
+    this._groupId = value;
+  }
+        get projectName(): string {
+    return this._projectName;
+  }
+
+  set projectName(value: string) {
+    this._projectName= value;
+  }
 
 
   get showFrontTemplates(): boolean {
@@ -111,6 +137,9 @@ export class UserConfigService {
     this.userConfig.frontend.technologie = new Technology();
     this.userConfig.frontend.technologie.name = this.frontendSelectedTechnology.name;
     this.userConfig.frontend.technologie.category = CATEGORY.FRONTEND;
+    this.userConfig.domain = this.domain;
+    this.userConfig.groupId = this.groupId;
+    this.userConfig.projectName = this.projectName;
   }
 
 }

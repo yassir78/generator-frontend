@@ -1,0 +1,32 @@
+<div class="p-mx-auto" style="max-width: 57vw;">
+    <div class="p-text-center p-my-6">
+        <h1>Créer un nouveau projet</h1>
+    </div>
+    <div class="card">
+        <div class="p-d-flex p-jc-center p-ai-start" [formGroup]="createProjectForm">
+            <div class="p-field p-mx-4">
+                <label for="firstname5" class="p-sr-only">Project Name</label>
+                <input id="firstname5" type="text" pInputText placeholder="Project Name"
+                    formControlName="projectName" />
+            </div>
+            <div class="p-field p-mx-4">
+                <label for="lastname5" class="p-sr-only">Group Id</label>
+                <input id="lastname5" type="text" pInputText placeholder="Group Id" formControlName="groupId" />
+            </div>
+            <div class="p-field p-mx-4">
+                <label for="lastname5" class="p-sr-only">Domain</label>
+                <input id="lastname5" type="text" pInputText placeholder="Domain" formControlName="domain" />
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="p-text-center " style="    font-size: 1.5rem;font-weight: 400;">
+            <span>{{domainDisplay}}.{{groupIdDisplay}}.{{projectNameDisplay}}</span>
+        </div>
+
+    </div>
+    <div class="">
+        <button pButton pRipple label="Submit" [disabled]="createProjectForm.invalid" (click)="submit()"></button>
+
+    </div>
+</div>

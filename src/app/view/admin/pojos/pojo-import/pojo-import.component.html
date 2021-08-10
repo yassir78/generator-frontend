@@ -1,5 +1,12 @@
-<h2 class="">Insert Entites Yaml in the Code Editor Below</h2>
-<p-splitButton label="Import" icon="pi pi-plus" [model]="items" styleClass="p-button-success p-mb-2"></p-splitButton>
+<h2 class="">Insert Entites Yaml in the Code Editor Below </h2>
+<div class="p-px-7 p-d-flex p-jc-between">
+    <p-splitButton label="Import" icon="pi pi-plus" [model]="items" styleClass="p-button-success p-mb-2">
+    </p-splitButton>
+    <button pButton pRipple label="Back" icon="pi pi-arrow-left" class="p-button-secondary p-mb-2 p-ml-2"
+        (click)="toCreatePage()"></button>
+</div>
+
+
 <div class="card p-fluid p-formgrid p-grid">
     <div class="p-field p-col">
         <!--   <textarea pInputTextarea [(ngModel)]="requestVo.yamlText" rows="20" placeholder="Enter Yaml Content"></textarea> -->
@@ -8,6 +15,7 @@
         </ngs-code-editor>
     </div>
     <div class="dad">
-        <p-button class="cen" label="Send " icon="pi pi-check" iconPos="left" (click)="importYaml()"></p-button>
+        <p-button class="cen" label="Send " [disabled]="!requestVo.yamlText" icon="pi pi-check" iconPos="left"
+            (click)="importYaml()"></p-button>
     </div>
 </div>
