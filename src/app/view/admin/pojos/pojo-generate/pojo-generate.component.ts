@@ -1,3 +1,6 @@
+import { ProjectConfigService } from 'src/app/controller/service/project-config.service';
+import { ProjectConfig } from './../../../../controller/model/project-config';
+import { RoleService } from './../../../../controller/service/role.service';
 import {Component, OnInit} from '@angular/core';
 import {UserConfigService} from "../../../../controller/service/userConfigService";
 import {Technology} from "../../../../controller/model/technology";
@@ -27,13 +30,23 @@ export class PojoGenerateComponent implements OnInit {
     }
 
     showProjectStructure:boolean;
-    constructor(private http :HttpClient,private userConfigService :UserConfigService,private pojoSerive:PojoService,private fileConfigService:FileConfigService) {
+    constructor(private http :HttpClient,
+        private userConfigService :UserConfigService,
+        private pojoSerive:PojoService,
+        private fileConfigService:FileConfigService,
+        private roleService: RoleService,
+        private projectConfigService: ProjectConfigService) {
 
     }
 
     public generateProject(){
         this.userConfigService.setTechnologiestoGenerate();
         this.userConfigService.userConfig.pojos = this.pojoSerive.items;
+        this.userConfigService.userConfig.roles = this.roleService.roles;
+        this.userConfigService.userConfig.config.projectName = this.projectConfigService.projectName;
+        this.userConfigService.userConfig.config.groupId = this.projectConfigService.groupId;
+        this.userConfigService.userConfig.config.domain = this.projectConfigService.domain;
+        
         // console.log(this.userConfigService.userConfig);
         this.http.post<GeneratedProject>(this.url, this.userConfigService.userConfig).subscribe(response => {
             if(response==null || response.zip==null)

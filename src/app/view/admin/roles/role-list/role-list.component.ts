@@ -42,7 +42,7 @@ import { UserConfigService } from 'src/app/controller/service/userConfigService'
 export class RoleListComponent implements OnInit {
 
   menusHierarchy:any[] = [];
-
+  
   selectedRoles: RoleConfig[];
   submitted: boolean;
   selectedFiles2;
@@ -112,7 +112,21 @@ export class RoleListComponent implements OnInit {
   navigateMenu(){
      this.router.navigateByUrl("view/pojo/generate");
      this.userConfigService.userConfig.roles = this.roles;
-     console.log(this.userConfigService)
+    //  let permissionsHistory: Permission[] = [];
+     this.roles.forEach(role=>{
+       role.permissions = [];
+       role.menuRoles.forEach(menuRole=>{
+         menuRole.menu.menuItems.forEach(sousMenu=>{
+           if(this.pojos.find(pojo=>pojo.name == sousMenu.libelle)){
+             sousMenu.menuItems.forEach(page=>{
+              let permission = {name: `${sousMenu.libelle}.${page.libelle}`,pojo:{name:sousMenu.libelle}}
+              // permissionsHistory.push({name: `${sousMenu.libelle}.${page.libelle}`,pojo:{name:sousMenu.libelle},roles: [role]})  
+            })
+           }
+         })
+       })
+     })
+     console.log(this.roles)
   }
 
 

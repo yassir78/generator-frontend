@@ -22,33 +22,7 @@ export class UserConfigService {
   private _userConfig: UserConfig;
   private _showBackendTemplates: boolean;
   private _showFrontTemplates: boolean;
-  private _domain:string;
-  private _groupId:string;
-  private _projectName:string;
-
- 
-    get domain(): string {
-    return this._domain;
-  }
-
-  set domain(value: string) {
-    this._domain= value;
-  }
-      get groupId(): string {
-    return this._groupId;
-  }
-
-  set groupId(value: string) {
-    this._groupId = value;
-  }
-        get projectName(): string {
-    return this._projectName;
-  }
-
-  set projectName(value: string) {
-    this._projectName= value;
-  }
-
+  
 
   get showFrontTemplates(): boolean {
     return this._showFrontTemplates;

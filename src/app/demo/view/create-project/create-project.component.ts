@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ProjectConfigService } from 'src/app/controller/service/project-config.service';
 import { UserConfigService } from 'src/app/controller/service/userConfigService';
 
 @Component({
@@ -9,9 +10,9 @@ import { UserConfigService } from 'src/app/controller/service/userConfigService'
   styleUrls: ['./create-project.component.scss']
 })
 export class CreateProjectComponent implements OnInit {
-  projectNameDisplay:string = "projectName"
-  groupIdDisplay : string = "example"
-  domainDisplay : string = "com"
+  projectNameDisplay:string = this.projectConfigService.projectName;
+  groupIdDisplay : string = this.projectConfigService.groupId;
+  domainDisplay : string = this.projectConfigService.domain;
   createProjectForm:FormGroup = new FormGroup({
       projectName:new FormControl('',Validators.required),
       groupId : new FormControl('',Validators.required),
@@ -19,7 +20,7 @@ export class CreateProjectComponent implements OnInit {
   }
    
   )
-  constructor(private userConfigService:UserConfigService,private router:Router) { }
+  constructor(private projectConfigService: ProjectConfigService,private router:Router) { }
 
   ngOnInit(): void {
     this.createProjectForm.setValue({
@@ -52,25 +53,25 @@ submit(){
 
 }
  get domain(): string {
-    return this.userConfigService.userConfig.config.domain;
+    return this.projectConfigService.domain;
   }
 
   set domain(value: string) {
-    this.userConfigService.userConfig.config.domain= value;
+    this.projectConfigService.domain= value;
   }
       get groupId(): string {
-    return this.userConfigService.userConfig.config.groupId;
+    return this.projectConfigService.groupId;
   }
 
   set groupId(value: string) {
-    this.userConfigService.userConfig.config.groupId = value;
+    this.projectConfigService.groupId = value;
   }
         get projectName(): string {
-    return this.userConfigService.userConfig.config.projectName;
+    return this.projectConfigService.projectName;
   }
 
   set projectName(value: string) {
-    this.userConfigService.userConfig.config.projectName= value;
+    this.projectConfigService.projectName= value;
   }
 
 }
