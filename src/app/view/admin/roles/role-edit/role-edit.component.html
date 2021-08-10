@@ -105,7 +105,7 @@
 
         <ng-template pTemplate class="p-col-12">
             <p-scrollPanel [style]="{width: '100%'}">
-                <p-treeTable [value]="files" [columns]="cols" [contentStyle]="{minHeight:'32vh'}">
+                <p-treeTable [value]="files" [columns]="cols">
                     <ng-template pTemplate="header" let-columns>
                         <tr>
                             <th *ngFor="let col of columns">

@@ -191,7 +191,6 @@ showPageAddForm(){
     if(level == 0){
       this.files = this.files.filter(treeNode => treeNode.data.libelle != libelleToDelete)
     }else{
-      console.log("m in")
       let treeNodes = [];
       const parent = rowNode.parent.data.libelle;
       const child = rowNode.node.data.libelle;

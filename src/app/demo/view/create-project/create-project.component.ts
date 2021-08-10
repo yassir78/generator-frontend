@@ -41,7 +41,6 @@ submit(){
     const projectName = formValues.projectName;
     const domain = formValues.domain;
     const groupId = formValues.groupId; 
-    console.log({projectName,domain,groupId})
     this.domain = domain;
     this.groupId = groupId;
     this.projectName = projectName;
