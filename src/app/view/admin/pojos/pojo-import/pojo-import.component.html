@@ -2,8 +2,6 @@
 <div class="p-px-7 p-d-flex p-jc-between">
     <p-splitButton label="Import" icon="pi pi-plus" [model]="items" styleClass="p-button-success p-mb-2">
     </p-splitButton>
-    <button pButton pRipple label="Back" icon="pi pi-arrow-left" class="p-button-secondary p-mb-2 p-ml-2"
-        (click)="toCreatePage()"></button>
 </div>
 
 
@@ -11,11 +9,13 @@
     <div class="p-field p-col">
         <!--   <textarea pInputTextarea [(ngModel)]="requestVo.yamlText" rows="20" placeholder="Enter Yaml Content"></textarea> -->
         <ngs-code-editor [theme]="theme" [codeModel]="codeModel" [options]="options"
-            (valueChanged)="onCodeChanged($event)" style="height: 50vh; width: 100%;">
-        </ngs-code-editor>
-    </div>
-    <div class="dad">
-        <p-button class="cen" label="Send " [disabled]="!requestVo.yamlText" icon="pi pi-check" iconPos="left"
+        (valueChanged)="onCodeChanged($event)" style="height: 50vh; width: 100%;">
+    </ngs-code-editor>
+</div>
+<div class="dad">
+        <button pButton pRipple label="Back" icon="pi pi-arrow-left" class="p-button-secondary p-mb-2 p-mr-2"
+            (click)="toCreatePage()"></button>
+        <p-button class="cen" label="Next " [disabled]="!requestVo.yamlText" icon="pi pi-arrow-right" iconPos="left"
             (click)="importYaml()"></p-button>
     </div>
 </div>
