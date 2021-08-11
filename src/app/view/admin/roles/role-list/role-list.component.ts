@@ -50,9 +50,7 @@ export class RoleListComponent implements OnInit {
   constructor(private roleService: RoleService, private messageService: MessageService,
               private confirmationService: ConfirmationService,private pojoService:PojoService,private router: Router,private userConfigService:UserConfigService) {}
 
-  ngOnInit() {
-  
-  }
+  ngOnInit() {}
 
   openNew() {
     this.role = new RoleConfig();
@@ -120,13 +118,14 @@ export class RoleListComponent implements OnInit {
            if(this.pojos.find(pojo=>pojo.name == sousMenu.libelle)){
              sousMenu.menuItems.forEach(page=>{
               let permission = {name: `${sousMenu.libelle}.${page.libelle}`,pojo:{name:sousMenu.libelle}}
-              // permissionsHistory.push({name: `${sousMenu.libelle}.${page.libelle}`,pojo:{name:sousMenu.libelle},roles: [role]})  
+              role.permissions.push({name: `${sousMenu.libelle}.${page.libelle}`,pojo:{name:sousMenu.libelle}})  
             })
            }
          })
        })
      })
      console.log(this.roles)
+     console.log(this.userConfigService.userConfig.roles)
   }
 
 

@@ -47,7 +47,7 @@ export class PojoGenerateComponent implements OnInit {
         this.userConfigService.userConfig.config.groupId = this.projectConfigService.groupId;
         this.userConfigService.userConfig.config.domain = this.projectConfigService.domain;
         
-        // console.log(this.userConfigService.userConfig);
+        console.log(this.userConfigService.userConfig);
         this.http.post<GeneratedProject>(this.url, this.userConfigService.userConfig).subscribe(response => {
             if(response==null || response.zip==null)
                 console.log('erreur lors du generation du projet');
