@@ -20,7 +20,7 @@ export class CreateProjectComponent implements OnInit {
       groupId : new FormControl('',Validators.required),
       domain : new FormControl('',Validators.required),
       dataSourceUserName : new FormControl('',Validators.required),
-      dataSourcePassword : new FormControl('',Validators.required),
+      dataSourcePassword : new FormControl('',[]),
       databaseName : new FormControl('',Validators.required),
   }
   
