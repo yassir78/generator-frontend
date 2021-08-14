@@ -10,7 +10,6 @@ export class ProjectConfig {
 	 service :string = "service";
 	 serviceFacade :string = "facade";
 	 serviceFacadeSuffix :string = "facade";
-
 	 serviceImpl :string = "impl";
 	 serviceImplSuffix  :string = "impl";
 	 serviceUtil :string = "util";
@@ -24,7 +23,6 @@ export class ProjectConfig {
 	 daoSuffix:string="Dao";
    converter :string = "converter";
    converterSuffix :string = "Converter";
-
    swagger:boolean =true ;
    flyWayDb :boolean = true;
    security:boolean;

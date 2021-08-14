@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BackendConfig } from '../model/backend-config';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,7 @@ export class ProjectConfigService {
   private _projectName:string = 'projectName';
   private _groupId:string = 'example';
   private _domain:string = 'com';
+  private _backendConfig:BackendConfig = new BackendConfig();
   
   constructor() { }
  
@@ -30,6 +32,13 @@ export class ProjectConfigService {
 
   set projectName(value: string) {
     this._projectName= value;
+  }
+  get backendConfig(): BackendConfig {
+    return this._backendConfig;
+  }
+
+  set backendConfig(value: BackendConfig) {
+    this._backendConfig= value;
   }
 
 }

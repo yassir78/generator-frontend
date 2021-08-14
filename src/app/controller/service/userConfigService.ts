@@ -13,7 +13,6 @@ import {UserConfig} from '../model/userConfig';
 @Injectable({
   providedIn: 'root'
 })
-
 export class UserConfigService {
   private _frontendTechnologies: Array<Technology>;
   private _backendTechnologies: Array<Technology>;
