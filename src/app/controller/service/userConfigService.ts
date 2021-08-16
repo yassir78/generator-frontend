@@ -7,8 +7,8 @@ import {
 import {
   TechnologyService
 } from './technology.service';
-import {CATEGORY} from '../model/category';
-import {UserConfig} from '../model/userConfig';
+import { CATEGORY } from '../model/category';
+import { UserConfig } from '../model/userConfig';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class UserConfigService {
   private _userConfig: UserConfig;
   private _showBackendTemplates: boolean;
   private _showFrontTemplates: boolean;
-  
+
 
   get showFrontTemplates(): boolean {
     return this._showFrontTemplates;

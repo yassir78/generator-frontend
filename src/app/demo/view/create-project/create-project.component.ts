@@ -16,18 +16,18 @@ export class CreateProjectComponent implements OnInit {
   domainDisplay : string = this.projectConfigService.domain;
   backendConfig :BackendConfig = this.projectConfigService.backendConfig;
   createProjectForm:FormGroup = new FormGroup({
-      projectName:new FormControl('',Validators.required),
-      groupId : new FormControl('',Validators.required),
-      domain : new FormControl('',Validators.required),
-      dataSourceUserName : new FormControl('',Validators.required),
-      dataSourcePassword : new FormControl('',[]),
-      databaseName : new FormControl('',Validators.required),
+    projectName:new FormControl('',Validators.required),
+    groupId : new FormControl('',Validators.required),
+    domain : new FormControl('',Validators.required),
+    dataSourceUserName : new FormControl('',Validators.required),
+    dataSourcePassword : new FormControl('',[]),
+    databaseName : new FormControl('',Validators.required),
   }
   
-   
+  
   )
   constructor(private projectConfigService: ProjectConfigService,private router:Router) { }
-
+  
   ngOnInit(): void {
     this.createProjectForm.setValue({
       domain:this.domain,
@@ -39,29 +39,29 @@ export class CreateProjectComponent implements OnInit {
     })
     this.onChanges();
   }
-
-onChanges(): void {
-  this.createProjectForm.valueChanges.subscribe(val => {
-    const projectName = val.projectName;
-    const domain = val.domain;
-    const groupId = val.groupId;
-    const userName = val.dataSourceUserName;
-    const password = val.dataSourcePassword;
-    const dataBaseName =  val.databaseName;
-    this.projectNameDisplay = projectName == '' ? 'projectName' : projectName;
-    this.domainDisplay = domain == '' ? 'com' : domain;
-    this.groupIdDisplay = groupId == '' ? 'example' : groupId;
-    this.backendConfig.databaseName = dataBaseName == ''? 'generated':dataBaseName;
-    this.backendConfig.dataSourcePassword = password;
-    this.backendConfig.dataSourceUserName = userName == ''?'root':userName;
-  });
-}
-submit(){
-  const formValues = this.createProjectForm.value;
+  
+  onChanges(): void {
+    this.createProjectForm.valueChanges.subscribe(val => {
+      const projectName = val.projectName;
+      const domain = val.domain;
+      const groupId = val.groupId;
+      const userName = val.dataSourceUserName;
+      const password = val.dataSourcePassword;
+      const dataBaseName =  val.databaseName;
+      this.projectNameDisplay = projectName == '' ? 'projectName' : projectName;
+      this.domainDisplay = domain == '' ? 'com' : domain;
+      this.groupIdDisplay = groupId == '' ? 'example' : groupId;
+      this.backendConfig.databaseName = dataBaseName == ''? 'generated':dataBaseName;
+      this.backendConfig.dataSourcePassword = password;
+      this.backendConfig.dataSourceUserName = userName == ''?'root':userName;
+    });
+  }
+  submit(){
+    const formValues = this.createProjectForm.value;
     const projectName = formValues.projectName;
     const domain = formValues.domain;
     const groupId = formValues.groupId; 
-     const userName = formValues.dataSourceUserName;
+    const userName = formValues.dataSourceUserName;
     const password = formValues.dataSourcePassword;
     const dataBaseName =  formValues.databaseName;
     this.domain = domain;
@@ -72,28 +72,28 @@ submit(){
     this.backendConfig.dataSourceUserName = userName;
     console.log(this.backendConfig)
     this.router.navigate(['/view/pojo/load'])
-
-}
- get domain(): string {
+    
+  }
+  get domain(): string {
     return this.projectConfigService.domain;
   }
-
+  
   set domain(value: string) {
     this.projectConfigService.domain= value;
   }
-      get groupId(): string {
+  get groupId(): string {
     return this.projectConfigService.groupId;
   }
-
+  
   set groupId(value: string) {
     this.projectConfigService.groupId = value;
   }
-        get projectName(): string {
+  get projectName(): string {
     return this.projectConfigService.projectName;
   }
-
+  
   set projectName(value: string) {
     this.projectConfigService.projectName= value;
   }
-
+  
 }

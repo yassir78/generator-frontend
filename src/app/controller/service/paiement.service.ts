@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {environment} from "../../../environments/environment";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {Paiement} from "../model/paiement.model";
+import { environment } from "../../../environments/environment";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { Paiement } from "../model/paiement.model";
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +43,7 @@ export class PaiementService {
   }
 
   public deleteMultipleByReference(): Observable<number> {
-    return this.http.post<number>(this.url + 'delete-multiple-by-reference' , this.selectes);
+    return this.http.post<number>(this.url + 'delete-multiple-by-reference', this.selectes);
   }
 
   public findIndexById(id: number): number {
@@ -62,7 +62,7 @@ export class PaiementService {
   }
 
   public deleteMultipleIndexById() {
-    for (const item of this.selectes){
+    for (const item of this.selectes) {
       this.deleteIndexById(item.id);
     }
   }
