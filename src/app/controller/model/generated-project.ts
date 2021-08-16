@@ -1,8 +1,7 @@
-import { TreeNode } from 'primeng/api/primeng-api';
+import { TreeNode } from "primeng/api/primeng-api";
 
 export class GeneratedProject {
-   name :string;
-   zip :ArrayBuffer ;
-   tree :TreeNode[];;
-
+  name: string;
+  zip: ArrayBuffer;
+  tree: TreeNode[];
 }

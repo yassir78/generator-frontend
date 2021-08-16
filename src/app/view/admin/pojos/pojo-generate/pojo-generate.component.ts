@@ -1,140 +1,138 @@
-import { ProjectConfigService } from 'src/app/controller/service/project-config.service';
-import { ProjectConfig } from './../../../../controller/model/project-config';
-import { RoleService } from './../../../../controller/service/role.service';
-import {Component, OnInit} from '@angular/core';
-import {UserConfigService} from "../../../../controller/service/userConfigService";
-import {Technology} from "../../../../controller/model/technology";
-import {UserConfig} from "../../../../controller/model/userConfig";
-import {ProjectTemplate} from "../../../../controller/model/projectTemplate";
-import {GeneratedProject} from "../../../../controller/model/generated-project";
-import {HttpClient} from "@angular/common/http";
-import {PojoService} from "../../../../controller/service/pojo.service";
+import { ProjectConfigService } from "src/app/controller/service/project-config.service";
+import { ProjectConfig } from "./../../../../controller/model/project-config";
+import { RoleService } from "./../../../../controller/service/role.service";
+import { Component, OnInit } from "@angular/core";
+import { UserConfigService } from "../../../../controller/service/userConfigService";
+import { Technology } from "../../../../controller/model/technology";
+import { UserConfig } from "../../../../controller/model/userConfig";
+import { ProjectTemplate } from "../../../../controller/model/projectTemplate";
+import { GeneratedProject } from "../../../../controller/model/generated-project";
+import { HttpClient } from "@angular/common/http";
+import { PojoService } from "../../../../controller/service/pojo.service";
 
-import {FileConfigService} from "../../../../controller/service/file-config.service";
-import { saveAs } from 'file-saver';
+import { FileConfigService } from "../../../../controller/service/file-config.service";
+import { saveAs } from "file-saver";
 
 @Component({
-    selector: 'app-pojo-generate',
-    templateUrl: './pojo-generate.component.html',
-    styleUrls: ['./pojo-generate.component.scss']
+  selector: "app-pojo-generate",
+  templateUrl: "./pojo-generate.component.html",
+  styleUrls: ["./pojo-generate.component.scss"],
 })
 export class PojoGenerateComponent implements OnInit {
+  showBackendTemplates: boolean = false;
+  showFrontendTemplates: boolean = false;
+  private url: string = "http://localhost:8036/generator/";
+  private _project: GeneratedProject;
 
-    showBackendTemplates: boolean = false;
-    showFrontendTemplates: boolean = false;
-    private url:string =  "http://localhost:8036/generator/";
-    private _project : GeneratedProject ;
+  ngOnInit(): void {}
 
+  showProjectStructure: boolean;
+  constructor(
+    private http: HttpClient,
+    private userConfigService: UserConfigService,
+    private pojoSerive: PojoService,
+    private fileConfigService: FileConfigService,
+    private roleService: RoleService,
+    private projectConfigService: ProjectConfigService
+  ) {}
 
-    ngOnInit(): void {
-    }
+  public generateProject() {
+    this.userConfigService.setTechnologiestoGenerate();
+    this.userConfigService.userConfig.pojos = this.pojoSerive.items;
+    this.userConfigService.userConfig.roles = this.roleService.roles;
+    this.userConfigService.userConfig.config.projectName =
+      this.projectConfigService.projectName;
+    this.userConfigService.userConfig.config.groupId =
+      this.projectConfigService.groupId;
+    this.userConfigService.userConfig.config.domain =
+      this.projectConfigService.domain;
 
-    showProjectStructure:boolean;
-    constructor(private http :HttpClient,
-        private userConfigService :UserConfigService,
-        private pojoSerive:PojoService,
-        private fileConfigService:FileConfigService,
-        private roleService: RoleService,
-        private projectConfigService: ProjectConfigService) {
+    console.log(this.userConfigService.userConfig);
+    this.http
+      .post<GeneratedProject>(this.url, this.userConfigService.userConfig)
+      .subscribe((response) => {
+        if (response == null || response.zip == null)
+          console.log("erreur lors du generation du projet");
+        else {
+          this.project = response;
+          this.showProjectStructure = true;
+        }
+      });
+  }
+  public download() {
+    let blob = new Blob([new Uint8Array(this.project.zip)], {
+      type: "octet/stream",
+    });
+    saveAs(blob, this.project.name + ".zip");
+  }
 
-    }
+  get project(): GeneratedProject {
+    if (this._project == null) this._project = new GeneratedProject();
+    return this._project;
+  }
+  set project(value: GeneratedProject) {
+    this._project = value;
+  }
 
-    public generateProject(){
-        this.userConfigService.setTechnologiestoGenerate();
-        this.userConfigService.userConfig.pojos = this.pojoSerive.items;
-        this.userConfigService.userConfig.roles = this.roleService.roles;
-        this.userConfigService.userConfig.config.projectName = this.projectConfigService.projectName;
-        this.userConfigService.userConfig.config.groupId = this.projectConfigService.groupId;
-        this.userConfigService.userConfig.config.domain = this.projectConfigService.domain;
-        
-        console.log(this.userConfigService.userConfig);
-        this.http.post<GeneratedProject>(this.url, this.userConfigService.userConfig).subscribe(response => {
-            if(response==null || response.zip==null)
-                console.log('erreur lors du generation du projet');
-            else{
-                this.project = response;
-                this.showProjectStructure = true;
-            }
-        });
+  showTemplatesOfSelectedBackendTechnologie() {
+    this.showBackendTemplates = true;
+  }
 
-    }
-    public download(){
-        let blob = new Blob([new Uint8Array(this.project.zip)], {type: "octet/stream"});
-        saveAs(blob, this.project.name+ '.zip');
-    }
+  get backendSelectedTechnology(): Technology {
+    return this.userConfigService.backendSelectedTechnology;
+  }
 
+  get frontendTechnologies(): Array<Technology> {
+    return this.userConfigService.frontendTechnologies;
+  }
 
-    get project():GeneratedProject{
-        if(this._project==null)
-            this._project = new GeneratedProject();
-        return this._project;
-    }
-    set project(value:GeneratedProject){
-        this._project = value;
-    }
+  get backendTechnologies(): Array<Technology> {
+    return this.userConfigService.backendTechnologies;
+  }
 
+  get frontendSelectedTechnology(): Technology {
+    return this.userConfigService.frontendSelectedTechnology;
+  }
 
-    showTemplatesOfSelectedBackendTechnologie() {
-        this.showBackendTemplates = true;
-    }
+  set frontendSelectedTechnology(technology: Technology) {
+    this.userConfigService.frontendSelectedTechnology = technology;
+  }
 
-    get backendSelectedTechnology(): Technology {
-        return this.userConfigService.backendSelectedTechnology;
-    }
+  get backendSeletedTechnology(): Technology {
+    return this.userConfigService.backendSelectedTechnology;
+  }
 
-    get frontendTechnologies(): Array<Technology> {
+  set backendSelectedTechnology(technology: Technology) {
+    this.userConfigService.backendSelectedTechnology = technology;
+  }
 
-        return this.userConfigService.frontendTechnologies;
-    }
+  get userConfig(): UserConfig {
+    return this.userConfigService.userConfig;
+  }
 
-    get backendTechnologies(): Array<Technology> {
-        return this.userConfigService.backendTechnologies;
-    }
+  set userConfig(config: UserConfig) {
+    this.userConfigService.userConfig = config;
+  }
 
-    get frontendSelectedTechnology(): Technology {
-        return this.userConfigService.frontendSelectedTechnology;
-    }
+  changeSelectedBackendTechnology() {
+    this.userConfig.backend = this.backendSelectedTechnology.defaultTemplate;
+  }
 
-    set frontendSelectedTechnology(technology: Technology) {
-        this.userConfigService.frontendSelectedTechnology = technology;
-    }
+  changeSelectedFrontendTechnology() {
+    this.userConfig.frontend = this.frontendSelectedTechnology.defaultTemplate;
+  }
 
-    get backendSeletedTechnology(): Technology {
-        return this.userConfigService.backendSelectedTechnology;
-    }
+  selectBackendTemplate(template: ProjectTemplate) {
+    this.userConfig.backend = template;
+    this.showBackendTemplates = false;
+  }
 
-    set backendSelectedTechnology(technology: Technology) {
-        this.userConfigService.backendSelectedTechnology = technology;
-    }
+  selectFrontendTemplate(template: ProjectTemplate) {
+    this.userConfig.frontend = template;
+    this.showFrontendTemplates = false;
+  }
 
-    get userConfig(): UserConfig {
-        return this.userConfigService.userConfig;
-    }
-
-    set userConfig(config: UserConfig) {
-        this.userConfigService.userConfig = config;
-    }
-
-    changeSelectedBackendTechnology() {
-        this.userConfig.backend = this.backendSelectedTechnology.defaultTemplate;
-    }
-
-    changeSelectedFrontendTechnology() {
-        this.userConfig.frontend = this.frontendSelectedTechnology.defaultTemplate;
-    }
-
-    selectBackendTemplate(template: ProjectTemplate) {
-        this.userConfig.backend = template;
-        this.showBackendTemplates = false;
-    }
-
-    selectFrontendTemplate(template: ProjectTemplate) {
-        this.userConfig.frontend = template;
-        this.showFrontendTemplates = false;
-    }
-
-    showTemplatesOfSelectedFrontendTechnologie() {
-        this.showFrontendTemplates = true;
-    }
-
+  showTemplatesOfSelectedFrontendTechnologie() {
+    this.showFrontendTemplates = true;
+  }
 }

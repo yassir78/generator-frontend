@@ -1,15 +1,14 @@
-import { Injectable } from '@angular/core';
-import {environment} from "../../../environments/environment";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {Paiement} from "../model/paiement.model";
+import { Injectable } from "@angular/core";
+import { environment } from "../../../environments/environment";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { Paiement } from "../model/paiement.model";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class PaiementService {
-
-  private url = environment.apiUrl + 'paiement/'
+  private url = environment.apiUrl + "paiement/";
   private _items: Array<Paiement>;
   private _selected: Paiement;
   private _selectes: Array<Paiement>;
@@ -19,12 +18,10 @@ export class PaiementService {
   private _viewDialog: boolean;
   private _submitted: boolean;
 
-
   // constructor(private messageService: MessageService,
   //             private confirmationService: ConfirmationService, private http: HttpClient) {
   // }
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   public findAll(): Observable<Array<Paiement>> {
     return this.http.get<Array<Paiement>>(this.url);
@@ -39,11 +36,16 @@ export class PaiementService {
   }
 
   public deleteByReference(): Observable<number> {
-    return this.http.delete<number>(this.url + 'reference/' + this.selected.ref);
+    return this.http.delete<number>(
+      this.url + "reference/" + this.selected.ref
+    );
   }
 
   public deleteMultipleByReference(): Observable<number> {
-    return this.http.post<number>(this.url + 'delete-multiple-by-reference' , this.selectes);
+    return this.http.post<number>(
+      this.url + "delete-multiple-by-reference",
+      this.selectes
+    );
   }
 
   public findIndexById(id: number): number {
@@ -62,7 +64,7 @@ export class PaiementService {
   }
 
   public deleteMultipleIndexById() {
-    for (const item of this.selectes){
+    for (const item of this.selectes) {
       this.deleteIndexById(item.id);
     }
   }
@@ -90,7 +92,6 @@ export class PaiementService {
   set selectes(value: Array<Paiement>) {
     this._selectes = value;
   }
-
 
   get createDialog(): boolean {
     return this._createDialog;

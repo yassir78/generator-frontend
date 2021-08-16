@@ -13,7 +13,6 @@ import { PojoGenerateComponent } from "./view/admin/pojos/pojo-generate/pojo-gen
 import { RoleListComponent } from "./view/admin/roles/role-list/role-list.component";
 import { CreateProjectComponent } from "./demo/view/create-project/create-project.component";
 
-
 @NgModule({
   imports: [
     RouterModule.forRoot(
@@ -27,9 +26,9 @@ import { CreateProjectComponent } from "./demo/view/create-project/create-projec
             { path: "view/pojo/show", component: PojoListComponent },
             { path: "view/pojo/generate", component: PojoGenerateComponent },
             { path: "dashboard", component: DashboardDemoComponent },
-             { path: "create", component: CreateProjectComponent },
+            { path: "create", component: CreateProjectComponent },
             { path: "view/role/show", component: RoleListComponent },
-              /*  {path: 'view/commande', component: CommandesComponent},
+            /*  {path: 'view/commande', component: CommandesComponent},
                       {path: 'uikit/formlayout', component: FormLayoutDemoComponent},
                       {path: 'uikit/floatlabel', component: FloatLabelDemoComponent},
                       {path: 'uikit/invalidstate', component: InvalidStateDemoComponent},
