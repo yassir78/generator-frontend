@@ -62,6 +62,7 @@ export class PojoGenerateComponent implements OnInit {
           this.messageService.add({severity:'success', summary: 'Success', detail: 'Project generated successfully'});
           this.project = response;
           this.showProjectStructure = true;
+          this.download();
         }
       });
   }
