@@ -161,8 +161,6 @@ export class RoleListComponent implements OnInit {
         });
       });
     });
-    console.log(this.roles);
-    console.log(this.userConfigService.userConfig.roles);
   }
 
   details(role: RoleConfig) {

@@ -1,3 +1,5 @@
+import { ConfirmationService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { ProjectConfigService } from "src/app/controller/service/project-config.service";
 import { ProjectConfig } from "./../../../../controller/model/project-config";
 import { RoleService } from "./../../../../controller/service/role.service";
@@ -17,6 +19,7 @@ import { saveAs } from "file-saver";
   selector: "app-pojo-generate",
   templateUrl: "./pojo-generate.component.html",
   styleUrls: ["./pojo-generate.component.scss"],
+  providers: [MessageService, ConfirmationService],
 })
 export class PojoGenerateComponent implements OnInit {
   showBackendTemplates: boolean = false;
@@ -33,7 +36,9 @@ export class PojoGenerateComponent implements OnInit {
     private pojoSerive: PojoService,
     private fileConfigService: FileConfigService,
     private roleService: RoleService,
-    private projectConfigService: ProjectConfigService
+    private projectConfigService: ProjectConfigService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {}
 
   public generateProject() {
@@ -54,6 +59,7 @@ export class PojoGenerateComponent implements OnInit {
         if (response == null || response.zip == null)
           console.log("erreur lors du generation du projet");
         else {
+          this.messageService.add({severity:'success', summary: 'Success', detail: 'Project generated successfully'});
           this.project = response;
           this.showProjectStructure = true;
         }
