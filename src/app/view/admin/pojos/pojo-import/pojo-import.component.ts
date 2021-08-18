@@ -1,11 +1,11 @@
-import { MenuItem } from 'primeng/api';
+import { MenuItem } from "primeng/api";
 import { Component, OnInit } from "@angular/core";
 import { PojoService } from "../../../../controller/service/pojo.service";
 import { Router } from "@angular/router";
 import { RequestVo } from "../../../../controller/model/request-vo.model";
 import { CodeModel } from "@ngstack/code-editor";
-import {DialogService, DynamicDialogModule} from 'primeng/dynamicdialog';
-import { FileLoadComponent } from './file-load/file-load.component';
+import { DialogService, DynamicDialogModule } from "primeng/dynamicdialog";
+import { FileLoadComponent } from "./file-load/file-load.component";
 
 @Component({
   selector: "app-pojo-import",
@@ -33,10 +33,12 @@ export class PojoImportComponent implements OnInit {
     },
   };
 
-  items:MenuItem[];
-  constructor(private pojoSerice: PojoService,
-      private router: Router,
-      public dialogService: DialogService) {}
+  items: MenuItem[];
+  constructor(
+    private pojoSerice: PojoService,
+    private router: Router,
+    public dialogService: DialogService
+  ) {}
 
   get requestVo(): RequestVo {
     return this.pojoSerice.requestVo;
@@ -56,16 +58,16 @@ export class PojoImportComponent implements OnInit {
     );
   }
 
-  public importJavaFiles(){
+  public importJavaFiles() {
     //TODO
   }
-toCreatePage(){
-  this.router.navigate(['/create'])
-}
-  public importYamlFile(){
+  toCreatePage() {
+    this.router.navigate(["/create"]);
+  }
+  public importYamlFile() {
     const ref = this.dialogService.open(FileLoadComponent, {
-      header: 'Choose a YAML file',
-      width: '50%'
+      header: "Choose a YAML file",
+      width: "50%",
     });
     ref.onClose.subscribe((text) => {
       if (text) {
@@ -77,17 +79,25 @@ toCreatePage(){
         // this.requestVo.yamlText = text;
         // console.log(this.codeModel.value)
       }
-  });
+    });
   }
 
   ngOnInit(): void {
-    this.items =[
-      {label:'Yaml file', icon:'pi pi-file', command:()=>{
-      this.importYamlFile();
-      }},
-      {label:'Java file (s)', icon:'pi pi-folder', command:()=>{
-      this.importJavaFiles();
-      }},
-      ];
+    this.items = [
+      {
+        label: "Yaml file",
+        icon: "pi pi-file",
+        command: () => {
+          this.importYamlFile();
+        },
+      },
+      {
+        label: "Java file (s)",
+        icon: "pi pi-folder",
+        command: () => {
+          this.importJavaFiles();
+        },
+      },
+    ];
   }
 }

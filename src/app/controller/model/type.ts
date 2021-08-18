@@ -1,5 +1,4 @@
 export class Type {
-    public simpleName:string;
-    public name:string;
-
+  public simpleName: string;
+  public name: string;
 }

@@ -4,7 +4,7 @@ import { Pojo } from "../model/pojo";
 import { Observable, Subject } from "rxjs";
 import { Field } from "../model/field";
 import { RequestVo } from "../model/request-vo.model";
-import {Permission} from "../model/permission";
+import { Permission } from "../model/permission";
 
 @Injectable({
   providedIn: "root",
@@ -18,15 +18,15 @@ export class PojoService {
   private _selectes: Array<Pojo>;
   private _pojo: Pojo;
   private _addDialog;
-  editField$:Subject<boolean> = new Subject<boolean>();
+  editField$: Subject<boolean> = new Subject<boolean>();
   private _createDialog: boolean;
   private _editDialog: boolean;
   private _viewDialog: boolean;
   private _submitted: boolean;
-  private _addFieldToExistingPojoDialog:boolean;
-  private _selectedPojoToBeEdited:Pojo;
-  private _editFieldDialog:boolean;
-  private _fieldToBeEdited:Field = new Field();
+  private _addFieldToExistingPojoDialog: boolean;
+  private _selectedPojoToBeEdited: Pojo;
+  private _editFieldDialog: boolean;
+  private _fieldToBeEdited: Field = new Field();
   private _fieldToBeEditedIndex: number = 0;
   private _requestVo: RequestVo;
 
@@ -40,7 +40,7 @@ export class PojoService {
   }
   public importYaml(): Observable<Array<Pojo>> {
     return this.http.post<any>(this.url + "/convert/", this.requestVo);
-  } 
+  }
 
   public findAll(): Observable<Array<Pojo>> {
     return this.http.get<Array<Pojo>>(this.url);
@@ -77,19 +77,15 @@ export class PojoService {
     this.items.splice(this.findIndexById(id), 1);
   }
   public fillojoPermitions() {
+    this.items.forEach((pojo) => {
+      pojo.permissions = pojo.permissions || [];
 
-    this.items.forEach(pojo =>{
-      pojo.permissions =  pojo.permissions || [];
-
-      pojo.permissions.push({name : pojo.name+".edit"});
-      pojo.permissions.push({name : pojo.name+".list"});
-      pojo.permissions.push({name : pojo.name+".view"});
-      pojo.permissions.push({name : pojo.name+".add"});
-      pojo.permissions.push({name : pojo.name+".delete"});
-
+      pojo.permissions.push({ name: pojo.name + ".edit" });
+      pojo.permissions.push({ name: pojo.name + ".list" });
+      pojo.permissions.push({ name: pojo.name + ".view" });
+      pojo.permissions.push({ name: pojo.name + ".add" });
+      pojo.permissions.push({ name: pojo.name + ".delete" });
     });
-
-
   }
 
   public deleteMultipleIndexById() {
@@ -193,28 +189,28 @@ export class PojoService {
   set viewDialog(value: boolean) {
     this._viewDialog = value;
   }
-    get addDialog(): boolean {
+  get addDialog(): boolean {
     return this._addDialog;
   }
 
   set addDialog(value: boolean) {
     this._addDialog = value;
   }
-    get editFieldDialog(): boolean {
+  get editFieldDialog(): boolean {
     return this._editFieldDialog;
   }
 
   set editFieldDialog(value: boolean) {
     this._editFieldDialog = value;
   }
- get fieldToBeEdited(): Field {
+  get fieldToBeEdited(): Field {
     return this._fieldToBeEdited;
   }
 
   set fieldToBeEdited(value: Field) {
     this._fieldToBeEdited = value;
   }
- get fieldToBeEditedIndex(): number {
+  get fieldToBeEditedIndex(): number {
     return this._fieldToBeEditedIndex;
   }
 

@@ -1,67 +1,108 @@
 <div class="" class="max-width" [formGroup]="createProjectForm">
-    <div class="p-text-center p-my-6">
-        <h1 class="title">Créer un nouveau projet</h1>
-    </div>
+  <div class="p-text-center p-my-6">
+    <h1 class="title">Créer un nouveau projet</h1>
+  </div>
 
-    <div class="card">
-        <div class="p-d-flex p-jc-center p-ai-start p-my-4">
-            <h2 style="font-weight: 200;">Project Configuration :</h2>
-        </div>
-        <div class="p-d-flex p-jc-center p-ai-start" [formGroup]="createProjectForm">
-            <div class="p-field p-mx-4">
-                <p>Project Name</p>
-                <label for="projectName" class="p-sr-only">Project Name</label>
-                <input id="projectName" type="text" pInputText placeholder="Project Name"
-                    formControlName="projectName" />
-            </div>
-            <div class="p-field p-mx-4">
-                <p>Group Id</p>
-                <label for="groupId" class="p-sr-only">Group Id</label>
-                <input id="groupId" type="text" pInputText placeholder="Group Id" formControlName="groupId" />
-            </div>
-            <div class="p-field p-mx-4">
-                <p>Domain</p>
-                <label for="domain" class="p-sr-only">Domain</label>
-                <input id="domain" type="text" pInputText placeholder="Domain" formControlName="domain" />
-            </div>
-        </div>
+  <div class="card">
+    <div class="p-d-flex p-jc-center p-ai-start p-my-4">
+      <h2 style="font-weight: 200">Project Configuration :</h2>
     </div>
-    <div class="card">
-        <div class="p-text-center " style="font-size: 1.5rem;font-weight: 400;">
-            <span>{{domainDisplay}}.{{groupIdDisplay}}.{{projectNameDisplay}}</span>
-        </div>
-
+    <div
+      class="p-d-flex p-jc-center p-ai-start"
+      [formGroup]="createProjectForm"
+    >
+      <div class="p-field p-mx-4">
+        <p>Project Name</p>
+        <label for="projectName" class="p-sr-only">Project Name</label>
+        <input
+          id="projectName"
+          type="text"
+          pInputText
+          placeholder="Project Name"
+          formControlName="projectName"
+        />
+      </div>
+      <div class="p-field p-mx-4">
+        <p>Group Id</p>
+        <label for="groupId" class="p-sr-only">Group Id</label>
+        <input
+          id="groupId"
+          type="text"
+          pInputText
+          placeholder="Group Id"
+          formControlName="groupId"
+        />
+      </div>
+      <div class="p-field p-mx-4">
+        <p>Domain</p>
+        <label for="domain" class="p-sr-only">Domain</label>
+        <input
+          id="domain"
+          type="text"
+          pInputText
+          placeholder="Domain"
+          formControlName="domain"
+        />
+      </div>
     </div>
-
-    <div class="card">
-        <div class="p-d-flex p-jc-center p-ai-start p-my-4">
-            <h2 style="font-weight: 200;">Database Configuration :</h2>
-        </div>
-        <div class="p-d-flex p-jc-center p-ai-start">
-            <div class="p-field p-mx-4">
-                <p>Database name</p>
-                <label for="databaseName" class="p-sr-only">Database name</label>
-                <input id="databaseName" type="text" pInputText placeholder="DataBase name"
-                    formControlName="databaseName" />
-            </div>
-            <div class="p-field p-mx-4">
-                <p>UserName</p>
-                <label for="dataSourceUserName" class="p-sr-only">UserName</label>
-                <input id="dataSourceUserName" type="text" pInputText placeholder="UserName"
-                    formControlName="dataSourceUserName" />
-            </div>
-            <div class="p-field p-mx-4">
-                <p>Password</p>
-                <label for="dataSourcePassword" class="p-sr-only">Password</label>
-                <input id="dataSourcePassword" type="text" pInputText placeholder="Password"
-                    formControlName="dataSourcePassword" />
-            </div>
-
-        </div>
+  </div>
+  <div class="card">
+    <div class="p-text-center" style="font-size: 1.5rem; font-weight: 400">
+      <span
+        >{{ domainDisplay }}.{{ groupIdDisplay }}.{{ projectNameDisplay }}</span
+      >
     </div>
-    <div class="">
-        <button pButton pRipple style="float: right;" label="Next" [disabled]="createProjectForm.invalid" icon="pi pi-arrow-right"
-            (click)="submit()"></button>
+  </div>
 
+  <div class="card">
+    <div class="p-d-flex p-jc-center p-ai-start p-my-4">
+      <h2 style="font-weight: 200">Database Configuration :</h2>
     </div>
+    <div class="p-d-flex p-jc-center p-ai-start">
+      <div class="p-field p-mx-4">
+        <p>Database name</p>
+        <label for="databaseName" class="p-sr-only">Database name</label>
+        <input
+          id="databaseName"
+          type="text"
+          pInputText
+          placeholder="DataBase name"
+          formControlName="databaseName"
+        />
+      </div>
+      <div class="p-field p-mx-4">
+        <p>UserName</p>
+        <label for="dataSourceUserName" class="p-sr-only">UserName</label>
+        <input
+          id="dataSourceUserName"
+          type="text"
+          pInputText
+          placeholder="UserName"
+          formControlName="dataSourceUserName"
+        />
+      </div>
+      <div class="p-field p-mx-4">
+        <p>Password</p>
+        <label for="dataSourcePassword" class="p-sr-only">Password</label>
+        <input
+          id="dataSourcePassword"
+          type="text"
+          pInputText
+          placeholder="Password"
+          formControlName="dataSourcePassword"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <button
+      pButton
+      pRipple
+      style="float: right"
+      label="Next"
+      [disabled]="createProjectForm.invalid"
+      icon="pi pi-arrow-right"
+      (click)="submit()"
+    ></button>
+  </div>
 </div>

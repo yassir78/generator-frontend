@@ -1,148 +1,216 @@
 <h3>Gestion des rôles</h3>
 <div class="p-grid">
-    <div class="p-col-12">
+  <div class="p-col-12">
+    <p-toast></p-toast>
 
-        <p-toast></p-toast>
+    <div class="card">
+      <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+          <button
+            pButton
+            pRipple
+            label="New"
+            icon="pi pi-plus"
+            class="p-button-success p-mr-2 p-mb-2"
+            (click)="openNew()"
+          ></button>
+          <button
+            pButton
+            pRipple
+            label="Delete"
+            icon="pi pi-trash"
+            class="p-button-danger p-mb-2"
+            (click)="deleteSelectedRole()"
+            [disabled]="!selectedRoles || !selectedRoles.length"
+          ></button>
+        </ng-template>
 
-        <div class="card">
-            <p-toolbar styleClass="p-mb-4">
-                <ng-template pTemplate="left">
-                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2"
-                        (click)="openNew()"></button>
-                    <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger p-mb-2"
-                        (click)="deleteSelectedRole()" [disabled]="!selectedRoles || !selectedRoles.length"></button>
-                </ng-template>
+        <ng-template pTemplate="right">
+          <button
+            pButton
+            pRipple
+            label="Back"
+            icon="pi pi-arrow-left"
+            class="p-button-secondary p-mb-2 p-mr-2"
+            routerLink="/view/pojo/show"
+          ></button>
+          <button
+            pButton
+            pRipple
+            label="Next"
+            [disabled]="roles.length == 0"
+            icon="pi pi-arrow-right"
+            class="p-button-info p-mb-2"
+            (click)="navigateMenu()"
+          ></button>
+        </ng-template>
+      </p-toolbar>
 
-                <ng-template pTemplate="right">
-                    <button pButton pRipple label="Back" icon="pi pi-arrow-left"
-                        class="p-button-secondary p-mb-2 p-mr-2" routerLink="/view/pojo/show"></button>
-                    <button pButton pRipple label="Next" [disabled]="roles.length == 0" icon="pi pi-arrow-right"
-                        class="p-button-info p-mb-2" (click)="navigateMenu()"></button>
-                </ng-template>
-            </p-toolbar>
+      <p-splitter [panelSizes]="[40, 60]">
+        <ng-template pTemplate>
+          <p-table
+            #dt
+            [value]="roles"
+            [rows]="4"
+            [paginator]="true"
+            [globalFilterFields]="['name']"
+            [(selection)]="selectedRoles"
+            [rowHover]="true"
+            dataKey="id"
+            styleClass="p-datatable-customers"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true"
+            class="p-col"
+          >
+            <ng-template pTemplate="caption">
+              <div
+                class="
+                  p-d-flex p-flex-column p-flex-md-row p-jc-md-between
+                  table-header
+                "
+              >
+                <h5 class="p-m-0">Les roles</h5>
+                <span class="p-input-icon-left">
+                  <i class="pi pi-search"></i>
+                  <input pInputText type="text" placeholder="Search..." />
+                </span>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th class="center" style="width: 3rem">
+                  <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="name">
+                  Name
+                  <p-sortIcon field="name"></p-sortIcon>
+                </th>
 
-            <p-splitter [panelSizes]="[40,60]">
-                <ng-template pTemplate>
-                    <p-table #dt [value]="roles" [rows]="4" [paginator]="true" [globalFilterFields]="['name']"
-                        [(selection)]="selectedRoles" [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                        [showCurrentPageReport]="true" class="p-col">
-                        <ng-template pTemplate="caption">
-                            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                                <h5 class="p-m-0">Les roles</h5>
-                                <span class="p-input-icon-left">
-                                    <i class="pi pi-search"></i>
-                                    <input pInputText type="text" placeholder="Search..." />
-                                </span>
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th class="center" style="width: 3rem">
-                                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                                </th>
-                                <th pSortableColumn="name">Name
-                                    <p-sortIcon field="name"></p-sortIcon>
-                                </th>
+                <th style="padding-left: 4%">Actions</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-role>
+              <tr>
+                <td>
+                  <p-tableCheckbox [value]="role"></p-tableCheckbox>
+                </td>
 
-                                <th style="padding-left: 4%;">Actions</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-role>
-                            <tr>
-                                <td>
-                                    <p-tableCheckbox [value]="role"></p-tableCheckbox>
-                                </td>
+                <td pEditableColumn>
+                  <p-cellEditor>
+                    <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="role.name" />
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                      {{ role.name }}
+                    </ng-template>
+                  </p-cellEditor>
+                </td>
 
-                                <td pEditableColumn>
-                                    <p-cellEditor>
-                                        <ng-template pTemplate="input">
-                                            <input pInputText type="text" [(ngModel)]="role.name">
-                                        </ng-template>
-                                        <ng-template pTemplate="output">
-                                            {{role.name}}
-                                        </ng-template>
-                                    </p-cellEditor>
-                                </td>
-
-                                <td>
-                                    <!-- <button pButton pRipple icon="pi pi-pencil"
+                <td>
+                  <!-- <button pButton pRipple icon="pi pi-pencil"
                                                             class="p-button-rounded p-button-success p-mr-2" (click)="edit(pojo)"></button> -->
-                                    <button pButton pRipple icon="pi pi-list"
-                                        class="p-button-rounded p-button-info p-mr-2" (click)="details(role)"></button>
-                                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
-                                        (click)="deleteRole(role)"></button>
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-list"
+                    class="p-button-rounded p-button-info p-mr-2"
+                    (click)="details(role)"
+                  ></button>
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-trash"
+                    class="p-button-rounded p-button-danger"
+                    (click)="deleteRole(role)"
+                  ></button>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+              <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{ items ? items.length : 0 }} items.
+              </div>
+            </ng-template>
+          </p-table>
+        </ng-template>
 
-                                </td>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="summary">
-                            <div class="p-d-flex p-ai-center p-jc-between">
-                                In total there are {{items ? items.length : 0 }} items.
-                            </div>
-                        </ng-template>
-                    </p-table>
-                </ng-template>
-
-                <ng-template pTemplate>
-                    <p-scrollPanel [style]="{width: '100%', height: '100%'}">
-                        <p-table #dt [globalFilterFields]="['name']" [value]="selectedRole.menuRoles" [rowHover]="true"
-                            dataKey="name" styleClass="p-datatable-customers" class="p-col">
-                            <ng-template pTemplate="caption">
-                                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                                    <h5 class="p-m-0">Menus</h5>
-                                    <span class="p-input-icon-left">
-                                        <i class="pi pi-search"></i>
-                                        <input pInputText type="text" placeholder="Search..." />
-                                    </span>
-                                </div>
-                            </ng-template>
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <!--   <th class="center" style="width: 3rem">
+        <ng-template pTemplate>
+          <p-scrollPanel [style]="{ width: '100%', height: '100%' }">
+            <p-table
+              #dt
+              [globalFilterFields]="['name']"
+              [value]="selectedRole.menuRoles"
+              [rowHover]="true"
+              dataKey="name"
+              styleClass="p-datatable-customers"
+              class="p-col"
+            >
+              <ng-template pTemplate="caption">
+                <div
+                  class="
+                    p-d-flex p-flex-column p-flex-md-row p-jc-md-between
+                    table-header
+                  "
+                >
+                  <h5 class="p-m-0">Menus</h5>
+                  <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Search..." />
+                  </span>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header">
+                <tr>
+                  <!--   <th class="center" style="width: 3rem">
                                                                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                                                                         </th>-->
-                                    <th pSortableColumn="ordre">Ordre
-                                        <p-sortIcon field="ordre"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="menu">Menu
-                                        <p-sortIcon field="menu"></p-sortIcon>
-                                    </th>
-                                    <th>Actions</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-menuRole let-i="rowIndex">
-                                <tr>
-                                    <!--   <td>
+                  <th pSortableColumn="ordre">
+                    Ordre
+                    <p-sortIcon field="ordre"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="menu">
+                    Menu
+                    <p-sortIcon field="menu"></p-sortIcon>
+                  </th>
+                  <th>Actions</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-menuRole let-i="rowIndex">
+                <tr>
+                  <!--   <td>
                                                                             <p-tableCheckbox [value]="commande"></p-tableCheckbox>
                                                                         </td>-->
 
-                                    <td>{{menuRole.order}}</td>
-                                    <td>
-                                        <p-tree [value]="menusHierarchy[i]"></p-tree>
-                                    </td>
+                  <td>{{ menuRole.order }}</td>
+                  <td>
+                    <p-tree [value]="menusHierarchy[i]"></p-tree>
+                  </td>
 
+                  <td>
+                    <button
+                      pButton
+                      pRipple
+                      icon="pi pi-pencil"
+                      class="p-button-rounded p-button-success p-mr-2"
+                      (click)="editMenuRole(menuRole)"
+                    ></button>
+                    <button
+                      pButton
+                      pRipple
+                      icon="pi pi-trash"
+                      class="p-button-rounded p-button-danger"
+                      (click)="deleteMenuRole(menuRole)"
+                    ></button>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </p-scrollPanel>
+        </ng-template>
+      </p-splitter>
+    </div>
 
-                                    <td>
-                                        <button pButton pRipple icon="pi pi-pencil"
-                                            class="p-button-rounded p-button-success p-mr-2"
-                                            (click)="editMenuRole(menuRole)"></button>
-                                        <button pButton pRipple icon="pi pi-trash"
-                                            class="p-button-rounded p-button-danger"
-                                            (click)="deleteMenuRole(menuRole)"></button>
-                                    </td>
-                                </tr>
-                            </ng-template>
-
-                        </p-table>
-                    </p-scrollPanel>
-                </ng-template>
-
-            </p-splitter>
-
-        </div>
-
-        <!-- <p-dialog [(visible)]="roleDialog" (onHide)="hideDialog()" [style]="{width: '450px'}"
+    <!-- <p-dialog [(visible)]="roleDialog" (onHide)="hideDialog()" [style]="{width: '450px'}"
             [header]="roleEditing?'Modifier Role':'Ajouter un Role'" [modal]="true" styleClass="p-fluid">
             <ng-template pTemplate="content">
                 <div class="p-field">
@@ -169,8 +237,8 @@
             </ng-template>
         </p-dialog> -->
 
-        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
-    </div>
+    <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+  </div>
 </div>
 <app-role-add></app-role-add>
 <app-role-edit></app-role-edit>

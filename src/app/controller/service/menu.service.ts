@@ -4,11 +4,11 @@ import { HttpClient } from "@angular/common/http";
 import { Pojo } from "../model/pojo";
 import { RoleConfig } from "../model/roleConfig";
 import { PojoService } from "./pojo.service";
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from "rxjs";
 import { MenuRole } from "../model/menuRole";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class MenuService {
   private baseUrl = "http://localhost:8036/";
@@ -86,5 +86,4 @@ export class MenuService {
   set viewMenuDialog(value: boolean) {
     this._viewMenuDialog = value;
   }
-
 }

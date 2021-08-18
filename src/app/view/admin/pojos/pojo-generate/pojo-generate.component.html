@@ -1,77 +1,139 @@
-<div class="p-d-flex p-flex-column p-jc-center  p-ai-center p-mt-5">
+<div class="p-d-flex p-flex-column p-jc-center p-ai-center p-mt-5">
+  <div class="">
+    <h1 class="p-text-normal">Configuration</h1>
+  </div>
+  <div class="card" style="width: 25vw">
     <div class="">
-        <h1 class="p-text-normal">Configuration</h1>
-    </div>
-    <div class="card" style="width: 25vw;">
-        <div class="">
-
-            <div class="p-field p-grid">
-                <label for="backend-technology " class="p-col-fixed" style="width:200px">Back End :</label>
-                <div class="p-col">
-                    <p-inputSwitch class="p-field-checkbox" [(ngModel)]="userConfig.wantBackend"></p-inputSwitch>
-                </div>
-
-            </div>
-
-            <div class="p-field p-grid">
-                <label for="backend-technology " class="p-col-fixed" style="width:200px">Technology :</label>
-                <div class="p-col">
-                    <p-dropdown [options]="backendTechnologies" [(ngModel)]="backendSelectedTechnology"
-                        optionLabel="name" [ngModelOptions]="{standalone: true}"
-                        (onChange)="changeSelectedBackendTechnology()" [showClear]="true" styleClass="technology">
-                    </p-dropdown>
-                </div>
-
-            </div>
-
-            <div class="p-field p-grid">
-                <label for="backend-technology " class="p-col-fixed" style="width:200px">Template :</label>
-                <div class="p-col ">
-                    <p-dropdown [options]="backendSelectedTechnology.templates" [(ngModel)]="userConfig.backend"
-                        optionLabel="name" [ngModelOptions]="{standalone: true}" [showClear]="true"
-                        styleClass="technology">
-                    </p-dropdown>
-                </div>
-
-            </div>
-            <div class="p-field p-grid">
-                <label for="backend-technology " class="p-col-fixed" style="width:200px">Front End :</label>
-                <div class="p-col">
-                    <p-inputSwitch class="p-field-checkbox" [(ngModel)]="userConfig.wantFrontend"></p-inputSwitch>
-                </div>
-
-            </div>
-
-            <div class="p-field p-grid">
-                <label for="backend-technology " class="p-col-fixed" style="width:200px">Technology :</label>
-                <div class="p-col">
-                    <p-dropdown [options]="frontendTechnologies" [(ngModel)]="frontendSelectedTechnology"
-                        optionLabel="name" [ngModelOptions]="{standalone: true}"
-                        (onChange)="changeSelectedFrontendTechnology()" [showClear]="true" styleClass="technology">
-                    </p-dropdown>
-                </div>
-
-            </div>
-            <div class="p-field p-grid">
-                <label for="backend-technology " class="p-col-fixed" style="width:200px">Template :</label>
-                <div class="p-col">
-                    <p-dropdown [options]="frontendSelectedTechnology.templates" [(ngModel)]="userConfig.frontend"
-                        optionLabel="name" [ngModelOptions]="{standalone: true}" [showClear]="true"
-                        styleClass="technology">
-                    </p-dropdown>
-                </div>
-
-            </div>
-
+      <div class="p-field p-grid">
+        <label
+          for="backend-technology "
+          class="p-col-fixed"
+          style="width: 200px"
+          >Back End :</label
+        >
+        <div class="p-col">
+          <p-inputSwitch
+            class="p-field-checkbox"
+            [(ngModel)]="userConfig.wantBackend"
+          ></p-inputSwitch>
         </div>
+      </div>
+
+      <div class="p-field p-grid">
+        <label
+          for="backend-technology "
+          class="p-col-fixed"
+          style="width: 200px"
+          >Technology :</label
+        >
+        <div class="p-col">
+          <p-dropdown
+            [options]="backendTechnologies"
+            [(ngModel)]="backendSelectedTechnology"
+            optionLabel="name"
+            [ngModelOptions]="{ standalone: true }"
+            (onChange)="changeSelectedBackendTechnology()"
+            [showClear]="true"
+            styleClass="technology"
+          >
+          </p-dropdown>
+        </div>
+      </div>
+
+      <div class="p-field p-grid">
+        <label
+          for="backend-technology "
+          class="p-col-fixed"
+          style="width: 200px"
+          >Template :</label
+        >
+        <div class="p-col">
+          <p-dropdown
+            [options]="backendSelectedTechnology.templates"
+            [(ngModel)]="userConfig.backend"
+            optionLabel="name"
+            [ngModelOptions]="{ standalone: true }"
+            [showClear]="true"
+            styleClass="technology"
+          >
+          </p-dropdown>
+        </div>
+      </div>
+      <div class="p-field p-grid">
+        <label
+          for="backend-technology "
+          class="p-col-fixed"
+          style="width: 200px"
+          >Front End :</label
+        >
+        <div class="p-col">
+          <p-inputSwitch
+            class="p-field-checkbox"
+            [(ngModel)]="userConfig.wantFrontend"
+          ></p-inputSwitch>
+        </div>
+      </div>
+
+      <div class="p-field p-grid">
+        <label
+          for="backend-technology "
+          class="p-col-fixed"
+          style="width: 200px"
+          >Technology :</label
+        >
+        <div class="p-col">
+          <p-dropdown
+            [options]="frontendTechnologies"
+            [(ngModel)]="frontendSelectedTechnology"
+            optionLabel="name"
+            [ngModelOptions]="{ standalone: true }"
+            (onChange)="changeSelectedFrontendTechnology()"
+            [showClear]="true"
+            styleClass="technology"
+          >
+          </p-dropdown>
+        </div>
+      </div>
+      <div class="p-field p-grid">
+        <label
+          for="backend-technology "
+          class="p-col-fixed"
+          style="width: 200px"
+          >Template :</label
+        >
+        <div class="p-col">
+          <p-dropdown
+            [options]="frontendSelectedTechnology.templates"
+            [(ngModel)]="userConfig.frontend"
+            optionLabel="name"
+            [ngModelOptions]="{ standalone: true }"
+            [showClear]="true"
+            styleClass="technology"
+          >
+          </p-dropdown>
+        </div>
+      </div>
     </div>
-    <div class="p-mx-auto">
-        <button pButton pRipple label="Back" icon="pi pi-arrow-left" class="p-button-secondary p-mb-2 p-mr-2"
-            routerLink="/view/role/show" style="width: 100px;"></button>
+  </div>
+  <div class="p-mx-auto">
+    <button
+      pButton
+      pRipple
+      label="Back"
+      icon="pi pi-arrow-left"
+      class="p-button-secondary p-mb-2 p-mr-2"
+      routerLink="/view/role/show"
+      style="width: 100px"
+    ></button>
 
-        <button pButton pRipple label="Generate" icon="pi pi-arrow-right" class="p-button-info p-mb-2 p-mr-2"
-            (click)="generateProject()" style="width: 100px;"></button>
-    </div>
-
-
+    <button
+      pButton
+      pRipple
+      label="Generate"
+      icon="pi pi-arrow-right"
+      class="p-button-info p-mb-2 p-mr-2"
+      (click)="generateProject()"
+      style="width: 100px"
+    ></button>
+  </div>
 </div>

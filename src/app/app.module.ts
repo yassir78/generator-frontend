@@ -1,4 +1,4 @@
-import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { DynamicDialogModule } from "primeng/dynamicdialog";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
@@ -133,14 +133,14 @@ import { CodeEditorModule } from "@ngstack/code-editor";
 import { PaiementListComponent } from "./view/paiements/paiement-list/paiement-list.component";
 import { PaiementViewComponent } from "./view/paiements/paiement-view/paiement-view.component";
 import { PaiementEditComponent } from "./view/paiements/paiement-edit/paiement-edit.component";
-import { FileLoadComponent } from './view/admin/pojos/pojo-import/file-load/file-load.component';
-import { PojoAddComponent } from './view/admin/pojos/pojo-add/pojo-add.component';
-import { PojoAddFieldComponent } from './view/admin/pojos/pojo-add-field/pojo-add-field.component';
-import { FieldEditComponent } from './view/admin/pojos/field-edit/field-edit.component';
-import { RoleListComponent } from './view/admin/roles/role-list/role-list.component';
-import { RoleAddComponent } from './view/admin/roles/role-add/role-add.component';
-import { RoleEditComponent } from './view/admin/roles/role-edit/role-edit.component';
-import { CreateProjectComponent } from './demo/view/create-project/create-project.component';
+import { FileLoadComponent } from "./view/admin/pojos/pojo-import/file-load/file-load.component";
+import { PojoAddComponent } from "./view/admin/pojos/pojo-add/pojo-add.component";
+import { PojoAddFieldComponent } from "./view/admin/pojos/pojo-add-field/pojo-add-field.component";
+import { FieldEditComponent } from "./view/admin/pojos/field-edit/field-edit.component";
+import { RoleListComponent } from "./view/admin/roles/role-list/role-list.component";
+import { RoleAddComponent } from "./view/admin/roles/role-add/role-add.component";
+import { RoleEditComponent } from "./view/admin/roles/role-edit/role-edit.component";
+import { CreateProjectComponent } from "./demo/view/create-project/create-project.component";
 @NgModule({
   imports: [
     BrowserModule,
@@ -279,9 +279,7 @@ import { CreateProjectComponent } from './demo/view/create-project/create-projec
     RoleEditComponent,
     CreateProjectComponent,
   ],
-  entryComponents:[
-    FileLoadComponent,
-  ],
+  entryComponents: [FileLoadComponent],
   providers: [
     /*    { provide: LocationStrategy, useClass: HashLocationStrategy }, */
     CountryService,

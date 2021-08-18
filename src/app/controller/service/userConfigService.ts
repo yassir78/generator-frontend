@@ -1,17 +1,11 @@
-import {
-  Injectable
-} from '@angular/core';
-import {
-  Technology
-} from '../model/technology';
-import {
-  TechnologyService
-} from './technology.service';
-import { CATEGORY } from '../model/category';
-import { UserConfig } from '../model/userConfig';
+import { Injectable } from "@angular/core";
+import { Technology } from "../model/technology";
+import { TechnologyService } from "./technology.service";
+import { CATEGORY } from "../model/category";
+import { UserConfig } from "../model/userConfig";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class UserConfigService {
   private _frontendTechnologies: Array<Technology>;
@@ -21,7 +15,6 @@ export class UserConfigService {
   private _userConfig: UserConfig;
   private _showBackendTemplates: boolean;
   private _showFrontTemplates: boolean;
-
 
   get showFrontTemplates(): boolean {
     return this._showFrontTemplates;
@@ -40,23 +33,26 @@ export class UserConfigService {
   }
 
   constructor(private TechnologyService: TechnologyService) {
-    this.TechnologyService.getTechnologyByCategory(CATEGORY.BACKEND).subscribe(data => {
-      this.backendTechnologies = data;
-      this.backendSelectedTechnology = this.backendTechnologies[0];
-      this.userConfig.backend = this.backendSelectedTechnology.defaultTemplate;
-
-    });
-    this.TechnologyService.getTechnologyByCategory(CATEGORY.FRONTEND).subscribe(data => {
-      this.frontendTechnologies = data;
-      this.frontendSelectedTechnology = this.frontendTechnologies[0];
-      this.userConfig.frontend = this.frontendSelectedTechnology.defaultTemplate;
-    });
+    this.TechnologyService.getTechnologyByCategory(CATEGORY.BACKEND).subscribe(
+      (data) => {
+        this.backendTechnologies = data;
+        this.backendSelectedTechnology = this.backendTechnologies[0];
+        this.userConfig.backend =
+          this.backendSelectedTechnology.defaultTemplate;
+      }
+    );
+    this.TechnologyService.getTechnologyByCategory(CATEGORY.FRONTEND).subscribe(
+      (data) => {
+        this.frontendTechnologies = data;
+        this.frontendSelectedTechnology = this.frontendTechnologies[0];
+        this.userConfig.frontend =
+          this.frontendSelectedTechnology.defaultTemplate;
+      }
+    );
   }
 
-
   get userConfig(): UserConfig {
-    if (this._userConfig == null)
-      this._userConfig = new UserConfig();
+    if (this._userConfig == null) this._userConfig = new UserConfig();
     return this._userConfig;
   }
 
@@ -106,10 +102,11 @@ export class UserConfigService {
 
   setTechnologiestoGenerate() {
     this.userConfig.backend.technologie = new Technology();
-    this.userConfig.backend.technologie.name = this.backendSelectedTechnology.name;
+    this.userConfig.backend.technologie.name =
+      this.backendSelectedTechnology.name;
     this.userConfig.frontend.technologie = new Technology();
-    this.userConfig.frontend.technologie.name = this.frontendSelectedTechnology.name;
+    this.userConfig.frontend.technologie.name =
+      this.frontendSelectedTechnology.name;
     this.userConfig.frontend.technologie.category = CATEGORY.FRONTEND;
   }
-
 }
