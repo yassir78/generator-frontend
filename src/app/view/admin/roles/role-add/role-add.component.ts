@@ -254,7 +254,7 @@ export class RoleAddComponent implements OnInit {
   }
   submit() {
     const roleName = this.addRoleForm.value.name;
-    this.roles.push({ name: roleName, menuRoles: this.menuRoles });
+    this.roles.push({ name: roleName.toUpperCase(), menuRoles: this.menuRoles });
     // this.roleService.menusHierarchyTree.set({name:roleName,menuRoles:this.menuRoles},this.menuRoles this.menuToTreeNode(this.menuRoles) )
     this.menuRolesService = this.menuRoles;
     this.menuRoles = [];
