@@ -148,13 +148,9 @@ export class RoleListComponent implements OnInit {
         menuRole.menu.menuItems.forEach((sousMenu) => {
           if (this.pojos.find((pojo) => pojo.name == sousMenu.libelle)) {
             sousMenu.menuItems.forEach((page) => {
-              let permission = {
-                name: `${sousMenu.libelle}.${page.libelle}`,
-                pojo: { name: sousMenu.libelle },
-              };
               role.permissions.push({
                 name: `${sousMenu.libelle}.${page.libelle}`,
-                pojo: { name: sousMenu.libelle },
+                pojo: this.findPojoByName(sousMenu.libelle),
               });
             });
           }
