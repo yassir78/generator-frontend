@@ -141,6 +141,8 @@ import { RoleListComponent } from "./view/admin/roles/role-list/role-list.compon
 import { RoleAddComponent } from "./view/admin/roles/role-add/role-add.component";
 import { RoleEditComponent } from "./view/admin/roles/role-edit/role-edit.component";
 import { CreateProjectComponent } from "./demo/view/create-project/create-project.component";
+import { NgxSpinnerModule } from 'ngx-spinner';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -234,6 +236,7 @@ import { CreateProjectComponent } from "./demo/view/create-project/create-projec
     TreeTableModule,
     VirtualScrollerModule,
     DynamicDialogModule,
+    NgxSpinnerModule
   ],
   declarations: [
     AppComponent,
@@ -295,4 +298,4 @@ import { CreateProjectComponent } from "./demo/view/create-project/create-projec
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

@@ -5,6 +5,7 @@ import { saveAs } from "file-saver";
 import { PojoService } from "./pojo.service";
 import { GeneratedProject } from "../model/generated-project";
 import { FileConfigService } from "./file-config.service";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -13,20 +14,22 @@ export class GeneratorService {
   private url: string = "http://localhost:8036/generator/";
   private _project: GeneratedProject;
 
+
   showProjectStructure: boolean;
   constructor(
     private http: HttpClient,
     private userConfigService: UserConfigService,
     private pojoSerive: PojoService,
     private fileConfigService: FileConfigService
-  ) {}
+  ) { }
   public generateProject() {
     this.userConfigService.setTechnologiestoGenerate();
     this.userConfigService.userConfig.pojos = this.pojoSerive.items;
-
+  
     this.http
       .post<GeneratedProject>(this.url, this.userConfigService.userConfig)
       .subscribe((response) => {
+        
         if (response == null || response.zip == null)
           console.log("Error while generating project");
         else {

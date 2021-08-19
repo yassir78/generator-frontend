@@ -12,8 +12,8 @@ import { GeneratedProject } from "../../../../controller/model/generated-project
 import { HttpClient } from "@angular/common/http";
 import { PojoService } from "../../../../controller/service/pojo.service";
 
-import { FileConfigService } from "../../../../controller/service/file-config.service";
 import { saveAs } from "file-saver";
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-pojo-generate",
@@ -27,19 +27,18 @@ export class PojoGenerateComponent implements OnInit {
   private url: string = "http://localhost:8036/generator/";
   private _project: GeneratedProject;
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   showProjectStructure: boolean;
   constructor(
     private http: HttpClient,
     private userConfigService: UserConfigService,
     private pojoSerive: PojoService,
-    private fileConfigService: FileConfigService,
     private roleService: RoleService,
     private projectConfigService: ProjectConfigService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
-  ) {}
+    private spinner: NgxSpinnerService
+  ) { }
 
   public generateProject() {
     this.userConfigService.setTechnologiestoGenerate();
@@ -52,18 +51,22 @@ export class PojoGenerateComponent implements OnInit {
     this.userConfigService.userConfig.config.domain =
       this.projectConfigService.domain;
 
-    console.log(this.userConfigService.userConfig);
+    this.spinner.show();
     this.http
       .post<GeneratedProject>(this.url, this.userConfigService.userConfig)
       .subscribe((response) => {
+        this.spinner.hide();
+
         if (response == null || response.zip == null)
           console.log("erreur lors du generation du projet");
         else {
-          this.messageService.add({severity:'success', summary: 'Success', detail: 'Project generated successfully'});
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Project generated successfully' });
           this.project = response;
           this.showProjectStructure = true;
           this.download();
         }
+      }, error => {
+        this.spinner.hide();
       });
   }
   public download() {
